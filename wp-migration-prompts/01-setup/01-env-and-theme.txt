@@ -1,0 +1,12 @@
+PHASE 1: ENVIRONMENT AND BLANK THEME SETUP
+
+Your task is to establish the WordPress foundation without introducing conflicting CSS.
+
+1. Analyze the existing Next.js repository. Locate the global CSS, Tailwind configuration (if used), and static assets (fonts/images).
+2. Spin up a local WordPress environment (e.g., using @wordpress/env, Docker, or local WP-CLI).
+3. Scaffold a completely blank, bare-bones WordPress theme (similar to Underscores '_s'). DO NOT use TwentyTwenty or any pre-styled block theme.
+4. Set up a build step (Webpack/Vite) inside the WordPress theme that compiles the exact CSS/Tailwind configuration used in the Next.js app.
+5. Enqueue this compiled CSS file in the WordPress theme's `functions.php`.
+6. Install and activate the 'Advanced Custom Fields PRO' plugin (or outline the steps for me to provide the license).
+
+Deliverable: A running WordPress instance with a blank theme that successfully loads the exact CSS framework from the Next.js app. Pause and wait for my approval.

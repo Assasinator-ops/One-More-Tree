@@ -1,0 +1,29 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    container_name: one-more-tree-wp
+    ports:
+      - "8888:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
+      WORDPRESS_TABLE_PREFIX: omT_
+    volumes:
+      - ./wp-content:/var/www/html/wp-content
+    depends_on:
+      - db
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    container_name: one-more-tree-db
+    environment:
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    restart: unless-stopped

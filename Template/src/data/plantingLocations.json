@@ -1,0 +1,130 @@
+[
+  {
+    "id": "sierra-nevada",
+    "name": "Sierra Nevada Restoration",
+    "region": "Granada, Andalusia",
+    "description": "Mountain forest restoration project",
+    "coords": { "x": "35%", "y": "75%" },
+    "treesPlanted": 42500,
+    "volunteers": 850,
+    "progressImages": [
+      {
+        "title": "Project Start - Bare Ground",
+        "description": "Initial area assessment and preparation",
+        "image": "/seedling.jpg",
+        "date": "Jan 2023"
+      },
+      {
+        "title": "3 Months Progress",
+        "description": "Seedlings planted and first growth visible",
+        "image": "/sapling.jpg",
+        "date": "Apr 2023"
+      },
+      {
+        "title": "6 Months Progress",
+        "description": "Strong root development and leaf growth",
+        "image": "/mature-tree.jpg",
+        "date": "Jul 2023"
+      },
+      {
+        "title": "Current Status",
+        "description": "Thriving young forest with 95% survival rate",
+        "image": "/hero-forest.jpg",
+        "date": "May 2026"
+      }
+    ]
+  },
+  {
+    "id": "madrid-urban",
+    "name": "Madrid Urban Greening",
+    "region": "Madrid, Central Spain",
+    "description": "Urban forest and green space initiative",
+    "coords": { "x": "48%", "y": "50%" },
+    "treesPlanted": 18900,
+    "volunteers": 320,
+    "progressImages": [
+      {
+        "title": "Site Preparation",
+        "description": "Urban park layout and soil preparation",
+        "image": "/seedling.jpg",
+        "date": "Feb 2024"
+      },
+      {
+        "title": "2 Months In",
+        "description": "Young trees installed and staked",
+        "image": "/sapling.jpg",
+        "date": "Apr 2024"
+      },
+      {
+        "title": "Current Growth",
+        "description": "Canopy development and community engagement",
+        "image": "/hero-forest.jpg",
+        "date": "May 2026"
+      }
+    ]
+  },
+  {
+    "id": "wildfire-recovery",
+    "name": "Wildfire Recovery Program",
+    "region": "Various Regions",
+    "description": "Restoring fire-damaged forest areas",
+    "coords": { "x": "42%", "y": "60%" },
+    "treesPlanted": 65200,
+    "volunteers": 1250,
+    "progressImages": [
+      {
+        "title": "Fire Damage Site",
+        "description": "Assessing burn damage and recovery needs",
+        "image": "/seedling.jpg",
+        "date": "Mar 2023"
+      },
+      {
+        "title": "Clearing & Preparation",
+        "description": "Removing charred wood and preparing soil",
+        "image": "/sapling.jpg",
+        "date": "Jun 2023"
+      },
+      {
+        "title": "Planting Phase",
+        "description": "Installing native tree species",
+        "image": "/mature-tree.jpg",
+        "date": "Sep 2023"
+      },
+      {
+        "title": "Recovery Progress",
+        "description": "Forest regeneration underway with excellent growth",
+        "image": "/hero-forest.jpg",
+        "date": "May 2026"
+      }
+    ]
+  },
+  {
+    "id": "school-initiative",
+    "name": "School Playground Initiative",
+    "region": "Multiple Cities, Spain",
+    "description": "Trees in school playgrounds and educational spaces",
+    "coords": { "x": "50%", "y": "45%" },
+    "treesPlanted": 28700,
+    "volunteers": 445,
+    "progressImages": [
+      {
+        "title": "School Selection",
+        "description": "Partnering with schools across Spain",
+        "image": "/seedling.jpg",
+        "date": "Aug 2024"
+      },
+      {
+        "title": "Community Planting",
+        "description": "Students and teachers planting trees together",
+        "image": "/sapling.jpg",
+        "date": "Oct 2024"
+      },
+      {
+        "title": "Growth & Learning",
+        "description": "Trees growing while students learn environmental stewardship",
+        "image": "/hero-forest.jpg",
+        "date": "May 2026"
+      }
+    ]
+  }
+]

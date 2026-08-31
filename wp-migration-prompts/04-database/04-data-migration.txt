@@ -1,0 +1,10 @@
+PHASE 4: DATABASE AND CONTENT MIGRATION
+
+Your task is to move the data from the Next.js database into the new WordPress structure.
+
+1. Analyze the Next.js database schema (Prisma, Mongoose, or raw SQL). 
+2. Determine which data belongs in standard WordPress Post Types (Pages, Posts), which require Custom Post Types (CPTs), and which require custom database tables.
+3. Write the PHP code to register any necessary Custom Post Types and Custom Taxonomies in the WP theme/plugin.
+4. Write a one-off PHP CLI script (or WP-CLI command) that connects to the old database (or reads a JSON export of the data), iterates through the records, and uses `wp_insert_post()` and `update_post_meta()` to migrate the data into WordPress.
+
+Deliverable: Execute the migration script and verify that the data correctly populates the frontend ACF blocks created in Phase 2.

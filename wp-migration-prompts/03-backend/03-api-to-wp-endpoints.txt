@@ -1,0 +1,11 @@
+PHASE 3: CUSTOM BACKEND LOGIC TO WORDPRESS
+
+Your task is to port the custom Node.js/Next.js backend logic into WordPress.
+
+1. Analyze the API routes located in the Next.js `/api` directory (or Next 13+ Route Handlers).
+2. Document the business logic, third-party API calls, authentication checks, and database queries happening in these routes.
+3. Create a custom WordPress plugin named `wp-app-backend`.
+4. Inside this plugin, use `register_rest_route()` to recreate these endpoints in the WordPress REST API (e.g., `/wp-json/custom/v1/...`).
+5. Translate the Node.js/TypeScript logic into PHP. Use WordPress native functions (`wp_remote_post`, `get_current_user_id()`) where applicable.
+
+Deliverable: A custom plugin containing the ported backend logic, and a markdown table mapping the old Next.js API URLs to the new WordPress REST API URLs. Wait for my approval.

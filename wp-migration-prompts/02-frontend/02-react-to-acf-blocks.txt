@@ -1,0 +1,13 @@
+PHASE 2: COMPONENT MIGRATION (REACT TO ACF BLOCKS)
+
+Your task is to convert the Next.js UI components into native, editable WordPress blocks using ACF.
+
+1. Scan the Next.js `/components` or `/app` directory to identify the core UI components (e.g., Hero, Grid, Testimonials, Navbar, Footer).
+2. For each component, create an ACF Block directory inside the WP theme (e.g., `theme/blocks/hero/`).
+3. Inside each block directory, generate:
+   - `block.json`: To register the block with WordPress.
+   - `render.php`: Translate the React JSX into PHP HTML markup. YOU MUST maintain the exact HTML structure and CSS classes from the Next.js component.
+4. Map the React props (e.g., heading, backgroundImage, items) to ACF fields. Use PHP functions like `get_field('heading')` inside the `render.php` file to make the content editable.
+5. Register the blocks in `functions.php`.
+
+Deliverable: Replicate the Next.js homepage inside the WordPress Gutenberg editor using these new blocks. Use Puppeteer MCP (if available) to verify the visual output matches the Next.js app perfectly. Wait for my approval.

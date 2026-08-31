@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 45 30% 98%;
+    --foreground: 140 15% 18%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 140 15% 18%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 140 15% 18%;
+
+    --primary: 142 60% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 85 20% 85%;
+    --secondary-foreground: 140 15% 25%;
+
+    --muted: 45 15% 92%;
+    --muted-foreground: 140 10% 45%;
+
+    --accent: 45 80% 55%;
+    --accent-foreground: 140 20% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 45 15% 88%;
+    --input: 45 15% 88%;
+    --ring: 142 60% 35%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html, body {
+    height: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4, h5, h6, .font-serif {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  }
+}
+
+/* Decorative noise overlay used across public pages */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* Decorative leaf pattern */
+.leaf-pattern {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><path d='M30 6 C 14 18 14 42 30 54 C 46 42 46 18 30 6 Z' fill='none' stroke='%2316a34a' stroke-opacity='0.25' stroke-width='1'/></svg>");
+  background-size: 60px 60px;
+}
+
+.page-header-texture {
+  background:
+    radial-gradient(1200px 600px at 50% 0%, rgba(34, 197, 94, 0.12), transparent 60%),
+    radial-gradient(800px 400px at 50% 100%, rgba(34, 197, 94, 0.08), transparent 60%);
+}
+
+/* Card + button helpers (mirroring original UI) */
+.glass {
+  background-color: rgba(20, 83, 45, 0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.shadow-soft { box-shadow: 0 6px 24px rgba(20, 83, 45, 0.08); }
+.shadow-medium { box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18); }
+
+/* Maintenance page keyframes */
+@keyframes maintenance-slide {
+  0% { transform: translateX(-30%); }
+  50% { transform: translateX(10%); }
+  100% { transform: translateX(-30%); }
+}
