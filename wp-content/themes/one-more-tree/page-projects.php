@@ -114,19 +114,19 @@ $default_locations = [
 
 // Pull locations from admin options (set via wp-admin or /administrator console)
 $admin_map = get_option('omt_admin_live_map');
-if (!empty($admin_map) && is_array($admin_map)) {
+$raw_locs = !empty($admin_map['locations']) ? $admin_map['locations'] : ($admin_map ?: []);
+if (!empty($raw_locs) && is_array($raw_locs)) {
     // Merge admin data (name, region, description, treesPlanted, volunteers) over defaults
     $locations = array_map(function($admin_loc) use ($default_locations) {
-        // Find matching default by id for progressImages fallback
         $default = null;
         foreach ($default_locations as $d) {
-            if ($d['id'] === ($admin_loc['id'] ?? '')) {
+            if (($d['id'] ?? '') === ($admin_loc['id'] ?? '')) {
                 $default = $d;
                 break;
             }
         }
-        return array_merge($default ?? $default_locations[0], $admin_loc);
-    }, $admin_map);
+        return array_merge($default ?? $default_locations[0], (array)$admin_loc);
+    }, $raw_locs);
 } else {
     $locations = $default_locations;
 }
@@ -353,19 +353,6 @@ $totalVolunteers = array_reduce($locations, function($sum, $loc) { return $sum +
         </div>
       </div>
     </div>
-
-    <?php
-    // Optional Gutenberg editor blocks added by administrator on Projects page
-    while (have_posts()) : the_post();
-      if (!empty(trim(get_the_content()))): ?>
-        <section class="py-16 sm:py-24 px-4 sm:px-6 lg:px-12 xl:px-20 bg-background border-t border-earth-200">
-          <div class="max-w-6xl mx-auto prose prose-lg prose-forest max-w-none">
-            <?php the_content(); ?>
-          </div>
-        </section>
-      <?php endif;
-    endwhile;
-    ?>
 
     <script>
       window.ONE_MORE_TREE_LOCATIONS = <?php echo json_encode($locations); ?>;

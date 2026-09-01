@@ -10,9 +10,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-/**
- * Register OneMoreTree Block Pattern Category and Patterns
- */
+// DISABLED: Force use of Fixed Designer Layouts (ACF/PHP templates) instead of Gutenberg blocks
+// Uncomment the function below to re-enable block patterns
+/*
 function one_more_tree_register_block_patterns() {
     if (!function_exists('register_block_pattern_category')) {
         return;

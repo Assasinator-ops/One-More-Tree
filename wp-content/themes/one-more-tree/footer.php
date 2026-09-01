@@ -1,24 +1,30 @@
 <?php
-/**
- * The template for displaying the footer
- *
- * Contains the closing of the #content div and all content after.
- *
- * @package One_More_Tree
- */
-
 $current_year = date('Y');
 
-// Get social links from WordPress options
-$social_links = [
-    'instagram' => get_option('omt_instagram_url', ''),
-    'twitter' => get_option('omt_twitter_url', ''),
-    'facebook' => get_option('omt_facebook_url', ''),
-    'linkedin' => get_option('omt_linkedin_url', ''),
+// Pull from unified admin options (same store as wp-admin + /administrator)
+$omt_social    = get_option('omt_admin_social', []);
+$omt_footer    = get_option('omt_admin_footer', []);
+$omt_contact   = [
+    'email'   => get_option('omt_contact_email',   'info@onemoretree.eu'),
+    'phone'   => get_option('omt_contact_phone',   '+34 912 345 678'),
+    'address' => get_option('omt_contact_address', 'Calle Gran Vía 28, Madrid, Spain'),
 ];
-$social_links = array_filter($social_links);
 
-// Check if newsletter is enabled - match Next.js default behavior
+$social_links = array_filter([
+    'instagram' => $omt_social['instagram'] ?? get_option('omt_instagram_url', ''),
+    'twitter'   => $omt_social['twitter']   ?? get_option('omt_twitter_url', ''),
+    'facebook'  => $omt_social['facebook']  ?? get_option('omt_facebook_url', ''),
+    'linkedin'  => $omt_social['linkedin']  ?? get_option('omt_linkedin_url', ''),
+]);
+
+$footer_tagline   = !empty($omt_footer['tagline'])   ? $omt_footer['tagline']   : 'Restoring forests, one tree at a time.';
+$footer_copyright = !empty($omt_footer['copyright']) ? $omt_footer['copyright'] : "© {$current_year} OneMoreTree. All rights reserved.";
+$footer_policies  = !empty($omt_footer['policy_links']) ? $omt_footer['policy_links'] : [
+    ['label' => 'Privacy Policy',  'url' => '#'],
+    ['label' => 'Terms of Service','url' => '#'],
+    ['label' => 'Cookie Policy',   'url' => '#'],
+];
+
 $newsletter_enabled = get_option('omt_newsletter_enabled', '1') === '1' || get_option('omt_newsletter_enabled', true) === true;
 ?>
     </div><!-- #content -->
@@ -37,7 +43,7 @@ $newsletter_enabled = get_option('omt_newsletter_enabled', '1') === '1' || get_o
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="OneMoreTree" class="h-8 w-auto sm:h-10" />
                 <span class="font-serif text-xl font-bold text-foreground">OneMore<span class="text-forest-600">Tree</span></span>
               </a>
-              <p class="text-sm text-foreground/60 mb-6">Restoring forests, one tree at a time.</p>
+              <p class="text-sm text-foreground/60 mb-6"><?php echo esc_html($footer_tagline); ?></p>
               <?php if (!empty($social_links)): ?>
                 <div class="flex gap-3">
                   <?php foreach ($social_links as $platform => $url): ?>
@@ -101,8 +107,14 @@ $newsletter_enabled = get_option('omt_newsletter_enabled', '1') === '1' || get_o
               <ul class="space-y-3">
                 <li class="flex items-start gap-3">
                   <svg class="w-4 h-4 text-forest-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                  <a href="mailto:info@onemoretree.eu" class="text-sm text-foreground/60 hover:text-forest-600">info@onemoretree.eu</a>
+                  <a href="mailto:<?php echo esc_attr($omt_contact['email']); ?>" class="text-sm text-foreground/60 hover:text-forest-600"><?php echo esc_html($omt_contact['email']); ?></a>
                 </li>
+                <?php if (!empty($omt_contact['phone'])): ?>
+                <li class="flex items-start gap-3">
+                  <svg class="w-4 h-4 text-forest-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                  <span class="text-sm text-foreground/60"><?php echo esc_html($omt_contact['phone']); ?></span>
+                </li>
+                <?php endif; ?>
               </ul>
             </div>
           </div>
@@ -138,18 +150,14 @@ $newsletter_enabled = get_option('omt_newsletter_enabled', '1') === '1' || get_o
           <!-- Bottom Row -->
           <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8 border-t border-earth-200 text-center">
             <p class="text-sm text-foreground/50">
-              © <?php echo esc_html($current_year); ?> OneMoreTree. All rights reserved.
+              <?php echo esc_html($footer_copyright); ?>
             </p>
             <div class="flex gap-6 flex-wrap justify-center">
-              <a href="#" class="text-sm text-foreground/50 hover:text-forest-600 transition-colors">
-                Privacy Policy
-              </a>
-              <a href="#" class="text-sm text-foreground/50 hover:text-forest-600 transition-colors">
-                Terms of Service
-              </a>
-              <a href="#" class="text-sm text-foreground/50 hover:text-forest-600 transition-colors">
-                Cookie Policy
-              </a>
+              <?php foreach ($footer_policies as $policy): ?>
+                <a href="<?php echo esc_url($policy['url'] ?? '#'); ?>" class="text-sm text-foreground/50 hover:text-forest-600 transition-colors">
+                  <?php echo esc_html($policy['label'] ?? ''); ?>
+                </a>
+              <?php endforeach; ?>
             </div>
           </div>
         </div>

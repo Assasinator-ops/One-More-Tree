@@ -64,6 +64,34 @@ function one_more_tree_register_rest_routes() {
         'callback'            => 'one_more_tree_rest_public_newsletter',
         'permission_callback' => '__return_true',
     ]);
+
+    // 7. Volunteer Form Submission
+    register_rest_route($namespace, '/public/volunteer', [
+        'methods'             => 'POST',
+        'callback'            => 'one_more_tree_rest_public_volunteer',
+        'permission_callback' => '__return_true',
+    ]);
+
+    // 8. Delete Contact Submission
+    register_rest_route($namespace, '/admin/contact/delete', [
+        'methods'             => 'POST',
+        'callback'            => 'one_more_tree_rest_admin_contact_delete',
+        'permission_callback' => 'one_more_tree_rest_admin_permission',
+    ]);
+
+    // 9. Delete Newsletter Subscriber
+    register_rest_route($namespace, '/admin/newsletter/delete', [
+        'methods'             => 'POST',
+        'callback'            => 'one_more_tree_rest_admin_newsletter_delete',
+        'permission_callback' => 'one_more_tree_rest_admin_permission',
+    ]);
+
+    // 10. Add Newsletter Subscriber (admin)
+    register_rest_route($namespace, '/admin/newsletter/add', [
+        'methods'             => 'POST',
+        'callback'            => 'one_more_tree_rest_admin_newsletter_add',
+        'permission_callback' => 'one_more_tree_rest_admin_permission',
+    ]);
 }
 add_action('rest_api_init', 'one_more_tree_register_rest_routes');
 
@@ -313,6 +341,177 @@ function one_more_tree_get_default_admin_data($key) {
         ],
         'contact_submissions' => [],
         'newsletter_subscribers' => [],
+        'hero' => [
+            'mission_badge'       => 'Planting trees, restoring forests.',
+            'headline_top'        => 'One More',
+            'headline_emphasis'   => 'Tree',
+            'subtitle'            => 'Planting 1 million trees across Spain by 2040. From a conversation among friends to a movement restoring forests.',
+            'primary_cta_text'    => 'Join the Movement',
+            'primary_cta_url'     => '/get-involved',
+            'secondary_cta_text'  => 'Watch the Journey',
+            'hero_image_url'      => '',
+            'stat1_value'         => '1M',
+            'stat1_label'         => 'Trees Planted',
+            'stat2_value'         => '50+',
+            'stat2_label'         => 'Projects',
+            'stat3_value'         => '10K+',
+            'stat3_label'         => 'Volunteers',
+        ],
+        'mission' => [
+            'badge'    => 'How We Work',
+            'headline' => 'Three Pillars of Impact',
+            'subtitle' => 'Our approach combines ecological expertise with community power to create forests that last.',
+            'card1_icon'  => '🌱',
+            'card1_title' => 'Europe First',
+            'card1_desc'  => 'Starting where the need is greatest — degraded lands across Spain and beyond.',
+            'card2_icon'  => '🤝',
+            'card2_title' => 'Community Power',
+            'card2_desc'  => 'Working hand-in-hand with local volunteers, schools, and stewardship groups.',
+            'card3_icon'  => '📊',
+            'card3_title' => 'Visible Progress',
+            'card3_desc'  => 'Tracking every tree, sharing results openly, earning trust through transparency.',
+        ],
+        'about_hero' => [
+            'badge'    => 'Who We Are',
+            'title'    => 'Rooted in Purpose',
+            'subtitle' => 'We are a volunteer-led organization committed to restoring native forests across Spain, one tree at a time.',
+        ],
+        'about_values' => [
+            'badge'    => 'Our Principles',
+            'headline' => 'What Guides Us',
+            'cards'    => [
+                ['icon' => '🌱', 'title' => 'Start with seeds', 'desc' => 'Every great forest begins small. We plant with patience and intention.'],
+                ['icon' => '🌿', 'title' => 'Respect ecosystems', 'desc' => 'Native species only. We work with nature, not against it.'],
+                ['icon' => '📅', 'title' => 'Commit for the long run', 'desc' => 'Forests take decades. We plan and monitor accordingly.'],
+                ['icon' => '🤝', 'title' => 'Work with communities', 'desc' => 'Local stewardship is the key to long-term survival.'],
+            ],
+        ],
+        'about_deliverables' => [
+            'box_title' => 'What We Deliver',
+            'box_desc'  => 'Measurable outcomes that help regenerate ecosystems and empower communities.',
+            'stat1_val'   => '3M',
+            'stat1_label' => 'Trees Goal',
+            'stat2_val'   => '100%',
+            'stat2_label' => 'Native Species',
+            'stat3_val'   => '12',
+            'stat3_label' => 'Active Sites',
+        ],
+        'testimonials' => [
+            'badge'    => 'Community Voices',
+            'headline' => 'What People Say',
+            'subtitle' => 'From volunteers and partners across Spain.',
+            'cta_text' => 'Join the movement →',
+            'items'    => [
+                ['quote' => 'Planting with OneMoreTree changed how I see the land around me.', 'name' => 'María J.', 'role' => 'Volunteer, Granada'],
+                ['quote' => 'The transparency and follow-up reports make it easy to trust the work.', 'name' => 'David K.', 'role' => 'Corporate Partner, Madrid'],
+                ['quote' => 'Our school planted 50 trees. The kids still visit them every year.', 'name' => 'Pilar R.', 'role' => 'Teacher, Valencia'],
+            ],
+        ],
+        'impact_hero' => [
+            'badge'    => 'Our Impact',
+            'title'    => 'Trees That Transform',
+            'subtitle' => 'Quantifying the change we\'re creating across Spain\'s forests.',
+        ],
+        'impact_goal' => [
+            'title'          => '1,000,000 Trees by 2040',
+            'target'         => 1000000,
+            'current'        => 847000,
+            'remaining_note' => '153,000 trees left to plant',
+        ],
+        'impact_stories' => [
+            'seed' => [
+                'chapter'  => 'Chapter One',
+                'badge'    => 'Day 1',
+                'subbadge' => 'The beginning',
+                'title'    => 'It Starts With a Single Seed',
+                'body1'    => 'Beneath the soil, magic happens. A tiny seed, no larger than a grain of rice, holds within it the blueprint for a towering forest giant.',
+                'body2'    => 'With patience, care, and the right conditions, life emerges. This is where our journey begins.',
+                'image_url' => '',
+            ],
+            'growth' => [
+                'chapter'  => 'Chapter Two',
+                'badge'    => 'Year 2',
+                'subbadge' => 'Taking root',
+                'title'    => 'Growing Through Adversity',
+                'body1'    => 'Young saplings brave harsh winds, scorching summers, and winter frost. In community, roots intertwine beneath the surface.',
+                'body2'    => 'Careful irrigation and local stewardship protect vulnerable seedlings during critical growth years.',
+                'image_url' => '',
+            ],
+            'mature' => [
+                'chapter'  => 'Chapter Three',
+                'badge'    => 'Year 10+',
+                'subbadge' => 'Thriving Forest',
+                'title'    => 'A Legacy That Lives On',
+                'body1'    => 'Decades later, a thriving canopy shelters diverse wildlife, enriches soil, and cools local microclimates.',
+                'body2'    => 'Restored woodlands become gathering grounds, teaching centers, and carbon sinks for generations to come.',
+                'image_url' => '',
+            ],
+        ],
+        'donate_hero' => [
+            'badge'    => 'Make a Difference',
+            'title'    => 'Plant Your Legacy',
+            'subtitle' => 'Every euro you donate plants real trees in real forests across Spain.',
+        ],
+        'volunteer_page' => [
+            'hero_badge'    => 'Get Involved',
+            'hero_title'    => 'Volunteer With Us',
+            'hero_subtitle' => 'Join our growing community of hands-on environmental stewards.',
+            'form_title'    => 'Sign Up to Volunteer',
+            'form_subtitle' => 'Tell us how you\'d like to help and we\'ll match you to a planting day near you.',
+            'interest_options' => "Tree Planting Day\nSite Maintenance & Stewardship\nCommunity Education\nAdministration & Communications\nFundraising & Partnerships",
+            'card1_icon'  => '🌳',
+            'card1_title' => 'Planting Days',
+            'card1_desc'  => 'Join weekend planting events at our active sites across Spain.',
+            'card2_icon'  => '🌿',
+            'card2_title' => 'Community Stewardship',
+            'card2_desc'  => 'Help maintain and monitor trees over the years after planting.',
+            'card3_icon'  => '📍',
+            'card3_title' => 'Local Coordination',
+            'card3_desc'  => 'Help organize events in your city or region.',
+        ],
+        'contact_page' => [
+            'hero_badge'    => 'Get in Touch',
+            'hero_title'    => 'We\'d Love to Hear From You',
+            'hero_subtitle' => 'Whether you want to volunteer, partner, or just learn more — reach out.',
+            'form_title'    => 'Send a Message',
+            'form_subtitle' => 'We typically respond within 24–48 hours.',
+            'btn_text'      => 'Send Message',
+        ],
+        'site_identity' => [
+            'site_title' => 'One More Tree',
+            'tagline'    => 'Planting 1 million trees across Spain by 2040.',
+            'logo_url'   => '',
+            'favicon_url'=> '',
+        ],
+        'nav_labels' => [
+            'home'        => 'Home',
+            'about'       => 'About',
+            'projects'    => 'Projects',
+            'impact'      => 'Impact',
+            'faq'         => 'FAQ',
+            'get_involved'=> 'Get Involved',
+            'volunteer'   => 'Volunteer',
+            'contact'     => 'Contact',
+            'donate'      => 'Donate',
+            'cta_text'    => 'Donate Now',
+            'cta_url'     => '/donate',
+        ],
+        'footer' => [
+            'tagline'      => 'Planting trees, restoring forests.',
+            'copyright'    => '© 2024 OneMoreTree NGO. All rights reserved.',
+            'policy_links' => [
+                ['label' => 'Privacy Policy', 'url' => '/privacy'],
+                ['label' => 'Cookie Policy', 'url' => '/cookies'],
+                ['label' => 'Terms of Use', 'url' => '/terms'],
+            ],
+        ],
+        'blog_settings' => [
+            'reading_progress_bar' => true,
+            'toc_enabled'          => true,
+            'social_share'         => true,
+            'default_author_bio'   => 'Written by the OneMoreTree team.',
+        ],
+        'volunteer_submissions' => [],
     ];
 
     return $defaults[$key] ?? null;
@@ -442,4 +641,65 @@ function one_more_tree_rest_public_newsletter($request) {
         'ok'      => true,
         'message' => 'Thanks for subscribing! You will receive our latest updates.',
     ]);
+}
+
+function one_more_tree_rest_public_volunteer($request) {
+    $params = $request->get_json_params() ?: $request->get_params();
+    $name = sanitize_text_field($params['name'] ?? '');
+    $email = sanitize_email($params['email'] ?? '');
+    $interest = sanitize_text_field($params['interest'] ?? '');
+    $message = sanitize_textarea_field($params['message'] ?? '');
+
+    if (empty($name) || empty($email)) {
+        return new WP_Error('missing_fields', 'Please fill out all required fields.', ['status' => 400]);
+    }
+
+    $submissions = get_option('omt_admin_contact_submissions', []);
+    if (!is_array($submissions)) $submissions = [];
+    array_unshift($submissions, [
+        'id'        => uniqid('vol_'),
+        'name'      => $name,
+        'email'     => $email,
+        'message'   => $message ?: "Volunteer Interest: {$interest}",
+        'interest'  => $interest,
+        'type'      => 'volunteer',
+        'date'      => current_time('mysql'),
+        'timestamp' => time(),
+        'status'    => 'unread',
+    ]);
+    $submissions = array_slice($submissions, 0, 500);
+    update_option('omt_admin_contact_submissions', $submissions);
+    return rest_ensure_response(['ok' => true, 'message' => 'Thank you! We will be in touch about volunteer opportunities.']);
+}
+
+function one_more_tree_rest_admin_contact_delete($request) {
+    $params = $request->get_json_params();
+    $id = sanitize_text_field($params['id'] ?? '');
+    if (empty($id)) return new WP_Error('missing_id', 'Submission ID required.', ['status' => 400]);
+    $submissions = get_option('omt_admin_contact_submissions', []);
+    $submissions = array_values(array_filter($submissions, fn($s) => ($s['id'] ?? '') !== $id));
+    update_option('omt_admin_contact_submissions', $submissions);
+    return rest_ensure_response(['ok' => true]);
+}
+
+function one_more_tree_rest_admin_newsletter_delete($request) {
+    $params = $request->get_json_params();
+    $id = sanitize_text_field($params['id'] ?? '');
+    if (empty($id)) return new WP_Error('missing_id', 'Subscriber ID required.', ['status' => 400]);
+    $subscribers = get_option('omt_admin_newsletter_subscribers', []);
+    $subscribers = array_values(array_filter($subscribers, fn($s) => ($s['id'] ?? '') !== $id));
+    update_option('omt_admin_newsletter_subscribers', $subscribers);
+    return rest_ensure_response(['ok' => true]);
+}
+
+function one_more_tree_rest_admin_newsletter_add($request) {
+    $params = $request->get_json_params();
+    $email = sanitize_email($params['email'] ?? '');
+    if (empty($email) || !is_email($email)) return new WP_Error('invalid_email', 'Valid email required.', ['status' => 400]);
+    $subscribers = get_option('omt_admin_newsletter_subscribers', []);
+    if (!is_array($subscribers)) $subscribers = [];
+    foreach ($subscribers as $s) { if (strtolower($s['email'] ?? '') === strtolower($email)) return rest_ensure_response(['ok' => true, 'message' => 'Already subscribed.']); }
+    array_unshift($subscribers, ['id' => uniqid('nl_'), 'email' => $email, 'date' => current_time('mysql'), 'timestamp' => time(), 'status' => 'active']);
+    update_option('omt_admin_newsletter_subscribers', $subscribers);
+    return rest_ensure_response(['ok' => true, 'message' => 'Subscriber added.']);
 }

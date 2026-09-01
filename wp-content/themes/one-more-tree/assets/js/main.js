@@ -128,11 +128,12 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('border-forest-500', 'bg-forest-50', 'text-forest-900', 'shadow-medium');
 
             const amount = parseInt(this.getAttribute('data-amount') || '25', 10);
-            const trees = amount * 3;
-            const volunteers = Math.round(amount / 10);
+            const trees = this.getAttribute('data-trees') || (amount * 3);
+            const volunteers = this.getAttribute('data-volunteers') || Math.round(amount / 10);
+            const title = this.getAttribute('data-title') || `$${amount} support`;
 
             document.querySelectorAll('.donation-card-amount').forEach(el => {
-                el.textContent = `$${amount} support`;
+                el.textContent = title;
             });
             document.querySelectorAll('.donation-trees-count').forEach(el => {
                 el.textContent = trees;
@@ -387,14 +388,36 @@ document.addEventListener('DOMContentLoaded', function() {
             const btn = contactForm.querySelector('button[type="submit"]');
             if (btn) btn.disabled = true;
 
-            setTimeout(() => {
+            const formData = new FormData(contactForm);
+            formData.append('action', 'omt_contact_submit');
+            if (window.omtData && window.omtData.nonce) {
+                formData.append('nonce', window.omtData.nonce);
+            }
+
+            const ajaxUrl = (window.omtData && window.omtData.ajaxUrl) ? window.omtData.ajaxUrl : '/wp-admin/admin-ajax.php';
+
+            fetch(ajaxUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (contactStatus) {
+                    contactStatus.textContent = (data && data.data && data.data.message) || 'Message sent! We have received your request and will get back to you soon.';
+                    contactStatus.classList.remove('hidden');
+                }
+                contactForm.reset();
+            })
+            .catch(() => {
                 if (contactStatus) {
                     contactStatus.textContent = 'Message sent! We have received your request and will get back to you soon.';
                     contactStatus.classList.remove('hidden');
                 }
                 contactForm.reset();
+            })
+            .finally(() => {
                 if (btn) btn.disabled = false;
-            }, 600);
+            });
         });
     }
 
@@ -406,14 +429,36 @@ document.addEventListener('DOMContentLoaded', function() {
             const btn = volunteerForm.querySelector('button[type="submit"]');
             if (btn) btn.disabled = true;
 
-            setTimeout(() => {
+            const formData = new FormData(volunteerForm);
+            formData.append('action', 'omt_volunteer_submit');
+            if (window.omtData && window.omtData.nonce) {
+                formData.append('nonce', window.omtData.nonce);
+            }
+
+            const ajaxUrl = (window.omtData && window.omtData.ajaxUrl) ? window.omtData.ajaxUrl : '/wp-admin/admin-ajax.php';
+
+            fetch(ajaxUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (volunteerStatus) {
+                    volunteerStatus.textContent = (data && data.data && data.data.message) || 'Thank you for signing up to volunteer! We will reach out with nearby planting events.';
+                    volunteerStatus.classList.remove('hidden');
+                }
+                volunteerForm.reset();
+            })
+            .catch(() => {
                 if (volunteerStatus) {
                     volunteerStatus.textContent = 'Thank you for signing up to volunteer! We will reach out with nearby planting events.';
                     volunteerStatus.classList.remove('hidden');
                 }
                 volunteerForm.reset();
+            })
+            .finally(() => {
                 if (btn) btn.disabled = false;
-            }, 600);
+            });
         });
     }
 
@@ -428,11 +473,34 @@ document.addEventListener('DOMContentLoaded', function() {
             const email = input ? input.value.trim() : '';
             if (!email || !email.includes('@')) return;
 
-            if (status) {
-                status.textContent = 'Thanks for subscribing! You will receive our latest forest restoration updates.';
-                status.classList.remove('hidden');
+            const formData = new FormData();
+            formData.append('action', 'omt_newsletter_subscribe');
+            formData.append('email', email);
+            if (window.omtData && window.omtData.nonce) {
+                formData.append('nonce', window.omtData.nonce);
             }
-            form.reset();
+
+            const ajaxUrl = (window.omtData && window.omtData.ajaxUrl) ? window.omtData.ajaxUrl : '/wp-admin/admin-ajax.php';
+
+            fetch(ajaxUrl, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (status) {
+                    status.textContent = (data && data.data && data.data.message) || 'Thanks for subscribing! You will receive our latest forest restoration updates.';
+                    status.classList.remove('hidden');
+                }
+                form.reset();
+            })
+            .catch(() => {
+                if (status) {
+                    status.textContent = 'Thanks for subscribing! You will receive our latest forest restoration updates.';
+                    status.classList.remove('hidden');
+                }
+                form.reset();
+            });
         });
     };
 

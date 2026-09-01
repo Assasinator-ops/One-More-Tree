@@ -9,19 +9,33 @@
 
 get_header();
 
-// Pull KPI data from admin options (saved via wp-admin or /administrator console)
-$admin_kpis = get_option('omt_admin_impact_kpis');
-$admin_counters = get_option('omt_admin_home_counters');
+// Pull ALL impact data from unified admin options
+$admin_kpis        = get_option('omt_admin_impact_kpis', []);
+$admin_goal        = get_option('omt_admin_impact_goal', []);
+$admin_stories     = get_option('omt_admin_impact_stories', []);
+$admin_counters    = get_option('omt_admin_home_counters', []);
 
-// KPI defaults
-$kpi_trees_planted = !empty($admin_kpis['treesPlanted']) ? number_format($admin_kpis['treesPlanted']) : '126,400';
-$kpi_sites_active  = !empty($admin_kpis['sitesActive'])  ? $admin_kpis['sitesActive']                 : '14';
-$kpi_survival_rate = !empty($admin_kpis['survivalRate']) ? $admin_kpis['survivalRate'] . '%'           : '94%';
-$kpi_countries     = !empty($admin_kpis['countries'])    ? $admin_kpis['countries']                    : '3';
-$kpi_goal_trees    = !empty($admin_kpis['goalTrees'])    ? $admin_kpis['goalTrees']                    : 1000000;
-$kpi_planted_now   = !empty($admin_kpis['treesPlanted']) ? $admin_kpis['treesPlanted']                 : 126400;
-$kpi_progress_pct  = min(100, round(($kpi_planted_now / $kpi_goal_trees) * 100, 1));
+// Goal progress (from omt_admin_impact_goal)
+$goal_title        = !empty($admin_goal['title'])          ? $admin_goal['title']          : '1,000,000 Trees by 2040';
+$goal_target       = !empty($admin_goal['target'])         ? intval($admin_goal['target'])  : 1000000;
+$goal_current      = !empty($admin_goal['current'])        ? intval($admin_goal['current']) : 847000;
+$goal_remaining    = !empty($admin_goal['remaining_note']) ? $admin_goal['remaining_note']  : number_format($goal_target - $goal_current) . ' trees left to plant';
+$goal_pct          = min(100, round(($goal_current / max(1, $goal_target)) * 100, 1));
+
+// KPI stats
+$kpis = !empty($admin_kpis['kpis']) ? $admin_kpis['kpis'] : [
+    ['label' => 'Regions Covered',    'value' => '4',     'sub' => 'Granada, Madrid, Valencia, Galicia'],
+    ['label' => 'Projects Active',    'value' => '12',    'sub' => 'Active forest & urban sites'],
+    ['label' => 'Tons CO2 Absorbed',  'value' => '4,850', 'sub' => 'Estimated lifetime absorption'],
+    ['label' => 'Volunteers Engaged', 'value' => '2,420', 'sub' => 'Community participants'],
+];
+
+// Story chapters
+$story_seed   = !empty($admin_stories['seed'])   ? $admin_stories['seed']   : [];
+$story_growth = !empty($admin_stories['growth']) ? $admin_stories['growth'] : [];
+$story_mature = !empty($admin_stories['mature']) ? $admin_stories['mature'] : [];
 ?>
+
 
 
 <div class="relative bg-background">
@@ -71,83 +85,50 @@ $kpi_progress_pct  = min(100, round(($kpi_planted_now / $kpi_goal_trees) * 100, 
             <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
               <div>
                 <h3 class="font-serif text-xl sm:text-2xl font-bold text-foreground">
-                  <?php echo get_acf_field('impact_goal_title', 'Goal: 1,000,000 Trees by 2040'); ?>
+                  <?php echo esc_html($goal_title); ?>
                 </h3>
                 <p class="text-sm text-foreground/60">
-                  <?php echo get_acf_field('impact_goal_subtitle', '153,000 trees to go to reach our first milestone'); ?>
+                  <?php echo esc_html($goal_remaining); ?>
                 </p>
               </div>
               <span class="text-2xl sm:text-3xl font-bold text-forest-600 font-serif">
-                <?php echo $kpi_progress_pct; ?>% Complete
+                <?php echo esc_html($goal_pct); ?>% Complete
               </span>
             </div>
             <div class="w-full bg-slate-200 h-4 rounded-full overflow-hidden">
-              <div class="bg-gradient-to-r from-forest-500 to-forest-600 h-full rounded-full transition-all duration-1000" style="width: <?php echo $kpi_progress_pct; ?>%"></div>
+              <div class="bg-gradient-to-r from-forest-500 to-forest-600 h-full rounded-full transition-all duration-1000" style="width: <?php echo esc_attr($goal_pct); ?>%"></div>
             </div>
           </div>
 
           <!-- 4 KPI Cards -->
           <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <?php 
+            $icons = [
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>',
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>',
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>',
+                '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>',
+            ];
+            foreach ($kpis as $idx => $kpi): 
+                $icon_svg = $icons[$idx % count($icons)];
+            ?>
             <div class="glass-card rounded-3xl p-6 sm:p-8 text-center shadow-soft hover:shadow-medium transition-all">
               <div class="w-12 h-12 rounded-2xl bg-forest-100 flex items-center justify-center mx-auto mb-4">
                 <svg class="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <?php echo $icon_svg; ?>
                 </svg>
               </div>
               <div class="font-serif text-3xl sm:text-4xl font-bold text-forest-600 mb-2">
-                <?php echo $kpi_countries; ?>
+                <?php echo esc_html($kpi['value'] ?? ''); ?>
               </div>
               <div class="text-sm font-semibold text-foreground mb-1">
-                <?php echo get_acf_field('kpi_regions_label', 'Regions Covered'); ?>
+                <?php echo esc_html($kpi['label'] ?? ''); ?>
               </div>
-              <div class="text-xs text-foreground/50">Granada, Madrid, Valencia, Galicia</div>
+              <div class="text-xs text-foreground/50">
+                <?php echo esc_html($kpi['sub'] ?? ''); ?>
+              </div>
             </div>
-
-            <div class="glass-card rounded-3xl p-6 sm:p-8 text-center shadow-soft hover:shadow-medium transition-all">
-              <div class="w-12 h-12 rounded-2xl bg-forest-100 flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
-              </div>
-              <div class="font-serif text-3xl sm:text-4xl font-bold text-forest-600 mb-2">
-                <?php echo $kpi_sites_active; ?>
-              </div>
-              <div class="text-sm font-semibold text-foreground mb-1">
-                <?php echo get_acf_field('kpi_projects_label', 'Projects Active'); ?>
-              </div>
-              <div class="text-xs text-foreground/50">Active forest &amp; urban sites</div>
-            </div>
-
-            <div class="glass-card rounded-3xl p-6 sm:p-8 text-center shadow-soft hover:shadow-medium transition-all">
-              <div class="w-12 h-12 rounded-2xl bg-forest-100 flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                </svg>
-              </div>
-              <div class="font-serif text-3xl sm:text-4xl font-bold text-forest-600 mb-2">
-                <?php echo $kpi_trees_planted; ?>
-              </div>
-              <div class="text-sm font-semibold text-foreground mb-1">
-                <?php echo get_acf_field('kpi_co2_label', 'Trees Planted'); ?>
-              </div>
-              <div class="text-xs text-foreground/50">Estimated lifetime absorption</div>
-            </div>
-
-            <div class="glass-card rounded-3xl p-6 sm:p-8 text-center shadow-soft hover:shadow-medium transition-all">
-              <div class="w-12 h-12 rounded-2xl bg-forest-100 flex items-center justify-center mx-auto mb-4">
-                <svg class="w-6 h-6 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                </svg>
-              </div>
-              <div class="font-serif text-3xl sm:text-4xl font-bold text-forest-600 mb-2">
-                <?php echo $kpi_survival_rate; ?>
-              </div>
-              <div class="text-sm font-semibold text-foreground mb-1">
-                <?php echo get_acf_field('kpi_volunteers_label', 'Survival Rate'); ?>
-              </div>
-              <div class="text-xs text-foreground/50">Community participants</div>
-            </div>
+            <?php endforeach; ?>
           </div>
 
         </div>
@@ -423,19 +404,6 @@ $kpi_progress_pct  = min(100, round(($kpi_planted_now / $kpi_goal_trees) * 100, 
         </div>
       </div>
     </section>
-
-    <?php
-    // Optional Gutenberg editor blocks added by administrator on Impact page
-    while (have_posts()) : the_post();
-      if (!empty(trim(get_the_content()))): ?>
-        <section class="py-16 sm:py-24 px-4 sm:px-6 lg:px-12 xl:px-20 bg-background border-t border-earth-200">
-          <div class="max-w-6xl mx-auto prose prose-lg prose-forest max-w-none">
-            <?php the_content(); ?>
-          </div>
-        </section>
-      <?php endif;
-    endwhile;
-    ?>
   </main>
 </div>
 

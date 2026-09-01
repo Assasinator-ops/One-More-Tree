@@ -207,10 +207,6 @@ get_header();
       </div>
     </section>
 
-        </div>
-      </div>
-    </section>
-
     <!-- Testimonials Section - Exact mirror of Next.js TestimonialsSection.tsx -->
     <section id="testimonials" class="relative min-h-[65vh] w-full py-20 sm:py-32 overflow-hidden gradient-bg">
       <div class="absolute inset-0 leaf-pattern opacity-20"></div>
@@ -277,7 +273,7 @@ get_header();
             <div class="inline-flex items-center gap-3 px-5 py-4 rounded-3xl glass-card shadow-medium">
               <span class="text-sm text-foreground/60">Want to share your story?</span>
               <a
-                href="#join"
+                href="<?php echo esc_url(home_url('/get-involved')); ?>"
                 class="text-sm font-semibold text-forest-600 hover:text-forest-700 transition-colors"
               >
                 Join the movement
@@ -287,19 +283,6 @@ get_header();
         </div>
       </div>
     </section>
-
-    <?php
-    // Optional Gutenberg editor blocks added by administrator on About page
-    while (have_posts()) : the_post();
-      if (!empty(trim(get_the_content()))): ?>
-        <section class="py-16 sm:py-24 px-4 sm:px-6 lg:px-12 xl:px-20 bg-background border-t border-earth-200">
-          <div class="max-w-5xl mx-auto prose prose-lg prose-forest max-w-none">
-            <?php the_content(); ?>
-          </div>
-        </section>
-      <?php endif;
-    endwhile;
-    ?>
   </main>
 </div>
 

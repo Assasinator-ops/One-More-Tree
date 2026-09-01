@@ -14,7 +14,14 @@
     <meta charset="<?php bloginfo('charset'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="profile" href="https://gmpg.org/xfn/11">
-    <link rel="icon" href="<?php echo get_template_directory_uri(); ?>/assets/images/favicon.ico">
+    <?php
+    // Site Identity – pull from admin options with fallbacks
+    $omt_identity   = get_option('omt_admin_site_identity', []);
+    $omt_nav_labels = get_option('omt_admin_nav_labels', []);
+    $omt_favicon    = !empty($omt_identity['favicon_url']) ? esc_url($omt_identity['favicon_url']) : get_template_directory_uri() . '/assets/images/favicon.ico';
+    $omt_logo_url   = !empty($omt_identity['logo_url'])   ? esc_url($omt_identity['logo_url'])   : get_template_directory_uri() . '/assets/images/logo.png';
+    ?>
+    <link rel="icon" href="<?php echo $omt_favicon; ?>">
     <link rel="apple-touch-icon" href="<?php echo get_template_directory_uri(); ?>/assets/images/apple-touch-icon.png">
     <?php wp_head(); ?>
 </head>
@@ -91,65 +98,50 @@
         <div class="flex items-center justify-between h-16 sm:h-20">
           <a href="<?php echo esc_url(home_url('/')); ?>" class="flex items-center gap-2 group">
             <img
-              src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png"
-              alt="OneMoreTree"
+              src="<?php echo $omt_logo_url; ?>"
+              alt="<?php echo esc_attr(!empty($omt_identity['site_title']) ? $omt_identity['site_title'] : 'OneMoreTree'); ?>"
               class="h-8 w-auto sm:h-10 transition-transform duration-300 group-hover:scale-105"
             />
             <span class="font-serif text-lg sm:text-xl font-bold text-foreground">
-              OneMore<span class="text-forest-600">Tree</span>
+              <?php
+                $site_title = !empty($omt_identity['site_title']) ? $omt_identity['site_title'] : 'OneMoreTree';
+                // Split "OneMoreTree" into prefix + colored suffix for styling
+                if (strtolower($site_title) === 'onemortree' || $site_title === 'OneMoreTree') {
+                    echo 'OneMore<span class="text-forest-600">Tree</span>';
+                } else {
+                    echo esc_html($site_title);
+                }
+              ?>
             </span>
           </a>
 
           <div class="hidden md:flex items-center gap-8">
-            <a
-              href="<?php echo esc_url(home_url('/')); ?>"
-              class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600"
-              data-path="/"
-            >
-              Home
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600" data-path="/">
+              <?php echo esc_html($omt_nav_labels['home'] ?? 'Home'); ?>
+            </a>
+            <a href="<?php echo esc_url(home_url('/about')); ?>" class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600" data-path="/about">
+              <?php echo esc_html($omt_nav_labels['about'] ?? 'About'); ?>
+            </a>
+            <a href="<?php echo esc_url(home_url('/projects')); ?>" class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600" data-path="/projects">
+              <?php echo esc_html($omt_nav_labels['projects'] ?? 'Projects'); ?>
+            </a>
+            <a href="<?php echo esc_url(home_url('/impact')); ?>" class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600" data-path="/impact">
+              <?php echo esc_html($omt_nav_labels['impact'] ?? 'Impact'); ?>
+            </a>
+            <a href="<?php echo esc_url(home_url('/faq')); ?>" class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600" data-path="/faq">
+              <?php echo esc_html($omt_nav_labels['faq'] ?? 'FAQ'); ?>
+            </a>
+            <a href="<?php echo esc_url(home_url('/get-involved')); ?>" class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600" data-path="/get-involved">
+              <?php echo esc_html($omt_nav_labels['get_involved'] ?? 'Get Involved'); ?>
             </a>
             <a
-              href="<?php echo esc_url(home_url('/about')); ?>"
-              class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600"
-              data-path="/about"
-            >
-              About
-            </a>
-            <a
-              href="<?php echo esc_url(home_url('/projects')); ?>"
-              class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600"
-              data-path="/projects"
-            >
-              Projects
-            </a>
-            <a
-              href="<?php echo esc_url(home_url('/impact')); ?>"
-              class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600"
-              data-path="/impact"
-            >
-              Impact
-            </a>
-            <a
-              href="<?php echo esc_url(home_url('/faq')); ?>"
-              class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600"
-              data-path="/faq"
-            >
-              FAQ
-            </a>
-            <a
-              href="<?php echo esc_url(home_url('/get-involved')); ?>"
-              class="nav-link text-sm transition-colors duration-300 animated-underline font-medium text-foreground/70 hover:text-forest-600"
-              data-path="/get-involved"
-            >
-              Get Involved
-            </a>
-            <a
-              href="<?php echo esc_url(home_url('/get-involved')); ?>"
+              href="<?php echo esc_url(!empty($omt_nav_labels['cta_url']) ? home_url($omt_nav_labels['cta_url']) : home_url('/donate')); ?>"
               class="px-5 py-2.5 bg-forest-600 hover:bg-forest-700 text-white text-sm font-semibold rounded-full transition-all duration-300 shadow-medium hover:shadow-elevated"
             >
-              Donate Now
+              <?php echo esc_html($omt_nav_labels['cta_text'] ?? 'Donate Now'); ?>
             </a>
           </div>
+
 
           <button
             id="mobile-menu-btn"
@@ -175,37 +167,37 @@
               href="<?php echo esc_url(home_url('/about')); ?>"
               class="block w-full text-left text-lg transition-colors duration-300 py-2 font-medium text-foreground/70 hover:text-forest-600"
             >
-              About
+              <?php echo esc_html($omt_nav_labels['about'] ?? 'About'); ?>
             </a>
             <a
               href="<?php echo esc_url(home_url('/projects')); ?>"
               class="block w-full text-left text-lg transition-colors duration-300 py-2 font-medium text-foreground/70 hover:text-forest-600"
             >
-              Projects
+              <?php echo esc_html($omt_nav_labels['projects'] ?? 'Projects'); ?>
             </a>
             <a
               href="<?php echo esc_url(home_url('/impact')); ?>"
               class="block w-full text-left text-lg transition-colors duration-300 py-2 font-medium text-foreground/70 hover:text-forest-600"
             >
-              Impact
+              <?php echo esc_html($omt_nav_labels['impact'] ?? 'Impact'); ?>
             </a>
             <a
               href="<?php echo esc_url(home_url('/faq')); ?>"
               class="block w-full text-left text-lg transition-colors duration-300 py-2 font-medium text-foreground/70 hover:text-forest-600"
             >
-              FAQ
+              <?php echo esc_html($omt_nav_labels['faq'] ?? 'FAQ'); ?>
             </a>
             <a
               href="<?php echo esc_url(home_url('/get-involved')); ?>"
               class="block w-full text-left text-lg transition-colors duration-300 py-2 font-medium text-foreground/70 hover:text-forest-600"
             >
-              Get Involved
+              <?php echo esc_html($omt_nav_labels['get_involved'] ?? 'Get Involved'); ?>
             </a>
             <a
-              href="<?php echo esc_url(home_url('/donate')); ?>"
+              href="<?php echo esc_url(!empty($omt_nav_labels['cta_url']) ? home_url($omt_nav_labels['cta_url']) : home_url('/donate')); ?>"
               class="block w-full mt-4 px-5 py-3 bg-forest-600 hover:bg-forest-700 text-white font-semibold rounded-full transition-all duration-300 shadow-medium text-center"
             >
-              Donate Now
+              <?php echo esc_html($omt_nav_labels['cta_text'] ?? 'Donate Now'); ?>
             </a>
           </div>
         </div>

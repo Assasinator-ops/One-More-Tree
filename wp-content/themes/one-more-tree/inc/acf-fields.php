@@ -1121,6 +1121,7 @@ endif;
  * Helper function to get ACF field value with fallback
  * This function works seamlessly whether ACF is active or settings are managed via WP Admin / Next.js Console
  */
+if (!function_exists('get_acf_field')) :
 function get_acf_field($field_name, $default = '') {
     if (function_exists('get_field')) {
         $value = get_field($field_name);
@@ -1219,8 +1220,107 @@ function get_acf_field($field_name, $default = '') {
             $st = get_option('omt_admin_stories');
             if (!empty($st['mature']['body2'])) return $st['mature']['body2'];
             break;
+
+        // NEW: Hero fields
+        case 'hero_mission_badge': $d = get_option('omt_admin_hero', []); return $d['mission_badge'] ?? $default;
+        case 'hero_headline_top': $d = get_option('omt_admin_hero', []); return $d['headline_top'] ?? $default;
+        case 'hero_headline_emphasis': $d = get_option('omt_admin_hero', []); return $d['headline_emphasis'] ?? $default;
+        case 'hero_subtitle': $d = get_option('omt_admin_hero', []); return $d['subtitle'] ?? $default;
+        case 'hero_primary_cta_text': $d = get_option('omt_admin_hero', []); return $d['primary_cta_text'] ?? $default;
+        case 'hero_primary_cta_url': $d = get_option('omt_admin_hero', []); return $d['primary_cta_url'] ?? $default;
+        case 'hero_secondary_cta_text': $d = get_option('omt_admin_hero', []); return $d['secondary_cta_text'] ?? $default;
+        case 'hero_image_url': $d = get_option('omt_admin_hero', []); return $d['hero_image_url'] ?? $default;
+        case 'hero_stat1_value': $d = get_option('omt_admin_hero', []); return $d['stat1_value'] ?? $default;
+        case 'hero_stat1_label': $d = get_option('omt_admin_hero', []); return $d['stat1_label'] ?? $default;
+        case 'hero_stat2_value': $d = get_option('omt_admin_hero', []); return $d['stat2_value'] ?? $default;
+        case 'hero_stat2_label': $d = get_option('omt_admin_hero', []); return $d['stat2_label'] ?? $default;
+        case 'hero_stat3_value': $d = get_option('omt_admin_hero', []); return $d['stat3_value'] ?? $default;
+        case 'hero_stat3_label': $d = get_option('omt_admin_hero', []); return $d['stat3_label'] ?? $default;
+
+        case 'mission_badge': $d = get_option('omt_admin_mission', []); return $d['badge'] ?? $default;
+        case 'mission_headline': $d = get_option('omt_admin_mission', []); return $d['headline'] ?? $default;
+        case 'mission_subtitle': $d = get_option('omt_admin_mission', []); return $d['subtitle'] ?? $default;
+        case 'mission_card1_icon': $d = get_option('omt_admin_mission', []); return $d['card1_icon'] ?? $default;
+        case 'mission_card1_title': $d = get_option('omt_admin_mission', []); return $d['card1_title'] ?? $default;
+        case 'mission_card1_desc': $d = get_option('omt_admin_mission', []); return $d['card1_desc'] ?? $default;
+        case 'mission_card2_icon': $d = get_option('omt_admin_mission', []); return $d['card2_icon'] ?? $default;
+        case 'mission_card2_title': $d = get_option('omt_admin_mission', []); return $d['card2_title'] ?? $default;
+        case 'mission_card2_desc': $d = get_option('omt_admin_mission', []); return $d['card2_desc'] ?? $default;
+        case 'mission_card3_icon': $d = get_option('omt_admin_mission', []); return $d['card3_icon'] ?? $default;
+        case 'mission_card3_title': $d = get_option('omt_admin_mission', []); return $d['card3_title'] ?? $default;
+        case 'mission_card3_desc': $d = get_option('omt_admin_mission', []); return $d['card3_desc'] ?? $default;
+
+        case 'about_hero_badge': $d = get_option('omt_admin_about_hero', []); return $d['badge'] ?? $default;
+        case 'about_hero_title': $d = get_option('omt_admin_about_hero', []); return $d['title'] ?? $default;
+        case 'about_hero_subtitle': $d = get_option('omt_admin_about_hero', []); return $d['subtitle'] ?? $default;
+
+        case 'impact_hero_badge': $d = get_option('omt_admin_impact_hero', []); return $d['badge'] ?? $default;
+        case 'impact_hero_title': $d = get_option('omt_admin_impact_hero', []); return $d['title'] ?? $default;
+        case 'impact_hero_subtitle': $d = get_option('omt_admin_impact_hero', []); return $d['subtitle'] ?? $default;
+
+        case 'impact_goal_title': $d = get_option('omt_admin_impact_goal', []); return $d['title'] ?? $default;
+        case 'impact_goal_target': $d = get_option('omt_admin_impact_goal', []); return $d['target'] ?? $default;
+        case 'impact_goal_current': $d = get_option('omt_admin_impact_goal', []); return $d['current'] ?? $default;
+        case 'impact_goal_remaining': $d = get_option('omt_admin_impact_goal', []); return $d['remaining_note'] ?? $default;
+
+        case 'donate_hero_badge': $d = get_option('omt_admin_donate_hero', []); return $d['badge'] ?? $default;
+        case 'donate_hero_title': $d = get_option('omt_admin_donate_hero', []); return $d['title'] ?? $default;
+        case 'donate_hero_subtitle': $d = get_option('omt_admin_donate_hero', []); return $d['subtitle'] ?? $default;
+
+        case 'volunteer_hero_badge': $d = get_option('omt_admin_volunteer_page', []); return $d['hero_badge'] ?? $default;
+        case 'volunteer_hero_title': $d = get_option('omt_admin_volunteer_page', []); return $d['hero_title'] ?? $default;
+        case 'volunteer_hero_subtitle': $d = get_option('omt_admin_volunteer_page', []); return $d['hero_subtitle'] ?? $default;
+        case 'volunteer_form_title': $d = get_option('omt_admin_volunteer_page', []); return $d['form_title'] ?? $default;
+        case 'volunteer_form_subtitle': $d = get_option('omt_admin_volunteer_page', []); return $d['form_subtitle'] ?? $default;
+        case 'volunteer_interest_options': $d = get_option('omt_admin_volunteer_page', []); return $d['interest_options'] ?? $default;
+        case 'volunteer_card1_icon': $d = get_option('omt_admin_volunteer_page', []); return $d['card1_icon'] ?? $default;
+        case 'volunteer_card1_title': $d = get_option('omt_admin_volunteer_page', []); return $d['card1_title'] ?? $default;
+        case 'volunteer_card1_desc': $d = get_option('omt_admin_volunteer_page', []); return $d['card1_desc'] ?? $default;
+        case 'volunteer_card2_icon': $d = get_option('omt_admin_volunteer_page', []); return $d['card2_icon'] ?? $default;
+        case 'volunteer_card2_title': $d = get_option('omt_admin_volunteer_page', []); return $d['card2_title'] ?? $default;
+        case 'volunteer_card2_desc': $d = get_option('omt_admin_volunteer_page', []); return $d['card2_desc'] ?? $default;
+        case 'volunteer_card3_icon': $d = get_option('omt_admin_volunteer_page', []); return $d['card3_icon'] ?? $default;
+        case 'volunteer_card3_title': $d = get_option('omt_admin_volunteer_page', []); return $d['card3_title'] ?? $default;
+        case 'volunteer_card3_desc': $d = get_option('omt_admin_volunteer_page', []); return $d['card3_desc'] ?? $default;
+
+        case 'contact_hero_badge': $d = get_option('omt_admin_contact_page', []); return $d['hero_badge'] ?? $default;
+        case 'contact_hero_title': $d = get_option('omt_admin_contact_page', []); return $d['hero_title'] ?? $default;
+        case 'contact_hero_subtitle': $d = get_option('omt_admin_contact_page', []); return $d['hero_subtitle'] ?? $default;
+        case 'contact_form_title': $d = get_option('omt_admin_contact_page', []); return $d['form_title'] ?? $default;
+        case 'contact_form_subtitle': $d = get_option('omt_admin_contact_page', []); return $d['form_subtitle'] ?? $default;
+        case 'contact_btn_text': $d = get_option('omt_admin_contact_page', []); return $d['btn_text'] ?? $default;
+
+        case 'site_title_custom': $d = get_option('omt_admin_site_identity', []); return $d['site_title'] ?? $default;
+        case 'site_tagline_custom': $d = get_option('omt_admin_site_identity', []); return $d['tagline'] ?? $default;
+        case 'logo_url': $d = get_option('omt_admin_site_identity', []); return $d['logo_url'] ?? $default;
+        case 'favicon_url_custom': $d = get_option('omt_admin_site_identity', []); return $d['favicon_url'] ?? $default;
+
+        case 'nav_home': $d = get_option('omt_admin_nav_labels', []); return $d['home'] ?? $default;
+        case 'nav_about': $d = get_option('omt_admin_nav_labels', []); return $d['about'] ?? $default;
+        case 'nav_projects': $d = get_option('omt_admin_nav_labels', []); return $d['projects'] ?? $default;
+        case 'nav_impact': $d = get_option('omt_admin_nav_labels', []); return $d['impact'] ?? $default;
+        case 'nav_faq': $d = get_option('omt_admin_nav_labels', []); return $d['faq'] ?? $default;
+        case 'nav_get_involved': $d = get_option('omt_admin_nav_labels', []); return $d['get_involved'] ?? $default;
+        case 'nav_volunteer': $d = get_option('omt_admin_nav_labels', []); return $d['volunteer'] ?? $default;
+        case 'nav_contact': $d = get_option('omt_admin_nav_labels', []); return $d['contact'] ?? $default;
+        case 'nav_donate': $d = get_option('omt_admin_nav_labels', []); return $d['donate'] ?? $default;
+        case 'nav_cta_text': $d = get_option('omt_admin_nav_labels', []); return $d['cta_text'] ?? $default;
+        case 'nav_cta_url': $d = get_option('omt_admin_nav_labels', []); return $d['cta_url'] ?? $default;
+
+        case 'footer_tagline': $d = get_option('omt_admin_footer', []); return $d['tagline'] ?? $default;
+        case 'footer_copyright': $d = get_option('omt_admin_footer', []); return $d['copyright'] ?? $default;
+
+        // About Deliverables & Restoration stats
+        case 'restoration_title': $d = get_option('omt_admin_about_deliverables', []); return $d['box_title'] ?? $default;
+        case 'restoration_description': $d = get_option('omt_admin_about_deliverables', []); return $d['box_desc'] ?? $default;
+        case 'restoration_stat_1_key': $d = get_option('omt_admin_about_deliverables', []); return $d['stat1_val'] ?? $default;
+        case 'restoration_stat_1_text': $d = get_option('omt_admin_about_deliverables', []); return $d['stat1_label'] ?? $default;
+        case 'restoration_stat_2_key': $d = get_option('omt_admin_about_deliverables', []); return $d['stat2_val'] ?? $default;
+        case 'restoration_stat_2_text': $d = get_option('omt_admin_about_deliverables', []); return $d['stat2_label'] ?? $default;
+        case 'restoration_stat_3_key': $d = get_option('omt_admin_about_deliverables', []); return $d['stat3_val'] ?? $default;
+        case 'restoration_stat_3_text': $d = get_option('omt_admin_about_deliverables', []); return $d['stat3_label'] ?? $default;
     }
 
     return $default;
 }
-
+endif;

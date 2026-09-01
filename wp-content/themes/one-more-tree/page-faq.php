@@ -11,8 +11,9 @@ get_header();
 
 // Pull FAQ items from admin settings (saved via wp-admin or /administrator console)
 $admin_faq = get_option('omt_admin_faq');
-$faqs = (!empty($admin_faq) && is_array($admin_faq))
-    ? $admin_faq
+$raw_faqs = !empty($admin_faq['faqs']) ? $admin_faq['faqs'] : ($admin_faq ?: []);
+$faqs = (!empty($raw_faqs) && is_array($raw_faqs))
+    ? $raw_faqs
     : [
         [
             'q' => 'Do you plant native species only?',
@@ -126,19 +127,6 @@ $faqs = (!empty($admin_faq) && is_array($admin_faq))
         </div>
       </div>
     </section>
-
-    <?php
-    // Optional Gutenberg editor blocks added by administrator on FAQ page
-    while (have_posts()) : the_post();
-      if (!empty(trim(get_the_content()))): ?>
-        <section class="py-16 sm:py-24 px-4 sm:px-6 lg:px-12 xl:px-20 bg-background border-t border-earth-200">
-          <div class="max-w-4xl mx-auto prose prose-lg prose-forest max-w-none">
-            <?php the_content(); ?>
-          </div>
-        </section>
-      <?php endif;
-    endwhile;
-    ?>
   </main>
 </div>
 

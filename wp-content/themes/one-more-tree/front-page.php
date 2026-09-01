@@ -11,11 +11,37 @@
 get_header();
 ?>
 
+<?php
+$admin_counters = get_option('omt_admin_home_counters', []);
+$admin_hero_data = get_option('omt_admin_hero', []);
+$admin_tiers_data = get_option('omt_admin_donation_tiers', []);
+
+// Hero stats
+$hero_stat1_val = !empty($admin_hero_data['stat1_value']) ? $admin_hero_data['stat1_value'] : (!empty($admin_counters['treesTracked']) ? number_format($admin_counters['treesTracked']) : '1M');
+$hero_stat1_lbl = !empty($admin_hero_data['stat1_label']) ? $admin_hero_data['stat1_label'] : 'Trees Planted';
+$hero_stat2_val = !empty($admin_hero_data['stat2_value']) ? $admin_hero_data['stat2_value'] : (!empty($admin_counters['projectsActive']) ? $admin_counters['projectsActive'] . '+' : '50+');
+$hero_stat2_lbl = !empty($admin_hero_data['stat2_label']) ? $admin_hero_data['stat2_label'] : 'Projects';
+$hero_stat3_val = !empty($admin_hero_data['stat3_value']) ? $admin_hero_data['stat3_value'] : (!empty($admin_counters['volunteersEngaged']) ? number_format($admin_counters['volunteersEngaged']) . '+' : '10K+');
+$hero_stat3_lbl = !empty($admin_hero_data['stat3_label']) ? $admin_hero_data['stat3_label'] : 'Volunteers';
+
+// Counters section
+$counter_trees      = !empty($admin_counters['treesTracked'])      ? number_format($admin_counters['treesTracked'])      : get_acf_field('counter_trees_tracked', '1,000,000');
+$counter_projects   = !empty($admin_counters['projectsActive'])    ? $admin_counters['projectsActive'] . '+'             : get_acf_field('counter_projects_active', '50+');
+$counter_volunteers = !empty($admin_counters['volunteersEngaged']) ? number_format($admin_counters['volunteersEngaged']) . '+' : get_acf_field('counter_volunteers_engaged', '10,000+');
+
+// Donation tiers
+$donation_tiers = !empty($admin_tiers_data['tiers']) ? $admin_tiers_data['tiers'] : [
+    ['amount' => 25, 'title' => '$25 support', 'description' => 'Supports tree planting, site care, and local communities.', 'trees' => 75, 'volunteers' => 3],
+    ['amount' => 50, 'title' => '$50 support', 'description' => 'Expands native tree coverage and regional biodiversity.', 'trees' => 150, 'volunteers' => 5],
+    ['amount' => 100, 'title' => '$100 support', 'description' => 'Funds full plot restoration, native saplings, and 5-year monitoring.', 'trees' => 300, 'volunteers' => 10],
+];
+?>
+
 <main id="primary" class="site-main">
     <!-- Hero Section - Exact mirror of Next.js -->
     <section id="hero-section" class="relative min-h-screen w-full flex items-center justify-center overflow-hidden">
       <div id="hero-image" class="absolute inset-0 w-full h-[120%] -top-[10%]">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/hero-forest.jpg" alt="Lush forest canopy" class="w-full h-full object-cover" />
+        <img src="<?php echo esc_url(!empty($admin_hero_data['hero_image_url']) ? $admin_hero_data['hero_image_url'] : get_template_directory_uri() . '/assets/images/hero-forest.jpg'); ?>" alt="Lush forest canopy" class="w-full h-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-b from-white/40 via-white/20 to-background/80"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-white/30 via-transparent to-white/30"></div>
       </div>
@@ -65,21 +91,21 @@ get_header();
           <div class="grid grid-cols-3 gap-4 sm:gap-8 max-w-2xl mx-auto">
             <div class="text-center p-3 sm:p-4 rounded-2xl bg-white/90 backdrop-blur-sm border border-forest-100 shadow-medium">
               <div class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-forest-600 mb-1">
-                <?php echo get_acf_field('hero_trees_count', '1M'); ?>
+                <?php echo esc_html($hero_stat1_val); ?>
               </div>
-              <div class="text-xs sm:text-sm text-foreground/60">Trees Planted</div>
+              <div class="text-xs sm:text-sm text-foreground/60"><?php echo esc_html($hero_stat1_lbl); ?></div>
             </div>
             <div class="text-center p-3 sm:p-4 rounded-2xl bg-white/90 backdrop-blur-sm border border-forest-100 shadow-medium">
               <div class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-forest-600 mb-1">
-                <?php echo get_acf_field('hero_projects_count', '50+'); ?>
+                <?php echo esc_html($hero_stat2_val); ?>
               </div>
-              <div class="text-xs sm:text-sm text-foreground/60">Projects</div>
+              <div class="text-xs sm:text-sm text-foreground/60"><?php echo esc_html($hero_stat2_lbl); ?></div>
             </div>
             <div class="text-center p-3 sm:p-4 rounded-2xl bg-white/90 backdrop-blur-sm border border-forest-100 shadow-medium">
               <div class="font-serif text-2xl sm:text-3xl md:text-4xl font-bold text-forest-600 mb-1">
-                <?php echo get_acf_field('hero_volunteers_count', '10K+'); ?>
+                <?php echo esc_html($hero_stat3_val); ?>
               </div>
-              <div class="text-xs sm:text-sm text-foreground/60">Volunteers</div>
+              <div class="text-xs sm:text-sm text-foreground/60"><?php echo esc_html($hero_stat3_lbl); ?></div>
             </div>
           </div>
         </div>
@@ -92,15 +118,15 @@ get_header();
         <div class="grid md:grid-cols-3 gap-6">
           <div class="rounded-3xl bg-white/90 border border-slate-200 p-8 text-center shadow-soft">
             <p class="text-xs uppercase tracking-[0.25em] text-forest-500 mb-3">Trees tracked</p>
-            <p class="text-4xl font-semibold text-foreground"><?php echo get_acf_field('counter_trees_tracked', '1,000,000'); ?></p>
+            <p class="text-4xl font-semibold text-foreground"><?php echo esc_html($counter_trees); ?></p>
           </div>
           <div class="rounded-3xl bg-white/90 border border-slate-200 p-8 text-center shadow-soft">
             <p class="text-xs uppercase tracking-[0.25em] text-forest-500 mb-3">Projects active</p>
-            <p class="text-4xl font-semibold text-foreground"><?php echo get_acf_field('counter_projects_active', '50+'); ?></p>
+            <p class="text-4xl font-semibold text-foreground"><?php echo esc_html($counter_projects); ?></p>
           </div>
           <div class="rounded-3xl bg-white/90 border border-slate-200 p-8 text-center shadow-soft">
             <p class="text-xs uppercase tracking-[0.25em] text-forest-500 mb-3">Volunteers engaged</p>
-            <p class="text-4xl font-semibold text-foreground"><?php echo get_acf_field('counter_volunteers_engaged', '10,000+'); ?></p>
+            <p class="text-4xl font-semibold text-foreground"><?php echo esc_html($counter_volunteers); ?></p>
           </div>
         </div>
       </div>
@@ -111,16 +137,16 @@ get_header();
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-12 xl:px-20">
         <div class="grid gap-8 lg:grid-cols-3">
           <div class="rounded-3xl bg-white/95 border border-slate-200 p-8">
-            <h3 class="font-serif text-2xl font-semibold text-foreground mb-3">Europe First</h3>
-            <p class="text-foreground/70 leading-relaxed"><?php echo get_acf_field('mission_europe_first', 'Our mission is rooted in Europe: local forests, local communities, local restoration.'); ?></p>
+            <h3 class="font-serif text-2xl font-semibold text-foreground mb-3"><?php echo get_acf_field('mission_card1_title', 'Europe First'); ?></h3>
+            <p class="text-foreground/70 leading-relaxed"><?php echo get_acf_field('mission_card1_desc', 'Our mission is rooted in Europe: local forests, local communities, local restoration.'); ?></p>
           </div>
           <div class="rounded-3xl bg-white/95 border border-slate-200 p-8">
-            <h3 class="font-serif text-2xl font-semibold text-foreground mb-3">Community Power</h3>
-            <p class="text-foreground/70 leading-relaxed"><?php echo get_acf_field('mission_community_power', 'Volunteers and partners work together to plant, protect, and nurture every site.'); ?></p>
+            <h3 class="font-serif text-2xl font-semibold text-foreground mb-3"><?php echo get_acf_field('mission_card2_title', 'Community Power'); ?></h3>
+            <p class="text-foreground/70 leading-relaxed"><?php echo get_acf_field('mission_card2_desc', 'Volunteers and partners work together to plant, protect, and nurture every site.'); ?></p>
           </div>
           <div class="rounded-3xl bg-white/95 border border-slate-200 p-8">
-            <h3 class="font-serif text-2xl font-semibold text-foreground mb-3">Visible Progress</h3>
-            <p class="text-foreground/70 leading-relaxed"><?php echo get_acf_field('mission_visible_progress', 'Every planting story is documented with images and milestones so supporters see real results.'); ?></p>
+            <h3 class="font-serif text-2xl font-semibold text-foreground mb-3"><?php echo get_acf_field('mission_card3_title', 'Visible Progress'); ?></h3>
+            <p class="text-foreground/70 leading-relaxed"><?php echo get_acf_field('mission_card3_desc', 'Every planting story is documented with images and milestones so supporters see real results.'); ?></p>
           </div>
         </div>
       </div>
@@ -160,53 +186,46 @@ get_header();
               <?php echo get_acf_field('donation_description', 'Explore each donation tier with a 3D preview card, then choose the amount that helps grow forests across Spain. This section is designed to feel engaging, warm, and effortless.'); ?>
             </p>
             <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <?php foreach ($donation_tiers as $idx => $tier): 
+                $is_active = $idx === 0;
+                $t_amount = esc_attr($tier['amount'] ?? 25);
+                $t_title  = esc_attr($tier['title'] ?? '$' . $t_amount . ' support');
+                $t_trees  = esc_attr($tier['trees'] ?? ($t_amount * 3));
+                $t_vols   = esc_attr($tier['volunteers'] ?? round($t_amount / 10));
+                $t_desc   = esc_html($tier['description'] ?? 'Supports tree planting, site care, and local communities.');
+              ?>
               <button
-                onclick="selectDonationTier(1)"
-                class="donation-tier-btn donation-tier-1 rounded-3xl border px-4 py-4 text-left transition-all duration-300 border-forest-500 bg-forest-50 text-forest-900 shadow-medium"
-                data-amount="<?php echo get_acf_field('donation_tier_1', '$25'); ?>"
+                class="tier-select-btn donation-tier-btn rounded-3xl border px-4 py-4 text-left transition-all duration-300 <?php echo $is_active ? 'border-forest-500 bg-forest-50 text-forest-900 shadow-medium' : 'border-slate-200 bg-white text-foreground hover:border-forest-300 hover:bg-forest-50'; ?>"
+                data-amount="<?php echo $t_amount; ?>"
+                data-title="<?php echo $t_title; ?>"
+                data-trees="<?php echo $t_trees; ?>"
+                data-volunteers="<?php echo $t_vols; ?>"
               >
                 <p class="text-sm uppercase tracking-[0.18em] text-forest-600 mb-2">Tier</p>
-                <p class="text-3xl font-semibold"><?php echo get_acf_field('donation_tier_1', '$25'); ?></p>
-                <p class="text-sm text-foreground/60 mt-2">Supports tree planting, site care, and local communities.</p>
+                <p class="text-3xl font-semibold">$<?php echo $t_amount; ?></p>
+                <p class="text-sm text-foreground/60 mt-2"><?php echo $t_desc; ?></p>
               </button>
-              <button
-                onclick="selectDonationTier(2)"
-                class="donation-tier-btn donation-tier-2 rounded-3xl border px-4 py-4 text-left transition-all duration-300 border-slate-200 bg-white text-foreground hover:border-forest-300 hover:bg-forest-50"
-                data-amount="<?php echo get_acf_field('donation_tier_2', '$50'); ?>"
-              >
-                <p class="text-sm uppercase tracking-[0.18em] text-forest-600 mb-2">Tier</p>
-                <p class="text-3xl font-semibold"><?php echo get_acf_field('donation_tier_2', '$50'); ?></p>
-                <p class="text-sm text-foreground/60 mt-2">Supports tree planting, site care, and local communities.</p>
-              </button>
-              <button
-                onclick="selectDonationTier(3)"
-                class="donation-tier-btn donation-tier-3 rounded-3xl border px-4 py-4 text-left transition-all duration-300 border-slate-200 bg-white text-foreground hover:border-forest-300 hover:bg-forest-50"
-                data-amount="<?php echo get_acf_field('donation_tier_3', '$100'); ?>"
-              >
-                <p class="text-sm uppercase tracking-[0.18em] text-forest-600 mb-2">Tier</p>
-                <p class="text-3xl font-semibold"><?php echo get_acf_field('donation_tier_3', '$100'); ?></p>
-                <p class="text-sm text-foreground/60 mt-2">Supports tree planting, site care, and local communities.</p>
-              </button>
+              <?php endforeach; ?>
             </div>
           </div>
 
           <div class="relative mx-auto w-full max-w-xl">
             <div
               id="donation-3d-card"
-              class="relative cursor-grab overflow-hidden rounded-[40px] bg-gradient-to-br from-white via-forest-50 to-forest-100 p-6 shadow-elevated transition-transform duration-300"
+              class="donation-card-tilt relative cursor-grab overflow-hidden rounded-[40px] bg-gradient-to-br from-white via-forest-50 to-forest-100 p-6 shadow-elevated transition-transform duration-300"
               style="perspective: 1400px;"
             >
               <div
                 id="donation-3d-inner"
-                class="relative transform-gpu rounded-[32px] border border-slate-200 bg-white p-8 shadow-2xl transition-transform duration-300"
+                class="donation-card-inner relative transform-gpu rounded-[32px] border border-slate-200 bg-white p-8 shadow-2xl transition-transform duration-300"
                 style="transform: rotateX(0deg) rotateY(0deg);"
               >
-                <div class="absolute inset-0 rounded-[32px] bg-gradient-to-br from-forest-100/60 to-white/90 opacity-80"></div>
+                <div class="absolute inset-0 rounded-[32px] bg-gradient-to-br from-forest-100/60 to-white/90 opacity-80 pointer-events-none"></div>
                 <div class="relative space-y-6">
                   <div class="flex items-center justify-between gap-4">
                     <div>
                       <p class="text-sm uppercase tracking-[0.2em] text-forest-600">Donation</p>
-                      <h3 id="donation-amount" class="mt-2 text-2xl font-semibold text-foreground donation-amount"><?php echo get_acf_field('donation_tier_1', '$25'); ?> support</h3>
+                      <h3 class="donation-card-amount mt-2 text-2xl font-semibold text-foreground"><?php echo esc_html($donation_tiers[0]['title'] ?? '$25 support'); ?></h3>
                     </div>
                     <div class="flex h-14 w-14 items-center justify-center rounded-3xl bg-forest-600 text-white shadow-lg">
                       <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -218,21 +237,21 @@ get_header();
                   <div class="grid gap-4 sm:grid-cols-2">
                     <div class="rounded-3xl bg-forest-50 p-4">
                       <p class="text-sm text-forest-700">Trees planted</p>
-                      <p id="trees-planted" class="mt-2 text-3xl font-semibold text-forest-900 trees-planted"><?php echo (int)str_replace(['$', ',', '€'], '', get_acf_field('donation_tier_1', '$25')) * 3; ?></p>
+                      <p class="donation-trees-count mt-2 text-3xl font-semibold text-forest-900"><?php echo esc_html($donation_tiers[0]['trees'] ?? '75'); ?></p>
                     </div>
                     <div class="rounded-3xl bg-slate-50 p-4">
                       <p class="text-sm text-foreground/70">Community support</p>
-                      <p id="volunteers" class="mt-2 text-3xl font-semibold text-foreground volunteers">+<?php echo round((int)str_replace(['$', ',', '€'], '', get_acf_field('donation_tier_1', '$25')) / 10); ?> volunteers</p>
+                      <p class="donation-volunteers-count mt-2 text-3xl font-semibold text-foreground">+<?php echo esc_html($donation_tiers[0]['volunteers'] ?? '3'); ?> volunteers</p>
                     </div>
                   </div>
 
                   <div class="rounded-3xl bg-forest-600/10 p-4 text-sm text-forest-700">
                     <p class="font-medium">Impact snapshot</p>
-                    <p class="mt-2 leading-relaxed text-foreground/75">Your donation helps plant trees, improve soil health, and support local reforestation teams in Spain.</p>
+                    <p class="mt-2 leading-relaxed text-foreground/75"><?php echo get_acf_field('donation_tax_note', 'Your donation helps plant trees, improve soil health, and support local reforestation teams in Spain.'); ?></p>
                   </div>
 
-                  <button id="donate-button" class="w-full rounded-3xl bg-forest-600 px-6 py-4 text-white font-semibold shadow-medium transition-all duration-300 hover:bg-forest-700 donate-button">
-                    Donate <?php echo get_acf_field('donation_tier_1', '$25'); ?>
+                  <button class="donation-submit-btn w-full rounded-3xl bg-forest-600 px-6 py-4 text-white font-semibold shadow-medium transition-all duration-300 hover:bg-forest-700">
+                    Donate $<?php echo esc_html($donation_tiers[0]['amount'] ?? '25'); ?>
                   </button>
                 </div>
               </div>
@@ -241,20 +260,8 @@ get_header();
         </div>
       </div>
     </section>
-
-    <?php
-    // Optional Gutenberg editor blocks added by administrator on homepage
-    while (have_posts()) : the_post();
-      if (!empty(trim(get_the_content()))): ?>
-        <section class="py-16 sm:py-24 px-4 sm:px-6 lg:px-12 xl:px-20 bg-background border-t border-earth-200">
-          <div class="max-w-6xl mx-auto prose prose-lg prose-forest max-w-none">
-            <?php the_content(); ?>
-          </div>
-        </section>
-      <?php endif;
-    endwhile;
-    ?>
 </main>
 
 <?php
 get_footer();
+
