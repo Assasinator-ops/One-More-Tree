@@ -2,7 +2,7 @@
  * OneMoreTree Admin Dashboard Module
  */
 
-class AdminDashboard {
+window.AdminDashboard = class AdminDashboard {
     constructor(config, api) {
         this.config = config;
         this.api = api;
@@ -87,7 +87,13 @@ class AdminDashboard {
     }
 
     escapeHtml(unsafe) {
-        return (unsafe || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        if (unsafe === null || unsafe === undefined) return '';
+        return String(unsafe).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    safeValue(value) {
+        if (value === null || value === undefined) return '';
+        return String(value);
     }
 
     // --- Modules ---
@@ -509,13 +515,13 @@ class AdminDashboard {
                         <button data-idx="${i}" class="del-loc text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">Delete</button>
                     </div>
                     <div class="grid gap-2 grid-cols-2 mb-4">
-                        <input id="lm-n-${i}" placeholder="Name" value="${this.escapeHtml(loc.name)}" class="border px-2 py-1 rounded">
-                        <input id="lm-r-${i}" placeholder="Region" value="${this.escapeHtml(loc.region)}" class="border px-2 py-1 rounded">
-                        <input id="lm-x-${i}" placeholder="Coord X" value="${this.escapeHtml(loc.coords?.x)}" class="border px-2 py-1 rounded">
-                        <input id="lm-y-${i}" placeholder="Coord Y" value="${this.escapeHtml(loc.coords?.y)}" class="border px-2 py-1 rounded">
-                        <input id="lm-t-${i}" placeholder="Trees Planted" value="${this.escapeHtml(loc.treesPlanted)}" class="border px-2 py-1 rounded">
-                        <input id="lm-v-${i}" placeholder="Volunteers" value="${this.escapeHtml(loc.volunteers)}" class="border px-2 py-1 rounded">
-                        <textarea id="lm-d-${i}" placeholder="Description" class="border px-2 py-1 rounded col-span-2">${this.escapeHtml(loc.description)}</textarea>
+                        <input id="lm-n-${i}" placeholder="Name" value="${this.escapeHtml(this.safeValue(loc.name))}" class="border px-2 py-1 rounded">
+                        <input id="lm-r-${i}" placeholder="Region" value="${this.escapeHtml(this.safeValue(loc.region))}" class="border px-2 py-1 rounded">
+                        <input id="lm-x-${i}" placeholder="Coord X" value="${this.escapeHtml(this.safeValue(loc.coords?.x))}" class="border px-2 py-1 rounded">
+                        <input id="lm-y-${i}" placeholder="Coord Y" value="${this.escapeHtml(this.safeValue(loc.coords?.y))}" class="border px-2 py-1 rounded">
+                        <input id="lm-t-${i}" placeholder="Trees Planted" value="${this.escapeHtml(this.safeValue(loc.treesPlanted))}" class="border px-2 py-1 rounded">
+                        <input id="lm-v-${i}" placeholder="Volunteers" value="${this.escapeHtml(this.safeValue(loc.volunteers))}" class="border px-2 py-1 rounded">
+                        <textarea id="lm-d-${i}" placeholder="Description" class="border px-2 py-1 rounded col-span-2">${this.escapeHtml(this.safeValue(loc.description))}</textarea>
                     </div>
                     <div class="pl-4 border-l-2 border-forest-200">
                         <h4 class="text-sm font-semibold mb-2">Progress Images <button data-loc="${i}" class="add-img text-xs text-forest-600 ml-2">+ Add Image</button></h4>
@@ -853,5 +859,3 @@ class AdminDashboard {
             </div></div>`;
     }
 }
-
-window.AdminDashboard = AdminDashboard;

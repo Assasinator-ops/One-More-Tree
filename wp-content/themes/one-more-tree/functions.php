@@ -206,6 +206,69 @@ function one_more_tree_admin_template_redirect() {
 add_action('template_redirect', 'one_more_tree_admin_template_redirect');
 
 /**
+ * FORCE TEMPLATE ROUTING
+ * Ensures that specific slugs always use their dedicated PHP templates, 
+ * bypassing Gutenberg or database-level template assignments.
+ */
+add_filter('template_include', function($template) {
+    $routes = [
+        'projects'     => 'page-projects.php',
+        'about'        => 'page-about.php',
+        'impact'       => 'page-impact.php',
+        'faq'          => 'page-faq.php',
+        'get-involved' => 'page-get-involved.php',
+        'volunteer'     => 'page-volunteer.php',
+        'contact'      => 'page-contact.php',
+        'donate'       => 'page-donate.php',
+    ];
+
+    foreach ($routes as $slug => $file) {
+        if (is_page($slug)) {
+            $custom_template = locate_template($file);
+            if ($custom_template) return $custom_template;
+        }
+    }
+    return $template;
+});
+
+/**
+ * DISABLE GUTENBERG (BLOCK EDITOR)
+ * Switches the admin editor back to the Classic editor to prevent 
+ * block-based content from overriding custom PHP layouts.
+ */
+add_filter('use_block_editor_for_post', '__return_false', 10);
+
+/**
+ * ENSURE ROUTE EXISTENCE
+ * Automatically creates the necessary Pages in the database if they are missing.
+ * This prevents WordPress from falling back to index.php (The "No posts matched" error).
+ */
+function omt_ensure_required_pages() {
+    $required_pages = [
+        'projects'     => 'Projects',
+        'about'        => 'About',
+        'impact'       => 'Impact',
+        'faq'          => 'FAQ',
+        'get-involved' => 'Get Involved',
+        'volunteer'    => 'Volunteer',
+        'contact'      => 'Contact',
+        'donate'       => 'Donate',
+    ];
+
+    foreach ($required_pages as $slug => $title) {
+        if (!get_page_by_path($slug)) {
+            wp_insert_post([
+                'post_title'  => $title,
+                'post_name'   => $slug,
+                'post_status' => 'publish',
+                'post_type'   => 'page',
+            ]);
+        }
+    }
+}
+add_action('init', 'omt_ensure_required_pages');
+
+/**
  * Auto-provision essential pages on theme activation / setup
  */
 function one_more_tree_provision_default_pages() {

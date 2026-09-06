@@ -1,0 +1,861 @@
+/**
+ * OneMoreTree Admin Dashboard Module
+ */
+
+window.AdminDashboard = class AdminDashboard {
+    constructor(config, api) {
+        this.config = config;
+        this.api = api;
+        this.moduleContent = document.getElementById('admin-module-content');
+    }
+
+    init() {
+        if (!this.api) return;
+        this.loadModule('home-counters');
+    }
+
+    async loadModule(pageKey) {
+        if (!this.moduleContent) return;
+        this.showLoading();
+
+        switch (pageKey) {
+            case 'home-counters': await this.loadHomeCounters(); break;
+            case 'impact-kpis': await this.loadImpactKpis(); break;
+            case 'hero': await this.loadHero(); break;
+            case 'mission': await this.loadMission(); break;
+            case 'about-hero': await this.loadAboutHero(); break;
+            case 'about-values': await this.loadAboutValues(); break;
+            case 'about-deliverables': await this.loadAboutDeliverables(); break;
+            case 'testimonials': await this.loadTestimonials(); break;
+            case 'projects': await this.loadProjects(); break;
+            case 'stories': await this.loadStories(); break;
+            case 'live-map': await this.loadLiveMap(); break;
+            case 'faq': await this.loadFaq(); break;
+            case 'donations': await this.loadDonations(); break;
+            case 'donate-hero': await this.loadDonateHero(); break;
+            case 'disclaimer': await this.loadDisclaimer(); break;
+            case 'social-media': await this.loadSocialMedia(); break;
+            case 'site-identity': await this.loadSiteIdentity(); break;
+            case 'nav-labels': await this.loadNavLabels(); break;
+            case 'footer-content': await this.loadFooterContent(); break;
+            case 'volunteer-page': await this.loadVolunteerPage(); break;
+            case 'contact-page': await this.loadContactPage(); break;
+            case 'contact': await this.loadContact(); break;
+            case 'newsletter': await this.loadNewsletter(); break;
+            case 'module-status': await this.loadModuleStatus(); break;
+            case 'blog': await this.loadBlog(); break;
+            case 'admin-users': await this.loadAdminUsers(); break;
+            case 'reporting': await this.loadReporting(); break;
+            case 'team': await this.loadTeam(); break;
+            default: await this.loadReporting(); break;
+        }
+    }
+
+    showLoading() {
+        if (!this.moduleContent) return;
+        this.moduleContent.innerHTML = `
+            <div class="py-16 text-center text-foreground/50">
+                <div class="inline-block w-8 h-8 border-4 border-forest-600 border-t-transparent rounded-full animate-spin mb-3"></div>
+                <p class="text-sm">Loading module data...</p>
+            </div>
+        `;
+    }
+
+    // --- Helpers ---
+    textInput(id, label, value, type="text") {
+        return `
+        <div class="p-4 bg-white rounded-2xl border border-earth-200 shadow-soft">
+            <label class="block text-xs font-semibold text-foreground/70 mb-1">${label}</label>
+            <input id="${id}" type="${type}" class="w-full px-4 py-2.5 rounded-xl border border-earth-200 text-sm focus:border-forest-500 outline-none" value="${(value !== undefined && value !== null) ? this.escapeHtml(String(value))) : ''}">
+        </div>`;
+    }
+
+    textareaInput(id, label, value) {
+        return `
+        <div class="p-4 bg-white rounded-2xl border border-earth-200 shadow-soft">
+            <label class="block text-xs font-semibold text-foreground/70 mb-1">${label}</label>
+            <textarea id="${id}" class="w-full px-4 py-2.5 rounded-xl border border-earth-200 text-sm focus:border-forest-500 outline-none" rows="3">${value || ''}</textarea>
+        </div>`;
+    }
+
+    checkboxInput(id, label, checked) {
+        return `
+        <div class="p-4 bg-white rounded-2xl border border-earth-200 shadow-soft flex items-center justify-between">
+            <label class="block text-xs font-semibold text-foreground/70">${label}</label>
+            <input id="${id}" type="checkbox" class="w-5 h-5 rounded border-earth-200 text-forest-600 focus:ring-forest-500" ${checked ? 'checked' : ''}>
+        </div>`;
+    }
+
+    escapeHtml(unsafe) {
+        if (unsafe === null || unsafe === undefined) return '';
+        return String(unsafe).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+    }
+
+    safeValue(value) {
+        if (value === null || value === undefined) return '';
+        return String(value);
+    }
+
+    // --- Modules ---
+    async loadHomeCounters() {
+        const data = await this.api.fetchData('home_counters') || { treesTracked: 1000000, projectsActive: 50, volunteersEngaged: 10000, regionsCovered: 4 };
+        this.moduleContent.innerHTML = `
+            <div class="space-y-6 animate-in fade-in">
+                <div>
+                    <h2 class="font-serif text-2xl font-bold text-foreground">Home Counters</h2>
+                </div>
+                <div class="grid gap-4 sm:grid-cols-2">
+                    ${this.textInput('hc-trees', 'Trees Tracked', data.treesTracked, 'number')}
+                    ${this.textInput('hc-projects', 'Projects Active', data.projectsActive, 'number')}
+                    ${this.textInput('hc-volunteers', 'Volunteers Engaged', data.volunteersEngaged, 'number')}
+                    ${this.textInput('hc-regions', 'Regions Covered', data.regionsCovered, 'number')}
+                </div>
+                <div class="flex justify-end">
+                    <button id="hc-save-btn" class="px-6 py-2.5 bg-forest-600 hover:bg-forest-700 text-white font-medium rounded-full transition-colors text-sm">Save Changes</button>
+                </div>
+                <div id="hc-toast"></div>
+            </div>`;
+        this.initHomeCountersSave();
+    }
+    initHomeCountersSave() {
+        document.getElementById('hc-save-btn')?.addEventListener('click', async () => {
+            const result = await this.api.saveData('home_counters', {
+                treesTracked: parseInt(document.getElementById('hc-trees').value),
+                projectsActive: parseInt(document.getElementById('hc-projects').value),
+                volunteersEngaged: parseInt(document.getElementById('hc-volunteers').value),
+                regionsCovered: parseInt(document.getElementById('hc-regions').value)
+            });
+            this.api.showToast('hc-toast', result.ok ? 'Saved successfully!' : 'Failed to save.', result.ok);
+        });
+    }
+
+    async loadImpactKpis() {
+        let data = await this.api.fetchData('impact_kpis') || { goalTarget: 0, goalCurrent: 0, kpis: Array(4).fill({label:'', value:'', sub:''}) };
+        if (!data.kpis) data.kpis = Array(4).fill({label:'', value:'', sub:''});
+        
+        const render = () => {
+            let kpiHtml = data.kpis.map((kpi, i) => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 shadow-soft">
+                    <h3 class="text-sm font-semibold mb-2">KPI ${i+1}</h3>
+                    <div class="space-y-2">
+                        <input id="ik-l-${i}" type="text" placeholder="Label" value="${this.escapeHtml(kpi.label))}" class="w-full px-3 py-2 border rounded text-sm">
+                        <input id="ik-v-${i}" type="text" placeholder="Value" value="${this.escapeHtml(kpi.value))}" class="w-full px-3 py-2 border rounded text-sm">
+                        <input id="ik-s-${i}" type="text" placeholder="Subtext" value="${this.escapeHtml(kpi.sub))}" class="w-full px-3 py-2 border rounded text-sm">
+                    </div>
+                </div>
+            `).join('');
+
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <h2 class="font-serif text-2xl font-bold text-foreground">Impact KPIs</h2>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        ${this.textInput('ik-target', 'Goal Target', data.goalTarget, 'number')}
+                        ${this.textInput('ik-current', 'Goal Current', data.goalCurrent, 'number')}
+                    </div>
+                    <h3 class="font-bold">4 KPI Rows</h3>
+                    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">${kpiHtml}</div>
+                    <div class="flex justify-end"><button id="ik-save-btn" class="px-6 py-2.5 bg-forest-600 hover:bg-forest-700 text-white font-medium rounded-full text-sm">Save Changes</button></div>
+                    <div id="ik-toast"></div>
+                </div>`;
+
+            document.getElementById('ik-save-btn').addEventListener('click', async () => {
+                const newData = {
+                    goalTarget: parseInt(document.getElementById('ik-target').value) || 0,
+                    goalCurrent: parseInt(document.getElementById('ik-current').value) || 0,
+                    kpis: []
+                };
+                for(let i=0; i<4; i++) {
+                    newData.kpis.push({
+                        label: document.getElementById(`ik-l-${i}`).value,
+                        value: document.getElementById(`ik-v-${i}`).value,
+                        sub: document.getElementById(`ik-s-${i}`).value
+                    });
+                }
+                const res = await this.api.saveData('impact_kpis', newData);
+                this.api.showToast('ik-toast', res.ok ? 'Saved' : 'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadHero() {
+        let data = await this.api.fetchData('hero') || {};
+        const fields = ['mission_badge', 'headline_top', 'headline_emphasis', 'subtitle', 'primary_cta_text', 'primary_cta_url', 'secondary_cta_text', 'hero_image_url', 'stat1_value', 'stat1_label', 'stat2_value', 'stat2_label', 'stat3_value', 'stat3_label'];
+        
+        const render = () => {
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <h2 class="font-serif text-2xl font-bold">Hero Section</h2>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        ${fields.map(f => this.textInput(f, f.replace(/_/g, ' '), data[f] || '')).join('')}
+                    </div>
+                    <div class="flex justify-end"><button id="hero-save" class="px-6 py-2.5 bg-forest-600 hover:bg-forest-700 text-white font-medium rounded-full text-sm">Save Changes</button></div>
+                    <div id="hero-toast"></div>
+                </div>`;
+            document.getElementById('hero-save').addEventListener('click', async () => {
+                fields.forEach(f => data[f] = document.getElementById(f).value);
+                const res = await this.api.saveData('hero', data);
+                this.api.showToast('hero-toast', res.ok ? 'Saved' : 'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadMission() {
+        let data = await this.api.fetchData('mission') || {};
+        const fields = ['badge', 'headline', 'subtitle', 'card1_icon', 'card1_title', 'card1_desc', 'card2_icon', 'card2_title', 'card2_desc', 'card3_icon', 'card3_title', 'card3_desc'];
+        
+        const render = () => {
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <h2 class="font-serif text-2xl font-bold">Mission Section</h2>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        ${fields.map(f => this.textInput(f, f.replace(/_/g, ' '), data[f] || '')).join('')}
+                    </div>
+                    <div class="flex justify-end"><button id="mission-save" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div>
+                    <div id="mission-toast"></div>
+                </div>`;
+            document.getElementById('mission-save').addEventListener('click', async () => {
+                fields.forEach(f => data[f] = document.getElementById(f).value);
+                const res = await this.api.saveData('mission', data);
+                this.api.showToast('mission-toast', res.ok ? 'Saved' : 'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadAboutHero() {
+        let data = await this.api.fetchData('about_hero') || {};
+        const fields = ['badge', 'title', 'subtitle'];
+        const render = () => {
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">About Hero</h2>
+                <div class="grid gap-4">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            document.getElementById('sv').addEventListener('click', async () => {
+                fields.forEach(f => data[f] = document.getElementById(f).value);
+                const res = await this.api.saveData('about_hero', data);
+                this.api.showToast('tst', res.ok ? 'Saved' : 'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadAboutValues() {
+        let data = await this.api.fetchData('about_values') || {badge:'', headline:'', cards:Array(4).fill({icon:'', title:'', desc:''})};
+        if(!data.cards) data.cards = Array(4).fill({icon:'', title:'', desc:''});
+        const render = () => {
+            let cardsHtml = data.cards.map((c, i) => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200">
+                    <h3 class="mb-2">Card ${i+1}</h3>
+                    <input id="av-i-${i}" value="${this.escapeHtml(c.icon)}" placeholder="Icon" class="w-full mb-2 px-2 py-1 border rounded">
+                    <input id="av-t-${i}" value="${this.escapeHtml(c.title)}" placeholder="Title" class="w-full mb-2 px-2 py-1 border rounded">
+                    <textarea id="av-d-${i}" placeholder="Desc" class="w-full px-2 py-1 border rounded">${this.escapeHtml(c.desc)}</textarea>
+                </div>
+            `).join('');
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">About Values</h2>
+                ${this.textInput('av-badge', 'Badge', data.badge)} ${this.textInput('av-hl', 'Headline', data.headline)}
+                <div class="grid gap-4 sm:grid-cols-2">${cardsHtml}</div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            document.getElementById('sv').addEventListener('click', async () => {
+                data.badge = document.getElementById('av-badge').value;
+                data.headline = document.getElementById('av-hl').value;
+                data.cards = [0,1,2,3].map(i => ({icon: document.getElementById(`av-i-${i}`).value, title: document.getElementById(`av-t-${i}`).value, desc: document.getElementById(`av-d-${i}`).value}));
+                const res = await this.api.saveData('about_values', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadAboutDeliverables() {
+        let data = await this.api.fetchData('about_deliverables') || {};
+        const fields = ['box_title', 'box_desc', 'stat1_val', 'stat1_label', 'stat2_val', 'stat2_label', 'stat3_val', 'stat3_label'];
+        const render = () => {
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">About Deliverables</h2>
+                <div class="grid gap-4 sm:grid-cols-2">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            document.getElementById('sv').addEventListener('click', async () => {
+                fields.forEach(f => data[f] = document.getElementById(f).value);
+                const res = await this.api.saveData('about_deliverables', data);
+                this.api.showToast('tst', res.ok ? 'Saved' : 'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadTeam() {
+        let data = await this.api.fetchData('team') || {badge:'', headline:'', subtitle:'', stat1:'', stat2:'', stat3:'', members:[]};
+        if(!data.members) data.members = [];
+        
+        const render = () => {
+            let mHtml = data.members.map((m, i) => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 mb-4 relative">
+                    <button data-idx="${i}" class="del-btn absolute top-2 right-2 text-xs px-2 py-1 bg-red-100 text-red-600 rounded-full">Remove</button>
+                    <div class="grid grid-cols-2 gap-2 mt-4">
+                        <input id="tm-n-${i}" placeholder="Name" value="${this.escapeHtml(m.name)}" class="px-2 py-1 border rounded">
+                        <input id="tm-r-${i}" placeholder="Role" value="${this.escapeHtml(m.role)}" class="px-2 py-1 border rounded">
+                        <input id="tm-u-${i}" placeholder="Image URL" value="${this.escapeHtml(m.image_url)}" class="px-2 py-1 border rounded">
+                        <textarea id="tm-h-${i}" placeholder="Highlight" class="px-2 py-1 border rounded">${this.escapeHtml(m.highlight)}</textarea>
+                    </div>
+                </div>
+            `).join('');
+
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <h2 class="font-serif text-2xl font-bold">Team</h2>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        ${this.textInput('t-b', 'Badge', data.badge)} ${this.textInput('t-h', 'Headline', data.headline)}
+                        ${this.textInput('t-s', 'Subtitle', data.subtitle)}
+                        ${this.textInput('t-s1', 'Stat 1', data.stat1)} ${this.textInput('t-s2', 'Stat 2', data.stat2)} ${this.textInput('t-s3', 'Stat 3', data.stat3)}
+                    </div>
+                    <div>
+                        <h3 class="font-bold flex justify-between items-center">Members <button id="add-m" class="text-xs px-3 py-1 bg-forest-100 text-forest-700 rounded-full">+ Add</button></h3>
+                        <div class="mt-4">${mHtml}</div>
+                    </div>
+                    <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save Changes</button></div>
+                    <div id="tst"></div>
+                </div>`;
+
+            const sync = () => {
+                data.badge = document.getElementById('t-b').value;
+                data.headline = document.getElementById('t-h').value;
+                data.subtitle = document.getElementById('t-s').value;
+                data.stat1 = document.getElementById('t-s1').value;
+                data.stat2 = document.getElementById('t-s2').value;
+                data.stat3 = document.getElementById('t-s3').value;
+                data.members = data.members.map((_, i) => ({
+                    name: document.getElementById(`tm-n-${i}`).value,
+                    role: document.getElementById(`tm-r-${i}`).value,
+                    image_url: document.getElementById(`tm-u-${i}`).value,
+                    highlight: document.getElementById(`tm-h-${i}`).value
+                }));
+            };
+
+            document.getElementById('add-m').addEventListener('click', () => { sync(); data.members.push({}); render(); });
+            document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                sync(); data.members.splice(e.target.dataset.idx, 1); render();
+            }));
+            document.getElementById('sv').addEventListener('click', async () => {
+                sync();
+                const res = await this.api.saveData('team', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadTestimonials() {
+        let data = await this.api.fetchData('testimonials') || {badge:'', headline:'', subtitle:'', cta_text:'', items:[]};
+        if(!data.items) data.items = [];
+        
+        const render = () => {
+            let tHtml = data.items.map((t, i) => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 mb-4 relative">
+                    <button data-idx="${i}" class="del-btn absolute top-2 right-2 text-xs px-2 py-1 bg-red-100 text-red-600 rounded-full">Remove</button>
+                    <div class="grid gap-2 mt-4">
+                        <textarea id="ts-q-${i}" placeholder="Quote" class="px-2 py-1 border rounded w-full">${this.escapeHtml(t.quote)}</textarea>
+                        <input id="ts-n-${i}" placeholder="Name" value="${this.escapeHtml(t.name)}" class="px-2 py-1 border rounded w-full">
+                        <input id="ts-r-${i}" placeholder="Role" value="${this.escapeHtml(t.role)}" class="px-2 py-1 border rounded w-full">
+                    </div>
+                </div>
+            `).join('');
+
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <h2 class="font-serif text-2xl font-bold">Testimonials</h2>
+                    <div class="grid gap-4 sm:grid-cols-2">
+                        ${this.textInput('ts-b', 'Badge', data.badge)} ${this.textInput('ts-h', 'Headline', data.headline)}
+                        ${this.textInput('ts-s', 'Subtitle', data.subtitle)} ${this.textInput('ts-c', 'CTA Text', data.cta_text)}
+                    </div>
+                    <div>
+                        <h3 class="font-bold flex justify-between items-center">Testimonials <button id="add-t" class="text-xs px-3 py-1 bg-forest-100 text-forest-700 rounded-full">+ Add</button></h3>
+                        <div class="mt-4">${tHtml}</div>
+                    </div>
+                    <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save Changes</button></div>
+                    <div id="tst"></div>
+                </div>`;
+
+            const sync = () => {
+                data.badge = document.getElementById('ts-b').value;
+                data.headline = document.getElementById('ts-h').value;
+                data.subtitle = document.getElementById('ts-s').value;
+                data.cta_text = document.getElementById('ts-c').value;
+                data.items = data.items.map((_, i) => ({
+                    quote: document.getElementById(`ts-q-${i}`).value,
+                    name: document.getElementById(`ts-n-${i}`).value,
+                    role: document.getElementById(`ts-r-${i}`).value
+                }));
+            };
+
+            document.getElementById('add-t').addEventListener('click', () => { sync(); data.items.push({}); render(); });
+            document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                sync(); data.items.splice(e.target.dataset.idx, 1); render();
+            }));
+            document.getElementById('sv').addEventListener('click', async () => {
+                sync();
+                const res = await this.api.saveData('testimonials', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadProjects() {
+        let data = await this.api.fetchData('projects') || {items:[]};
+        if(!data.items) data.items = [];
+        
+        const render = () => {
+            let pHtml = data.items.map((p, i) => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold">${this.escapeHtml(p.title) || 'New Project'}</h3>
+                        <button data-idx="${i}" class="del-btn text-xs px-2 py-1 bg-red-100 text-red-600 rounded-full">Delete</button>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2">
+                        <input id="pj-t-${i}" placeholder="Title" value="${this.escapeHtml(p.title)}" class="px-2 py-1 border rounded">
+                        <input id="pj-r-${i}" placeholder="Region" value="${this.escapeHtml(p.region)}" class="px-2 py-1 border rounded">
+                        <input id="pj-tr-${i}" placeholder="Trees" value="${this.escapeHtml(p.trees)}" class="px-2 py-1 border rounded">
+                        <input id="pj-s-${i}" placeholder="Status" value="${this.escapeHtml(p.status)}" class="px-2 py-1 border rounded">
+                        <input id="pj-u-${i}" placeholder="Image URL" value="${this.escapeHtml(p.image_url)}" class="px-2 py-1 border rounded col-span-2">
+                        <textarea id="pj-d-${i}" placeholder="Description" class="px-2 py-1 border rounded col-span-2">${this.escapeHtml(p.description)}</textarea>
+                    </div>
+                </div>
+            `).join('');
+
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <h2 class="font-serif text-2xl font-bold flex justify-between items-center">Projects <button id="add-p" class="text-xs px-3 py-1 bg-forest-100 text-forest-700 rounded-full">+ Add Project</button></h2>
+                    <div class="mt-4">${pHtml}</div>
+                    <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save Changes</button></div>
+                    <div id="tst"></div>
+                </div>`;
+
+            const sync = () => {
+                data.items = data.items.map((_, i) => ({
+                    title: document.getElementById(`pj-t-${i}`).value,
+                    region: document.getElementById(`pj-r-${i}`).value,
+                    trees: document.getElementById(`pj-tr-${i}`).value,
+                    status: document.getElementById(`pj-s-${i}`).value,
+                    image_url: document.getElementById(`pj-u-${i}`).value,
+                    description: document.getElementById(`pj-d-${i}`).value
+                }));
+            };
+
+            document.getElementById('add-p').addEventListener('click', () => { sync(); data.items.push({}); render(); });
+            document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                sync(); data.items.splice(e.target.dataset.idx, 1); render();
+            }));
+            document.getElementById('sv').addEventListener('click', async () => {
+                sync();
+                const res = await this.api.saveData('projects', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadStories() {
+        let data = await this.api.fetchData('stories') || {seed:{}, growth:{}, mature:{}};
+        const sections = ['seed', 'growth', 'mature'];
+        const render = () => {
+            let html = sections.map(s => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 mb-4">
+                    <h3 class="font-bold capitalize mb-4">${s}</h3>
+                    <div class="grid gap-2 sm:grid-cols-2">
+                        <input id="st-${s}-c" placeholder="Chapter" value="${this.escapeHtml(data[s].chapter)}" class="border rounded px-2 py-1">
+                        <input id="st-${s}-b" placeholder="Badge" value="${this.escapeHtml(data[s].badge)}" class="border rounded px-2 py-1">
+                        <input id="st-${s}-sb" placeholder="Subbadge" value="${this.escapeHtml(data[s].subbadge)}" class="border rounded px-2 py-1">
+                        <input id="st-${s}-t" placeholder="Title" value="${this.escapeHtml(data[s].title)}" class="border rounded px-2 py-1">
+                        <textarea id="st-${s}-b1" placeholder="Body 1" class="border rounded px-2 py-1 col-span-2">${this.escapeHtml(data[s].body1)}</textarea>
+                        <textarea id="st-${s}-b2" placeholder="Body 2" class="border rounded px-2 py-1 col-span-2">${this.escapeHtml(data[s].body2)}</textarea>
+                    </div>
+                </div>
+            `).join('');
+
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Stories</h2>
+                ${html}
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            document.getElementById('sv').addEventListener('click', async () => {
+                sections.forEach(s => {
+                    data[s] = {
+                        chapter: document.getElementById(`st-${s}-c`).value,
+                        badge: document.getElementById(`st-${s}-b`).value,
+                        subbadge: document.getElementById(`st-${s}-sb`).value,
+                        title: document.getElementById(`st-${s}-t`).value,
+                        body1: document.getElementById(`st-${s}-b1`).value,
+                        body2: document.getElementById(`st-${s}-b2`).value
+                    };
+                });
+                const res = await this.api.saveData('stories', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadLiveMap() {
+        let data = await this.api.fetchData('live_map') || {locations:[]};
+        if(!data.locations) data.locations = [];
+        
+        const render = () => {
+            let lHtml = data.locations.map((loc, i) => {
+                if(!loc.progressImages) loc.progressImages = [];
+                let pimg = loc.progressImages.map((pi, j) => `
+                    <div class="flex gap-2 mb-2 items-center">
+                        <input id="lm-${i}-pt-${j}" placeholder="Title" value="${this.escapeHtml(pi.title)}" class="border px-2 w-1/4">
+                        <input id="lm-${i}-pd-${j}" placeholder="Date" value="${this.escapeHtml(pi.date)}" class="border px-2 w-1/4">
+                        <input id="lm-${i}-pu-${j}" placeholder="URL" value="${this.escapeHtml(pi.image_url)}" class="border px-2 w-1/4">
+                        <button data-loc="${i}" data-img="${j}" class="del-img text-xs text-red-600">Remove</button>
+                    </div>
+                `).join('');
+                return `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 mb-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold">Location ${i+1}</h3>
+                        <button data-idx="${i}" class="del-loc text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">Delete</button>
+                    </div>
+                    <div class="grid gap-2 grid-cols-2 mb-4">
+                        <input id="lm-n-${i}" placeholder="Name" value="${this.escapeHtml(this.safeValue(loc.name))}" class="border px-2 py-1 rounded">
+                        <input id="lm-r-${i}" placeholder="Region" value="${this.escapeHtml(this.safeValue(loc.region))}" class="border px-2 py-1 rounded">
+                        <input id="lm-x-${i}" placeholder="Coord X" value="${this.escapeHtml(this.safeValue(loc.coords?.x))}" class="border px-2 py-1 rounded">
+                        <input id="lm-y-${i}" placeholder="Coord Y" value="${this.escapeHtml(this.safeValue(loc.coords?.y))}" class="border px-2 py-1 rounded">
+                        <input id="lm-t-${i}" placeholder="Trees Planted" value="${this.escapeHtml(this.safeValue(loc.treesPlanted))}" class="border px-2 py-1 rounded">
+                        <input id="lm-v-${i}" placeholder="Volunteers" value="${this.escapeHtml(this.safeValue(loc.volunteers))}" class="border px-2 py-1 rounded">
+                        <textarea id="lm-d-${i}" placeholder="Description" class="border px-2 py-1 rounded col-span-2">${this.escapeHtml(this.safeValue(loc.description))}</textarea>
+                    </div>
+                    <div class="pl-4 border-l-2 border-forest-200">
+                        <h4 class="text-sm font-semibold mb-2">Progress Images <button data-loc="${i}" class="add-img text-xs text-forest-600 ml-2">+ Add Image</button></h4>
+                        ${pimg}
+                    </div>
+                </div>`;
+            }).join('');
+
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <h2 class="font-serif text-2xl font-bold flex justify-between items-center">Live Map <button id="add-loc" class="text-xs px-3 py-1 bg-forest-100 text-forest-700 rounded-full">+ Add Location</button></h2>
+                    <div class="mt-4">${lHtml}</div>
+                    <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save Changes</button></div>
+                    <div id="tst"></div>
+                </div>`;
+
+            const sync = () => {
+                data.locations = data.locations.map((loc, i) => {
+                    let updated = {
+                        name: document.getElementById(`lm-n-${i}`).value,
+                        region: document.getElementById(`lm-r-${i}`).value,
+                        coords: { x: document.getElementById(`lm-x-${i}`).value, y: document.getElementById(`lm-y-${i}`).value },
+                        treesPlanted: document.getElementById(`lm-t-${i}`).value,
+                        volunteers: document.getElementById(`lm-v-${i}`).value,
+                        description: document.getElementById(`lm-d-${i}`).value,
+                        progressImages: (loc.progressImages || []).map((_, j) => ({
+                            title: document.getElementById(`lm-${i}-pt-${j}`).value,
+                            date: document.getElementById(`lm-${i}-pd-${j}`).value,
+                            image_url: document.getElementById(`lm-${i}-pu-${j}`).value
+                        }))
+                    };
+                    return updated;
+                });
+            };
+
+            document.getElementById('add-loc').addEventListener('click', () => { sync(); data.locations.push({progressImages:[]}); render(); });
+            document.querySelectorAll('.del-loc').forEach(btn => btn.addEventListener('click', (e) => { sync(); data.locations.splice(e.target.dataset.idx, 1); render(); }));
+            document.querySelectorAll('.add-img').forEach(btn => btn.addEventListener('click', (e) => { sync(); data.locations[e.target.dataset.loc].progressImages.push({}); render(); }));
+            document.querySelectorAll('.del-img').forEach(btn => btn.addEventListener('click', (e) => { sync(); data.locations[e.target.dataset.loc].progressImages.splice(e.target.dataset.img, 1); render(); }));
+
+            document.getElementById('sv').addEventListener('click', async () => {
+                sync();
+                const res = await this.api.saveData('live_map', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadFaq() {
+        let data = await this.api.fetchData('faq') || {faqs:[]};
+        if(!data.faqs) data.faqs = [];
+        const render = () => {
+            let fHtml = data.faqs.map((f, i) => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 mb-2 flex gap-4 items-start">
+                    <div class="flex-grow space-y-2">
+                        <input id="fq-q-${i}" value="${this.escapeHtml(f.q)}" placeholder="Question" class="w-full border px-2 py-1 rounded font-semibold">
+                        <textarea id="fq-a-${i}" placeholder="Answer" class="w-full border px-2 py-1 rounded">${this.escapeHtml(f.a)}</textarea>
+                    </div>
+                    <button data-idx="${i}" class="del-btn px-2 py-1 bg-red-100 text-red-600 rounded text-xs">Delete</button>
+                </div>
+            `).join('');
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold flex justify-between">FAQ <button id="add-f" class="text-xs px-3 py-1 bg-forest-100 text-forest-700 rounded-full">+ Add Question</button></h2>
+                <div>${fHtml}</div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            const sync = () => { data.faqs = data.faqs.map((_, i) => ({ q: document.getElementById(`fq-q-${i}`).value, a: document.getElementById(`fq-a-${i}`).value })); };
+            document.getElementById('add-f').addEventListener('click', () => { sync(); data.faqs.push({}); render(); });
+            document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', e => { sync(); data.faqs.splice(e.target.dataset.idx, 1); render(); }));
+            document.getElementById('sv').addEventListener('click', async () => { sync(); const res = await this.api.saveData('faq', data); this.api.showToast('tst', res.ok?'Saved':'Error', res.ok); });
+        };
+        render();
+    }
+
+    async loadDonations() {
+        let data = await this.api.fetchData('donation_tiers') || {tiers:Array(3).fill({}), multiplier:1, volunteer_ratio:'', btn_text:'', tax_note:''};
+        if(!data.tiers || data.tiers.length !== 3) data.tiers = Array(3).fill({});
+        const render = () => {
+            let tHtml = data.tiers.map((t, i) => `
+                <div class="p-4 bg-white rounded-2xl border border-earth-200">
+                    <h3 class="font-bold mb-2">Tier ${i+1}</h3>
+                    <input id="dt-a-${i}" type="number" placeholder="Amount" value="${t.amount||''}" class="w-full border px-2 py-1 mb-2">
+                    <input id="dt-t-${i}" placeholder="Title" value="${this.escapeHtml(t.title)}" class="w-full border px-2 py-1 mb-2">
+                    <textarea id="dt-d-${i}" placeholder="Description" class="w-full border px-2 py-1 mb-2">${this.escapeHtml(t.description)}</textarea>
+                    <input id="dt-tr-${i}" type="number" placeholder="Trees" value="${t.trees||''}" class="w-full border px-2 py-1 mb-2">
+                    <input id="dt-v-${i}" type="number" placeholder="Volunteers" value="${t.volunteers||''}" class="w-full border px-2 py-1 mb-2">
+                </div>
+            `).join('');
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Donations</h2>
+                <div class="grid gap-4 sm:grid-cols-3">${tHtml}</div>
+                <div class="grid gap-4 sm:grid-cols-2 mt-4">
+                    ${this.textInput('dt-m', 'Multiplier', data.multiplier, 'number')}
+                    ${this.textInput('dt-vr', 'Volunteer Ratio', data.volunteer_ratio)}
+                    ${this.textInput('dt-b', 'Btn Text', data.btn_text)}
+                    ${this.textInput('dt-tn', 'Tax Note', data.tax_note)}
+                </div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            document.getElementById('sv').addEventListener('click', async () => {
+                data.multiplier = parseFloat(document.getElementById('dt-m').value);
+                data.volunteer_ratio = document.getElementById('dt-vr').value;
+                data.btn_text = document.getElementById('dt-b').value;
+                data.tax_note = document.getElementById('dt-tn').value;
+                data.tiers = [0,1,2].map(i => ({
+                    amount: parseFloat(document.getElementById(`dt-a-${i}`).value),
+                    title: document.getElementById(`dt-t-${i}`).value,
+                    description: document.getElementById(`dt-d-${i}`).value,
+                    trees: parseInt(document.getElementById(`dt-tr-${i}`).value),
+                    volunteers: parseInt(document.getElementById(`dt-v-${i}`).value)
+                }));
+                const res = await this.api.saveData('donation_tiers', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadDonateHero() {
+        let data = await this.api.fetchData('donate_hero') || {};
+        const fields = ['badge', 'title', 'subtitle'];
+        const render = () => {
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Donate Hero</h2>
+                <div class="grid gap-4">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            document.getElementById('sv').addEventListener('click', async () => {
+                fields.forEach(f => data[f] = document.getElementById(f).value);
+                const res = await this.api.saveData('donate_hero', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadDisclaimer() {
+        let data = await this.api.fetchData('disclaimer') || {enabled:false, message:''};
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Disclaimer</h2>
+            ${this.checkboxInput('d-e', 'Enabled', data.enabled)}
+            ${this.textareaInput('d-m', 'Message', data.message)}
+            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+        document.getElementById('sv').addEventListener('click', async () => {
+            data.enabled = document.getElementById('d-e').checked;
+            data.message = document.getElementById('d-m').value;
+            const res = await this.api.saveData('disclaimer', data);
+            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+        });
+    }
+
+    async loadSocialMedia() {
+        let data = await this.api.fetchData('social') || {};
+        const fields = ['instagram', 'twitter', 'facebook', 'linkedin'];
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Social Media</h2>
+            <div class="grid gap-4 sm:grid-cols-2">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
+            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+        document.getElementById('sv').addEventListener('click', async () => {
+            fields.forEach(f => data[f] = document.getElementById(f).value);
+            const res = await this.api.saveData('social', data);
+            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+        });
+    }
+
+    async loadSiteIdentity() {
+        let data = await this.api.fetchData('site_identity') || {};
+        const fields = ['site_title', 'tagline', 'logo_url', 'favicon_url'];
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Site Identity</h2>
+            <div class="grid gap-4 sm:grid-cols-2">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
+            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+        document.getElementById('sv').addEventListener('click', async () => {
+            fields.forEach(f => data[f] = document.getElementById(f).value);
+            const res = await this.api.saveData('site_identity', data);
+            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+        });
+    }
+
+    async loadNavLabels() {
+        let data = await this.api.fetchData('nav_labels') || {};
+        const fields = Array.from({length:10}, (_, i) => `nav_link_${i+1}`).concat(['cta_text', 'cta_url']);
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Nav Labels</h2>
+            <div class="grid gap-4 sm:grid-cols-2">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
+            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+        document.getElementById('sv').addEventListener('click', async () => {
+            fields.forEach(f => data[f] = document.getElementById(f).value);
+            const res = await this.api.saveData('nav_labels', data);
+            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+        });
+    }
+
+    async loadFooterContent() {
+        let data = await this.api.fetchData('footer') || {tagline:'', copyright:'', policy_links:[]};
+        if(!data.policy_links) data.policy_links = [];
+        const render = () => {
+            let lHtml = data.policy_links.map((l, i) => `
+                <div class="flex gap-2 mb-2"><input id="f-pl-l-${i}" value="${this.escapeHtml(l.label)}" placeholder="Label" class="border px-2 py-1 rounded w-1/2">
+                <input id="f-pl-u-${i}" value="${this.escapeHtml(l.url)}" placeholder="URL" class="border px-2 py-1 rounded w-1/2">
+                <button data-idx="${i}" class="del-btn text-xs text-red-600">Del</button></div>
+            `).join('');
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Footer Content</h2>
+                ${this.textInput('f-t', 'Tagline', data.tagline)} ${this.textInput('f-c', 'Copyright', data.copyright)}
+                <div class="p-4 bg-white rounded-2xl border border-earth-200"><h3 class="font-bold flex justify-between">Policy Links <button id="add-l" class="text-xs text-forest-600">+ Add</button></h3>
+                <div class="mt-2">${lHtml}</div></div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            const sync = () => {
+                data.tagline = document.getElementById('f-t').value; data.copyright = document.getElementById('f-c').value;
+                data.policy_links = data.policy_links.map((_, i) => ({label: document.getElementById(`f-pl-l-${i}`).value, url: document.getElementById(`f-pl-u-${i}`).value}));
+            };
+            document.getElementById('add-l').addEventListener('click', () => { sync(); data.policy_links.push({}); render(); });
+            document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', e => { sync(); data.policy_links.splice(e.target.dataset.idx, 1); render(); }));
+            document.getElementById('sv').addEventListener('click', async () => { sync(); const res = await this.api.saveData('footer', data); this.api.showToast('tst', res.ok?'Saved':'Error', res.ok); });
+        };
+        render();
+    }
+
+    async loadVolunteerPage() {
+        let data = await this.api.fetchData('volunteer_page') || {cards:Array(3).fill({})};
+        if(!data.cards || data.cards.length !== 3) data.cards = Array(3).fill({});
+        const fields = ['hero_badge', 'hero_title', 'hero_subtitle', 'form_title', 'form_subtitle', 'interest_options'];
+        const render = () => {
+            let cHtml = data.cards.map((c, i) => `
+                <div class="p-2 border rounded">
+                    <input id="vp-c-i-${i}" value="${this.escapeHtml(c.icon)}" placeholder="Icon" class="w-full border px-1 mb-1">
+                    <input id="vp-c-t-${i}" value="${this.escapeHtml(c.title)}" placeholder="Title" class="w-full border px-1 mb-1">
+                    <textarea id="vp-c-d-${i}" placeholder="Desc" class="w-full border px-1">${this.escapeHtml(c.desc)}</textarea>
+                </div>
+            `).join('');
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Volunteer Page</h2>
+                <div class="grid gap-4 sm:grid-cols-2">${fields.map(f => f==='interest_options' ? this.textareaInput(f, f, data[f]) : this.textInput(f, f, data[f])).join('')}</div>
+                <h3 class="font-bold">3 Info Cards</h3><div class="grid gap-4 sm:grid-cols-3">${cHtml}</div>
+                <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+            document.getElementById('sv').addEventListener('click', async () => {
+                fields.forEach(f => data[f] = document.getElementById(f).value);
+                data.cards = [0,1,2].map(i => ({icon: document.getElementById(`vp-c-i-${i}`).value, title: document.getElementById(`vp-c-t-${i}`).value, desc: document.getElementById(`vp-c-d-${i}`).value}));
+                const res = await this.api.saveData('volunteer_page', data);
+                this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+            });
+        };
+        render();
+    }
+
+    async loadContactPage() {
+        let data = await this.api.fetchData('contact_page') || {};
+        const fields = ['hero_badge', 'hero_title', 'hero_subtitle', 'form_title', 'form_subtitle', 'btn_text'];
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Contact Page</h2>
+            <div class="grid gap-4 sm:grid-cols-2">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
+            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+        document.getElementById('sv').addEventListener('click', async () => {
+            fields.forEach(f => data[f] = document.getElementById(f).value);
+            const res = await this.api.saveData('contact_page', data);
+            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+        });
+    }
+
+    async loadContact() {
+        let data = await this.api.fetchData('contact_submissions') || [];
+        const render = () => {
+            let trs = data.map((d, i) => `<tr><td class="px-4 py-2 border">${this.escapeHtml(d.date)}</td><td class="px-4 py-2 border">${this.escapeHtml(d.name)}</td><td class="px-4 py-2 border">${this.escapeHtml(d.email)}</td><td class="px-4 py-2 border">${this.escapeHtml(d.message)}</td><td class="px-4 py-2 border text-center"><button data-idx="${i}" class="del-btn text-xs text-red-600 px-2 py-1 bg-red-100 rounded">Delete</button></td></tr>`).join('');
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold flex justify-between">Contact Submissions <span class="bg-forest-100 text-forest-700 px-2 rounded-full text-sm">${data.length}</span></h2>
+                <div class="overflow-x-auto bg-white rounded border border-earth-200"><table class="w-full text-sm"><thead class="bg-earth-50 text-left"><tr><th class="px-4 py-2 border">Date</th><th class="px-4 py-2 border">Name</th><th class="px-4 py-2 border">Email</th><th class="px-4 py-2 border">Message</th><th class="px-4 py-2 border text-center">Action</th></tr></thead><tbody>${trs}</tbody></table></div></div>`;
+            document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', async e => {
+                data.splice(e.target.dataset.idx, 1);
+                await this.api.saveData('contact_submissions', data);
+                render();
+            }));
+        };
+        render();
+    }
+
+    async loadNewsletter() {
+        let data = await this.api.fetchData('newsletter_subscribers') || [];
+        const render = () => {
+            let trs = data.map((d, i) => `<tr><td class="px-4 py-2 border">${i+1}</td><td class="px-4 py-2 border">${this.escapeHtml(d.email)}</td><td class="px-4 py-2 border">${this.escapeHtml(d.date)}</td><td class="px-4 py-2 border">${this.escapeHtml(d.status)}</td><td class="px-4 py-2 border text-center"><button data-idx="${i}" class="del-btn text-xs text-red-600 px-2 py-1 bg-red-100 rounded">Delete</button></td></tr>`).join('');
+            this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold flex justify-between">Newsletter <span class="bg-forest-100 text-forest-700 px-2 rounded-full text-sm">Total: ${data.length}</span></h2>
+                <div class="flex gap-2 mb-4"><input id="ns-em" placeholder="Email" class="border px-4 py-2 rounded"><button id="add-ns" class="px-4 py-2 bg-forest-600 text-white rounded text-sm">Add</button></div>
+                <div class="overflow-x-auto bg-white rounded border border-earth-200"><table class="w-full text-sm"><thead class="bg-earth-50 text-left"><tr><th class="px-4 py-2 border">#</th><th class="px-4 py-2 border">Email</th><th class="px-4 py-2 border">Date</th><th class="px-4 py-2 border">Status</th><th class="px-4 py-2 border text-center">Action</th></tr></thead><tbody>${trs}</tbody></table></div></div>`;
+            document.getElementById('add-ns').addEventListener('click', async () => {
+                let em = document.getElementById('ns-em').value;
+                if(em) { data.push({email: em, date: new Date().toISOString().split('T')[0], status: 'Active'}); await this.api.saveData('newsletter_subscribers', data); render(); }
+            });
+            document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', async e => {
+                data.splice(e.target.dataset.idx, 1); await this.api.saveData('newsletter_subscribers', data); render();
+            }));
+        };
+        render();
+    }
+
+    async loadModuleStatus() {
+        let data = await this.api.fetchData('modules') || {};
+        const toggles = ['home_hero', 'home_counters', 'home_story', 'home_donation', 'home_testimonials', 'live_map', 'impact_story', 'faq_section'];
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Module Visibility</h2>
+            <div class="grid gap-4 sm:grid-cols-2">${toggles.map(t => this.checkboxInput(`mod-${t}`, t, data[t])).join('')}</div>
+            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+        document.getElementById('sv').addEventListener('click', async () => {
+            toggles.forEach(t => data[t] = document.getElementById(`mod-${t}`).checked);
+            const res = await this.api.saveData('modules', data);
+            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+        });
+    }
+
+    async loadBlog() {
+        let data = await this.api.fetchData('blog_settings') || {};
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Blog Settings</h2>
+            <div class="space-y-4">
+                ${this.checkboxInput('b-rp', 'Reading Progress Bar', data.reading_progress_bar)}
+                ${this.checkboxInput('b-toc', 'TOC Enabled', data.toc_enabled)}
+                ${this.checkboxInput('b-ss', 'Social Share', data.social_share)}
+                ${this.textareaInput('b-da', 'Default Author Bio', data.default_author_bio)}
+            </div>
+            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
+        document.getElementById('sv').addEventListener('click', async () => {
+            data.reading_progress_bar = document.getElementById('b-rp').checked;
+            data.toc_enabled = document.getElementById('b-toc').checked;
+            data.social_share = document.getElementById('b-ss').checked;
+            data.default_author_bio = document.getElementById('b-da').value;
+            const res = await this.api.saveData('blog_settings', data);
+            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
+        });
+    }
+
+    async loadAdminUsers() {
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Admin Users</h2>
+            <div class="p-4 bg-white rounded-2xl border border-earth-200">
+                <p class="mb-4">User management is handled via WordPress Dashboard → Users. <a href="/wp-admin/users.php" class="text-forest-600 underline">Click here → [link]</a></p>
+                <div class="p-4 bg-earth-50 rounded"><strong>Current User:</strong> ${this.escapeHtml(this.config?.user?.name || 'Admin')}</div>
+            </div></div>`;
+    }
+
+    async loadReporting() {
+        let contacts = await this.api.fetchData('contact_submissions') || [];
+        let newsletter = await this.api.fetchData('newsletter_subscribers') || [];
+        let projects = await this.api.fetchData('projects') || {items:[]};
+        let counters = await this.api.fetchData('home_counters') || {treesTracked:0};
+        
+        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Reporting Summary</h2>
+            <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 text-center"><h3 class="text-3xl font-bold text-forest-600">${contacts.length}</h3><p class="text-sm text-foreground/60">Contact Submissions</p></div>
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 text-center"><h3 class="text-3xl font-bold text-forest-600">${newsletter.length}</h3><p class="text-sm text-foreground/60">Subscribers</p></div>
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 text-center"><h3 class="text-3xl font-bold text-forest-600">${(projects.items || []).length}</h3><p class="text-sm text-foreground/60">Active Projects</p></div>
+                <div class="p-4 bg-white rounded-2xl border border-earth-200 text-center"><h3 class="text-3xl font-bold text-forest-600">${counters.treesTracked}</h3><p class="text-sm text-foreground/60">Trees Tracked</p></div>
+            </div></div>`;
+    }
+}

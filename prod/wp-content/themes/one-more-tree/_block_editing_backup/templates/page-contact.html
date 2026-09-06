@@ -1,0 +1,75 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"4rem","bottom":"4rem"}}},"layout":{"type":"constrained","contentSize":"1100px"},"tagName":"main"} -->
+<div class="wp-block-group alignfull" style="padding-top:4rem;padding-bottom:4rem">
+    <!-- wp:columns {"style":{"spacing":{"blockGap":"3rem"}}} -->
+    <div class="wp-block-columns">
+        <!-- wp:column {"width":"50%"} -->
+        <div class="wp-block-column" style="flex-basis:50%">
+            <!-- wp:heading {"level":1,"style":{"typography":{"fontSize":"3rem"}},"fontFamily":"playfair"} -->
+            <h1 class="wp-block-heading has-playfair-font-family" style="font-size:3rem">Contact Us</h1>
+            <!-- /wp:heading -->
+            <!-- wp:paragraph {"style":{"typography":{"fontSize":"1.1rem"}}} -->
+            <p style="font-size:1.1rem">We'd love to hear from you. Whether you're interested in volunteering, partnering, or just want to learn more about our work.</p>
+            <!-- /wp:paragraph -->
+            
+            <!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"2rem","right":"2rem"}}},"backgroundColor":"forest-50","className":"rounded-2xl"} -->
+            <div class="wp-block-group rounded-2xl has-forest-50-background-color has-background" style="padding-top:2rem;padding-right:2rem;padding-bottom:2rem;padding-left:2rem">
+                <!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"1.25rem"}},"fontFamily":"playfair"} -->
+                <h3 class="wp-block-heading has-playfair-font-family" style="font-size:1.25rem">Get in Touch</h3>
+                <!-- /wp:heading -->
+                <!-- wp:paragraph -->
+                <p><strong>Email:</strong> info@onemoretree.eu</p>
+                <!-- /wp:paragraph -->
+                <!-- wp:paragraph -->
+                <p><strong>Phone:</strong> +34 91 123 4567</p>
+                <!-- /wp:paragraph -->
+                <!-- wp:paragraph -->
+                <p><strong>Address:</strong> Calle Mayor 45, Madrid, Spain</p>
+                <!-- /wp:paragraph -->
+            </div>
+            <!-- /wp:group -->
+        </div>
+        <!-- /wp:column -->
+        
+        <!-- wp:column {"width":"50%"} -->
+        <div class="wp-block-column" style="flex-basis:50%">
+            <!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","bottom":"2rem","left":"2rem","right":"2rem"}}},"backgroundColor":"white","className":"rounded-2xl border border-earth-200 shadow-soft"} -->
+            <div class="wp-block-group rounded-2xl border border-earth-200 shadow-soft has-white-background-color has-background" style="padding-top:2rem;padding-right:2rem;padding-bottom:2rem;padding-left:2rem">
+                <!-- wp:heading {"level":3,"style":{"typography":{"fontSize":"1.25rem"}},"fontFamily":"playfair"} -->
+                <h3 class="wp-block-heading has-playfair-font-family" style="font-size:1.25rem">Send us a Message</h3>
+                <!-- /wp:heading -->
+                <!-- wp:paragraph -->
+                <p>Fill out the form below and we'll get back to you within 24 hours.</p>
+                <!-- /wp:paragraph -->
+                <!-- wp:html -->
+                <form action="#" method="POST" style="display: flex; flex-direction: column; gap: 1rem;">
+                    <div>
+                        <label for="name" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Name</label>
+                        <input type="text" id="name" name="name" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;" required>
+                    </div>
+                    <div>
+                        <label for="email" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Email</label>
+                        <input type="email" id="email" name="email" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;" required>
+                    </div>
+                    <div>
+                        <label for="subject" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Subject</label>
+                        <input type="text" id="subject" name="subject" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;" required>
+                    </div>
+                    <div>
+                        <label for="message" style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Message</label>
+                        <textarea id="message" name="message" rows="5" style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 0.5rem;" required></textarea>
+                    </div>
+                    <button type="submit" style="background-color: #15803d; color: white; padding: 0.75rem 1.75rem; border: none; border-radius: 9999px; font-weight: 600; cursor: pointer; align-self: flex-start;">Send Message</button>
+                </form>
+                <!-- /wp:html -->
+            </div>
+            <!-- /wp:group -->
+        </div>
+        <!-- /wp:column -->
+    </div>
+    <!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

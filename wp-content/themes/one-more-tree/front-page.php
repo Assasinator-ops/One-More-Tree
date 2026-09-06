@@ -62,7 +62,7 @@ $donation_tiers = !empty($admin_tiers_data['tiers']) ? $admin_tiers_data['tiers'
             <span class="block text-forest-700 italic"><?php echo get_acf_field('hero_headline_emphasis', 'Tree'); ?></span>
           </h1>
 
-          <p class="text-base sm:text-lg md:text-xl text-foreground/80 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-4">
+          <p class="text-base sm:text-lg md:text-xl text-forest-900 max-w-2xl mx-auto mb-8 sm:mb-10 leading-relaxed px-4">
             <?php echo get_acf_field('hero_subtitle', 'Planting 1 million trees across Spain by 2040. From a conversation among friends to a movement restoring forests.'); ?>
           </p>
 

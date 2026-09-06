@@ -1,0 +1,2986 @@
+/**
+ * OneMoreTree Native Gutenberg Block Styling
+ * Ensures full visual parity between Next.js design and WordPress core blocks
+ */
+
+/* =========================================================
+   1. Headings & Typography
+   ========================================================= */
+.wp-block-heading,
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--wp--preset--color--foreground, #0f172a);
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin-top: 1.75em;
+  margin-bottom: 0.75em;
+}
+
+.wp-block-heading:first-child {
+  margin-top: 0;
+}
+
+h1.wp-block-heading { font-size: clamp(2rem, 4vw, 3rem); }
+h2.wp-block-heading { font-size: clamp(1.6rem, 3vw, 2.25rem); }
+h3.wp-block-heading { font-size: clamp(1.3rem, 2.5vw, 1.75rem); }
+h4.wp-block-heading { font-size: 1.25rem; }
+h5.wp-block-heading { font-size: 1.1rem; }
+h6.wp-block-heading { font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.wp-block-paragraph,
+.prose p {
+  color: rgba(15, 23, 42, 0.8);
+  font-size: 1rem;
+  line-height: 1.8;
+  margin-bottom: 1.5em;
+}
+
+.wp-block-paragraph.has-drop-cap:not(:focus)::first-letter {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 3.8em;
+  font-weight: 700;
+  float: left;
+  line-height: 0.8;
+  margin: 0.1em 0.15em 0 0;
+  color: #15803d;
+}
+
+/* =========================================================
+   2. Quotes & Pullquotes
+   ========================================================= */
+.wp-block-quote,
+.prose blockquote {
+  position: relative;
+  margin: 2em 0;
+  padding: 1.5em 2em;
+  background: rgba(240, 253, 244, 0.6);
+  border-left: 4px solid #15803d;
+  border-radius: 0 1.5rem 1.5rem 0;
+  color: #0f172a;
+}
+
+.wp-block-quote p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: #14532d;
+  margin-bottom: 0.5em;
+}
+
+.wp-block-quote cite {
+  display: block;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  font-style: normal;
+  font-weight: 600;
+  color: #15803d;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.wp-block-pullquote {
+  border-top: 2px solid #bbf7d0;
+  border-bottom: 2px solid #bbf7d0;
+  padding: 2em 0;
+  margin: 2.5em 0;
+  text-align: center;
+}
+
+.wp-block-pullquote blockquote p {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: #14532d;
+}
+
+/* =========================================================
+   3. Images & Galleries
+   ========================================================= */
+.wp-block-image {
+  margin: 2em 0;
+}
+
+.wp-block-image img {
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.wp-block-image figcaption,
+.wp-block-gallery figcaption {
+  text-align: center;
+  font-size: 0.85rem;
+  color: rgba(15, 23, 42, 0.5);
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+.wp-block-gallery {
+  display: grid;
+  gap: 1.25rem;
+  margin: 2em 0;
+}
+
+.wp-block-gallery .wp-block-image img {
+  border-radius: 1.25rem;
+  height: 100%;
+}
+
+/* =========================================================
+   4. Buttons
+   ========================================================= */
+.wp-block-buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 2em 0;
+}
+
+.wp-block-button__link {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 0.925rem;
+  border-radius: 9999px !important;
+  background: #15803d !important;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 14px 0 rgba(22, 163, 74, 0.3) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: none !important;
+  cursor: pointer;
+}
+
+.wp-block-button__link:hover {
+  background: #166534 !important;
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4) !important;
+  transform: translateY(-1px);
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+  background: transparent !important;
+  color: #15803d !important;
+  border: 1.5px solid #15803d !important;
+  box-shadow: none !important;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+  background: #f0fdf4 !important;
+  border-color: #166534 !important;
+}
+
+/* =========================================================
+   5. Columns & Groups (Cards)
+   ========================================================= */
+.wp-block-columns {
+  display: flex;
+  gap: 1.75rem;
+  margin: 2em 0;
+}
+
+@media (max-width: 768px) {
+  .wp-block-columns {
+    flex-direction: column !important;
+  }
+}
+
+.wp-block-group.is-style-card,
+.wp-block-group.has-background {
+  border-radius: 1.75rem;
+  padding: 2rem;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+/* =========================================================
+   6. Tables
+   ========================================================= */
+.wp-block-table {
+  margin: 2em 0;
+  overflow-x: auto;
+}
+
+.wp-block-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #ffffff;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.wp-block-table th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 1rem 1.25rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.wp-block-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.925rem;
+  color: rgba(15, 23, 42, 0.8);
+}
+
+.wp-block-table tr:last-child td {
+  border-bottom: none;
+}
+
+.wp-block-table tr:hover td {
+  background: #f8fafc;
+}
+
+/* =========================================================
+   7. Separators & Dividers
+   ========================================================= */
+.wp-block-separator {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+  margin: 3em auto;
+  max-width: 60%;
+}
+
+.wp-block-separator.is-style-wide {
+  max-width: 100%;
+}
+
+.wp-block-separator.is-style-dots {
+  background: none;
+  text-align: center;
+  height: auto;
+}
+
+.wp-block-separator.is-style-dots::before {
+  content: "•••";
+  color: #15803d;
+  font-size: 1.5rem;
+  letter-spacing: 1em;
+  padding-left: 1em;
+}
+
+/* =========================================================
+   8. Lists & Callouts
+   ========================================================= */
+.wp-block-list,
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  margin: 1.5em 0;
+  color: rgba(15, 23, 42, 0.8);
+  line-height: 1.8;
+}
+
+.wp-block-list li,
+.prose li {
+  margin-bottom: 0.5rem;
+}
+
+/* =========================================================
+   9. Code & Preformatted
+   ========================================================= */
+.wp-block-code,
+.wp-block-preformatted,
+.prose pre {
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  padding: 1.5rem !important;
+  border-radius: 1.25rem !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+  font-size: 0.9rem !important;
+  line-height: 1.6 !important;
+  overflow-x: auto;
+  margin: 2em 0;
+}
+
+/* =========================================================
+   10. Next.js Design Helpers — Mirrors Template/app/globals.css
+   ========================================================= */
+
+/* Decorative noise overlay used across public pages */
+.omt-noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* Decorative leaf pattern */
+.omt-leaf-pattern {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><path d='M30 6 C 14 18 14 42 30 54 C 46 42 46 18 30 6 Z' fill='none' stroke='%2316a34a' stroke-opacity='0.25' stroke-width='1'/></svg>");
+  background-size: 60px 60px;
+}
+
+/* Page-header gradient hero texture */
+.omt-page-header-texture {
+  background:
+    radial-gradient(1200px 600px at 50% 0%, rgba(34, 197, 94, 0.12), transparent 60%),
+    radial-gradient(800px 400px at 50% 100%, rgba(34, 197, 94, 0.08), transparent 60%);
+}
+
+/* Glass helpers */
+.omt-glass {
+  background-color: rgba(20, 83, 45, 0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
+.omt-glass-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+/* Custom shadows */
+.omt-shadow-soft { box-shadow: 0 6px 24px rgba(20, 83, 45, 0.08); }
+.omt-shadow-medium { box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18); }
+.omt-shadow-elevated { box-shadow: 0 18px 48px rgba(20, 83, 45, 0.22); }
+
+/* Gradient section background used across public pages */
+.omt-gradient-bg {
+  background: linear-gradient(180deg, #f8fbf7 0%, #ffffff 100%);
+}
+
+/* =========================================================
+   11. Forms (contact, volunteer, newsletter)
+   ========================================================= */
+.omt-form-input,
+.omt-form-textarea,
+.omt-form-select,
+input[type="text"].omt-input,
+input[type="email"].omt-input,
+input[type="tel"].omt-input,
+textarea.omt-input,
+select.omt-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  background: var(--wp--preset--color--earth-50, #f8f5ef);
+  color: var(--wp--preset--color--foreground, #0f172a);
+  border: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.95rem;
+}
+.omt-form-input::placeholder,
+.omt-form-textarea::placeholder,
+.omt-input::placeholder {
+  color: rgba(15, 23, 42, 0.4);
+}
+.omt-form-input:focus,
+.omt-form-textarea:focus,
+.omt-form-select:focus,
+.omt-input:focus {
+  outline: none;
+  border-color: var(--wp--preset--color--forest-500, #22c55e);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12);
+  background: #ffffff;
+}
+.omt-form-input:disabled,
+.omt-form-textarea:disabled,
+.omt-form-select:disabled,
+.omt-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.omt-form-input[aria-invalid="true"],
+.omt-input[aria-invalid="true"] {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.1);
+}
+.omt-form-textarea {
+  min-height: 8rem;
+  resize: vertical;
+}
+.omt-form-label {
+  display: block;
+  font-size: 0.875rem;
+  color: rgba(15, 23, 42, 0.7);
+  margin-bottom: 0.25rem;
+}
+.omt-form-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.85rem 2rem;
+  background: var(--wp--preset--color--forest-600, #16a34a);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+}
+.omt-form-button:hover {
+  background: var(--wp--preset--color--forest-700, #15803d);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+  transform: translateY(-1px);
+}
+.omt-form-button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+  transform: none;
+}
+.omt-form-status {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: var(--wp--preset--color--earth-50, #f8f5ef);
+  border: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+  font-size: 0.875rem;
+  color: rgba(15, 23, 42, 0.8);
+}
+.omt-form-status[data-status="success"] {
+  background: rgba(220, 252, 231, 0.7);
+  border-color: #86efac;
+  color: #14532d;
+}
+.omt-form-status[data-status="error"] {
+  background: rgba(254, 226, 226, 0.7);
+  border-color: #fca5a5;
+  color: #7f1d1d;
+}
+
+/* =========================================================
+   12. Navigation link hover/focus (header & footer)
+   ========================================================= */
+.wp-block-navigation a,
+.wp-block-navigation-link__content,
+.wp-block-site-title a {
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.wp-block-navigation a:hover,
+.wp-block-navigation-link__content:hover {
+  color: var(--wp--preset--color--forest-600, #16a34a) !important;
+}
+.wp-block-navigation.is-style-primary a,
+.wp-block-navigation-link.is-style-primary .wp-block-navigation-link__content {
+  background: var(--wp--preset--color--forest-700, #15803d);
+  color: #ffffff !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 9999px;
+}
+.wp-block-navigation.is-style-primary a:hover,
+.wp-block-navigation-link.is-style-primary .wp-block-navigation-link__content:hover {
+  background: var(--wp--preset--color--forest-800, #166534) !important;
+  color: #ffffff !important;
+}
+
+/* =========================================================
+   13. Query / Post-template cards
+   ========================================================= */
+.wp-block-post-template {
+  display: grid;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wp-block-post-template.is-layout-grid {
+  display: grid;
+}
+@media (min-width: 640px) {
+  .wp-block-post-template.columns-2,
+  .wp-block-post-template.columns-3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .wp-block-post-template.columns-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.wp-block-post-template > li {
+  background: #ffffff;
+  border: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: 0 6px 24px rgba(20, 83, 45, 0.08);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.wp-block-post-template > li:hover {
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+  border-color: rgba(22, 163, 74, 0.3);
+  transform: translateY(-2px);
+}
+.wp-block-post-template h2.wp-block-post-title,
+.wp-block-post-template .wp-block-post-title a {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--wp--preset--color--foreground, #0f172a);
+}
+.wp-block-post-template h2.wp-block-post-title {
+  margin: 0.75rem 0 0.5rem;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+.wp-block-post-template .wp-block-post-title a:hover {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.wp-block-post-template .wp-block-post-featured-image img {
+  border-radius: 1rem;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.wp-block-post-template .wp-block-post-excerpt {
+  color: rgba(15, 23, 42, 0.7);
+  line-height: 1.6;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+/* =========================================================
+   14. Site logo normalization
+   ========================================================= */
+.wp-block-site-logo img {
+  max-width: 100%;
+  height: auto;
+}
+.wp-block-site-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: inherit;
+}
+.wp-block-site-title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================================================
+   15. Latest posts & categories (sidebar)
+   ========================================================= */
+.wp-block-latest-posts,
+.wp-block-categories {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.wp-block-latest-posts li,
+.wp-block-categories li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+}
+.wp-block-latest-posts li:last-child,
+.wp-block-categories li:last-child {
+  border-bottom: none;
+}
+.wp-block-latest-posts a,
+.wp-block-categories a {
+  color: var(--wp--preset--color--foreground, #0f172a);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+.wp-block-latest-posts a:hover,
+.wp-block-categories a:hover {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+
+/* =========================================================
+   16. Inline SVG icon helpers used in patterns
+   ========================================================= */
+.omt-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: var(--wp--preset--color--forest-100, #dcfce7);
+  flex-shrink: 0;
+}
+.omt-icon-badge svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.omt-icon-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: var(--wp--preset--color--forest-100, #dcfce7);
+  border: 1px solid var(--wp--preset--color--forest-200, #bbf7d0);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--wp--preset--color--forest-700, #15803d);
+}
+.omt-icon-pill svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+
+/* =========================================================
+   17. Hero / section decoration (header & footer block parts)
+   ========================================================= */
+.omt-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.omt-hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 5rem 1rem;
+}
+@media (min-width: 640px) {
+  .omt-hero-content { padding: 8rem 3rem; }
+}
+@media (min-width: 1024px) {
+  .omt-hero-content { padding: 8rem 5rem; }
+}
+.omt-section {
+  position: relative;
+  width: 100%;
+  padding: 5rem 1rem;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .omt-section { padding: 8rem 3rem; }
+}
+@media (min-width: 1024px) {
+  .omt-section { padding: 8rem 5rem; }
+}
+
+/* =========================================================
+   18. Card / value-card pattern helpers
+   ========================================================= */
+.omt-card {
+  background: #ffffff;
+  border: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 6px 24px rgba(20, 83, 45, 0.08);
+}
+@media (min-width: 640px) {
+  .omt-card { padding: 1.75rem; }
+}
+.omt-card-featured {
+  background: var(--wp--preset--color--white, #ffffff);
+  border: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+}
+.omt-grid-2 {
+  display: grid;
+  gap: 1rem;
+}
+.omt-grid-3 {
+  display: grid;
+  gap: 1rem;
+}
+.omt-grid-4 {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .omt-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .omt-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .omt-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .omt-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .omt-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.omt-section-heading {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+@media (min-width: 640px) {
+  .omt-section-heading { margin-bottom: 5rem; }
+}
+.omt-section-heading h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.15;
+  color: var(--wp--preset--color--foreground, #0f172a);
+  margin: 0.5rem 0 1rem;
+}
+.omt-section-heading p {
+  font-size: 1rem;
+  color: rgba(15, 23, 42, 0.6);
+  max-width: 42rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+@media (min-width: 640px) {
+  .omt-section-heading p { font-size: 1.125rem; }
+}
+
+/* =========================================================
+   30. Icon Components (Next.js mirroring)
+   ========================================================= */
+.omt-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: var(--wp--preset--color--forest-100, #dcfce7);
+  flex-shrink: 0;
+}
+.omt-icon-badge svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.omt-icon-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: var(--wp--preset--color--forest-100, #dcfce7);
+  border: 1px solid var(--wp--preset--color--forest-200, #bbf7d0);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--wp--preset--color--forest-700, #15803d);
+}
+.omt-icon-pill svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+
+/* =========================================================
+   31. Hero Specific Styles (Next.js mirroring)
+   ========================================================= */
+.omt-hero-full {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.omt-hero-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 120%;
+  top: -10%;
+}
+.omt-hero-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.omt-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2), rgba(248, 250, 252, 0.8));
+}
+.omt-hero-overlay-side {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.3), transparent, rgba(255, 255, 255, 0.3));
+}
+.omt-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--wp--preset--color--forest-200, #bbf7d0);
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.1);
+}
+.omt-hero-badge img {
+  height: 1.5rem;
+  width: auto;
+}
+@media (min-width: 640px) {
+  .omt-hero-badge img { height: 2rem; }
+}
+.omt-hero-stat-card {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--wp--preset--color--forest-100, #dcfce7);
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.1);
+}
+@media (min-width: 640px) {
+  .omt-hero-stat-card { padding: 1rem 1.5rem; }
+}
+.omt-hero-stat-value {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+  margin-bottom: 0.25rem;
+}
+@media (min-width: 640px) {
+  .omt-hero-stat-value { font-size: 1.875rem; }
+}
+@media (min-width: 768px) {
+  .omt-hero-stat-value { font-size: 2.25rem; }
+}
+.omt-hero-stat-label {
+  font-size: 0.75rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+@media (min-width: 640px) {
+  .omt-hero-stat-label { font-size: 0.875rem; }
+}
+
+/* =========================================================
+   32. Hero Pattern Specific Utilities
+   ========================================================= */
+.custom-full-width img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.omt-hero-content > .wp-block-group {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   33. Donation Pattern Specific Utilities
+   ========================================================= */
+.page-header-texture .wp-block-group[style*="position:absolute"] {
+  position: absolute !important;
+}
+.page-header-texture .wp-block-group[style*="pointer-events:none"] {
+  pointer-events: none !important;
+}
+.omt-donation-card {
+  max-width: 100%;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .omt-donation-card {
+    max-width: 400px;
+  }
+}
+
+/* =========================================================
+   34. Navigation Scroll States
+   ========================================================= */
+.site-navigation.is-scrolled {
+  background: rgba(255, 255, 255, 1) !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--wp--preset--color--earth-200, #e2e8f0);
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.site-navigation:not(.is-scrolled) {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
+}
+
+@media (max-width: 767px) {
+  .site-navigation:not(.is-scrolled) {
+    background: #ffffff;
+  }
+}
+
+/* Remove gap above navbar when scrolled */
+.site-navigation.is-scrolled {
+  top: 0 !important;
+}
+
+/* Tailwind utility classes for navigation */
+.bg-white\/98 {
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.border-earth-200 {
+  border-color: var(--wp--preset--color--earth-200, #e2e8f0);
+}
+
+.shadow-medium {
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+}
+
+.md\:bg-gradient-to-b {
+  background: linear-gradient(to bottom, var(--tw-gradient-stops));
+}
+
+.md\:from-white\/90 {
+  --tw-gradient-from: rgba(255, 255, 255, 0.9);
+  --tw-gradient-to: rgba(255, 255, 255, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+/* =========================================================
+   36. Tailwind CSS Variable Mapping for Gutenberg
+   ========================================================= */
+/* Text Colors */
+.text-foreground {
+  color: var(--wp--preset--color--foreground, #0f172a);
+}
+.text-foreground\/70 {
+  color: rgba(15, 23, 42, 0.7);
+}
+.text-foreground\/50 {
+  color: rgba(15, 23, 42, 0.5);
+}
+.text-foreground\/40 {
+  color: rgba(15, 23, 42, 0.4);
+}
+.text-forest-600 {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.text-forest-700 {
+  color: var(--wp--preset--color--forest-700, #15803d);
+}
+.text-forest-300 {
+  color: var(--wp--preset--color--forest-300, #86efac);
+}
+.text-forest-200 {
+  color: var(--wp--preset--color--forest-200, #bbf7d0);
+}
+.text-white {
+  color: #ffffff;
+}
+
+/* Background Colors */
+.bg-white {
+  background-color: #ffffff;
+}
+.bg-forest-600 {
+  background-color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.bg-forest-700 {
+  background-color: var(--wp--preset--color--forest-700, #15803d);
+}
+.bg-forest-900 {
+  background-color: var(--wp--preset--color--forest-900, #14532d);
+}
+.bg-forest-950 {
+  background-color: var(--wp--preset--color--forest-950, #052e16);
+}
+.bg-background {
+  background-color: var(--wp--preset--color--background, #ffffff);
+}
+.bg-earth-50 {
+  background-color: var(--wp--preset--color--earth-50, #f8fafc);
+}
+.bg-forest-50 {
+  background-color: var(--wp--preset--color--forest-50, #f0fdf4);
+}
+
+/* Border Colors */
+.border-earth-200 {
+  border-color: var(--wp--preset--color--earth-200, #e2e8f0);
+}
+.border-forest-500 {
+  border-color: var(--wp--preset--color--forest-500, #22c55e);
+}
+.border-forest-200 {
+  border-color: var(--wp--preset--color--forest-200, #bbf7d0);
+}
+.border-forest-300 {
+  border-color: var(--wp--preset--color--forest-300, #86efac);
+}
+.border-forest-800 {
+  border-color: var(--wp--preset--color--forest-800, #166534);
+}
+
+/* Text Sizes */
+.text-xs {
+  font-size: 0.75rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+}
+.text-base {
+  font-size: 1rem;
+}
+.text-lg {
+  font-size: 1.125rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+/* Font Weights */
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+/* Spacing */
+.p-2 {
+  padding: 0.5rem;
+}
+.p-3 {
+  padding: 0.75rem;
+}
+.p-4 {
+  padding: 1rem;
+}
+.p-6 {
+  padding: 1.5rem;
+}
+.p-8 {
+  padding: 2rem;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* Margin */
+.mt-0 {
+  margin-top: 0;
+}
+.mt-3 {
+  margin-top: 0.75rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
+}
+.mb-12 {
+  margin-bottom: 3rem;
+}
+.mb-16 {
+  margin-bottom: 4rem;
+}
+.mb-20 {
+  margin-bottom: 5rem;
+}
+.mb-24 {
+  margin-bottom: 6rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.mr-4 {
+  margin-right: 1rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.ml-4 {
+  margin-left: 1rem;
+}
+
+/* Flexbox */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.items-center {
+  align-items: center;
+}
+.items-start {
+  align-items: flex-start;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-left {
+  justify-content: flex-start;
+}
+.gap-2 {
+  gap: 0.5rem;
+}
+.gap-3 {
+  gap: 0.75rem;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.gap-6 {
+  gap: 1.5rem;
+}
+.gap-8 {
+  gap: 2rem;
+}
+.gap-12 {
+  gap: 3rem;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+/* Position */
+.fixed {
+  position: fixed;
+}
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.top-0 {
+  top: 0;
+}
+.left-0 {
+  left: 0;
+}
+.right-0 {
+  right: 0;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.bottom-4 {
+  bottom: 1rem;
+}
+.bottom-full {
+  bottom: 100%;
+}
+
+/* Sizing */
+.w-full {
+  width: 100%;
+}
+.w-auto {
+  width: auto;
+}
+@media (min-width: 640px) {
+  .sm\:w-auto {
+    width: auto;
+  }
+}
+.h-16 {
+  height: 4rem;
+}
+.h-20 {
+  height: 5rem;
+}
+.h-6 {
+  height: 1.5rem;
+}
+.h-8 {
+  height: 2rem;
+}
+.h-10 {
+  height: 2.5rem;
+}
+.h-1\/2 {
+  height: 50%;
+}
+.min-h-screen {
+  min-height: 100vh;
+}
+.max-w-xs {
+  max-width: 20rem;
+}
+.max-w-sm {
+  max-width: 24rem;
+}
+.max-w-md {
+  max-width: 28rem;
+}
+.max-w-lg {
+  max-width: 32rem;
+}
+.max-w-xl {
+  max-width: 36rem;
+}
+.max-w-7xl {
+  max-width: 80rem;
+}
+
+/* Rounded */
+.rounded-full {
+  border-radius: 9999px;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+.rounded-2xl {
+  border-radius: 1rem;
+}
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+/* Transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.duration-300 {
+  transition-duration: 300ms;
+}
+.duration-500 {
+  transition-duration: 500ms;
+}
+.ease {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Opacity */
+.opacity-10 {
+  opacity: 0.1;
+}
+.opacity-90 {
+  opacity: 0.9;
+}
+.opacity-95 {
+  opacity: 0.95;
+}
+.opacity-98 {
+  opacity: 0.98;
+}
+
+/* Display */
+.hidden {
+  display: none;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.inline-flex {
+  display: inline-flex;
+}
+
+/* Overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Z-Index */
+.z-50 {
+  z-index: 50;
+}
+.z-60 {
+  z-index: 60;
+}
+.z-70 {
+  z-index: 70;
+}
+
+/* Line Height */
+.leading-snug {
+  line-height: 1.375;
+}
+
+/* Letter Spacing */
+.tracking-wider {
+  letter-spacing: 0.025em;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* Text Alignment */
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+
+/* Cursor */
+.pointer-events-none {
+  pointer-events: none;
+}
+
+/* White Space */
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+/* Transform */
+.scale-105 {
+  transform: scale(1.05);
+}
+
+/* Flex Shrink */
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+/* Min Width */
+.min-w-0 {
+  min-width: 0;
+}
+
+/* Shadow */
+.shadow-soft {
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.1);
+}
+.shadow-elevated {
+  box-shadow: 0 20px 40px rgba(20, 83, 45, 0.2);
+}
+
+/* Gap for specific elements */
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}
+
+/* Line Clamp */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Hover States */
+.hover\:text-forest-600:hover {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.hover\:bg-forest-700:hover {
+  background-color: var(--wp--preset--color--forest-700, #15803d);
+}
+.hover\:bg-forest-50:hover {
+  background-color: var(--wp--preset--color--forest-50, #f0fdf4);
+}
+.hover\:border-forest-300:hover {
+  border-color: var(--wp--preset--color--forest-300, #86efac);
+}
+.hover\:shadow-elevated:hover {
+  box-shadow: 0 20px 40px rgba(20, 83, 45, 0.2);
+}
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+/* Focus States */
+.focus\:border-forest-500:focus {
+  border-color: var(--wp--preset--color--forest-500, #22c55e);
+}
+.focus\:outline-none:focus {
+  outline: none;
+}
+.focus\:ring-2:focus {
+  box-shadow: 0 0 0 2px var(--wp--preset--color--forest-200, #bbf7d0);
+}
+
+/* Responsive Utilities */
+@media (min-width: 640px) {
+  .sm\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .sm\:w-auto {
+    width: auto;
+  }
+  .sm\:h-10 {
+    height: 2.5rem;
+  }
+  .sm\:text-xs {
+    font-size: 0.75rem;
+  }
+  .sm\:text-lg {
+    font-size: 1.125rem;
+  }
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+  .sm\:w-64 {
+    width: 16rem;
+  }
+  .sm\:line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:hidden {
+    display: none;
+  }
+  .md\:flex {
+    display: flex;
+  }
+  .md\:bg-transparent {
+    background: transparent;
+  }
+  .md\:bg-gradient-to-b {
+    background: linear-gradient(to bottom, var(--tw-gradient-stops));
+  }
+  .md\:from-white\/90 {
+    --tw-gradient-from: rgba(255, 255, 255, 0.9);
+    --tw-gradient-to: rgba(255, 255, 255, 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+  .md\:to-transparent {
+    --tw-gradient-to: transparent;
+  }
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .md\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .md\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+  .md\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+  .md\:flex-row {
+    flex-direction: row;
+  }
+  .md\:items-center {
+    align-items: center;
+  }
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+  .md\:p-8 {
+    padding: 2rem;
+  }
+  .md\:py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .md\:text-xl {
+    font-size: 1.25rem;
+  }
+  .md\:mb-0 {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .lg\:gap-12 {
+    gap: 3rem;
+  }
+  .lg\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lg\:text-sm {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:px-20 {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  .xl\:text-sm {
+    font-size: 0.875rem;
+  }
+}
+
+/* =========================================================
+   35. Animated Underline for Navigation Links
+   ========================================================= */
+.animated-underline {
+  position: relative;
+}
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--wp--preset--color--forest-600, #16a34a);
+  transition: width 0.3s ease;
+}
+.animated-underline:hover::after {
+  width: 100%;
+}
+
+/* =========================================================
+   19. Inline editor content (post body + Gutenberg prose)
+   ========================================================= */
+.omt-prose-forest {
+  max-width: 65ch;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--wp--preset--color--foreground, #0f172a);
+  line-height: 1.8;
+}
+.omt-prose-forest h1,
+.omt-prose-forest h2,
+.omt-prose-forest h3,
+.omt-prose-forest h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  color: var(--wp--preset--color--foreground, #0f172a);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  line-height: 1.25;
+}
+.omt-prose-forest h1 { font-size: clamp(2rem, 4vw, 3rem); }
+.omt-prose-forest h2 { font-size: clamp(1.6rem, 3vw, 2.25rem); }
+.omt-prose-forest h3 { font-size: 1.5rem; }
+.omt-prose-forest p { margin: 0 0 1.25rem; font-size: 1.0625rem; }
+.omt-prose-forest a {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.omt-prose-forest ul,
+.omt-prose-forest ol {
+  padding-left: 1.5rem;
+  margin: 0 0 1.5rem;
+}
+.omt-prose-forest li { margin-bottom: 0.5rem; }
+.omt-prose-forest blockquote {
+  border-left: 4px solid var(--wp--preset--color--forest-500, #22c55e);
+  background: rgba(240, 253, 244, 0.6);
+  padding: 1.5rem 2rem;
+  border-radius: 0 1.5rem 1.5rem 0;
+  margin: 2rem 0;
+  font-style: italic;
+  color: #14532d;
+}
+
+/* =========================================================
+   20. Tier button (donation selector)
+   ========================================================= */
+.omt-tier {
+  text-align: left;
+  padding: 1rem;
+  border-radius: 1.5rem;
+  border: 1px solid var(--wp--preset--color--slate-200, #e2e8f0);
+  background: #ffffff;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: 'Inter', system-ui, sans-serif;
+  color: var(--wp--preset--color--foreground, #0f172a);
+}
+.omt-tier:hover {
+  border-color: rgba(22, 163, 74, 0.4);
+  background: rgba(240, 253, 244, 0.5);
+}
+.omt-tier[aria-pressed="true"] {
+  border-color: var(--wp--preset--color--forest-500, #22c55e);
+  background: rgba(240, 253, 244, 0.8);
+  color: var(--wp--preset--color--forest-900, #14532d);
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+}
+.omt-tier-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+  margin: 0 0 0.5rem;
+}
+.omt-tier-amount {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin: 0;
+  line-height: 1;
+}
+.omt-tier-desc {
+  font-size: 0.875rem;
+  color: rgba(15, 23, 42, 0.6);
+  margin: 0.5rem 0 0;
+}
+
+/* =========================================================
+   21. Donation card (preview on donate page)
+   ========================================================= */
+.omt-donation-card {
+  position: relative;
+  border-radius: 2.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, rgba(220, 252, 231, 0.6) 50%, rgba(187, 247, 208, 0.6) 100%);
+  padding: 1.5rem;
+  box-shadow: 0 18px 48px rgba(20, 83, 45, 0.22);
+  overflow: hidden;
+}
+.omt-donation-card-inner {
+  position: relative;
+  border-radius: 2rem;
+  border: 1px solid var(--wp--preset--color--slate-200, #e2e8f0);
+  background: #ffffff;
+  padding: 2rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+.omt-donation-card-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 2rem;
+  background: linear-gradient(135deg, rgba(220, 252, 231, 0.6), rgba(255, 255, 255, 0.9));
+  opacity: 0.8;
+  pointer-events: none;
+}
+.omt-donation-stat {
+  border-radius: 1.5rem;
+  padding: 1rem;
+}
+.omt-donation-stat--trees {
+  background: rgba(220, 252, 231, 0.6);
+}
+.omt-donation-stat--community {
+  background: rgba(241, 245, 249, 1);
+}
+.omt-donation-stat-label {
+  font-size: 0.875rem;
+  margin: 0;
+}
+.omt-donation-stat-value {
+  font-size: 1.875rem;
+  font-weight: 600;
+  margin: 0.5rem 0 0;
+  line-height: 1;
+}
+.omt-donation-impact {
+  border-radius: 1.5rem;
+  background: rgba(22, 163, 74, 0.1);
+  padding: 1rem;
+  font-size: 0.875rem;
+  color: var(--wp--preset--color--forest-700, #15803d);
+}
+.omt-donation-impact p { margin: 0; }
+.omt-donation-impact-title { font-weight: 600; margin-bottom: 0.5rem; }
+.omt-donation-submit {
+  width: 100%;
+  padding: 1rem 1.5rem;
+  background: var(--wp--preset--color--forest-600, #16a34a);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 1.5rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+  transition: background-color 0.25s ease;
+}
+.omt-donation-submit:hover { background: var(--wp--preset--color--forest-700, #15803d); }
+
+/* =========================================================
+   22. Map marker (projects page interactive map)
+   ========================================================= */
+.omt-map-marker {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  background: linear-gradient(135deg, #4ade80, #16a34a);
+  border-radius: 9999px;
+  box-shadow: 0 6px 18px rgba(20, 83, 45, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+  border: none;
+  padding: 0;
+}
+.omt-map-marker:hover { transform: translate(-50%, -50%) scale(1.15); }
+.omt-map-marker svg { width: 1rem; height: 1rem; color: #fff; }
+.omt-map-marker-pulse {
+  position: absolute;
+  inset: -0.5rem;
+  border: 2px solid var(--wp--preset--color--forest-400, #4ade80);
+  border-radius: 9999px;
+  opacity: 0.4;
+  animation: omt-marker-pulse 2s ease-in-out infinite;
+}
+@keyframes omt-marker-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.4); opacity: 0.1; }
+}
+
+/* =========================================================
+   23. FAQ accordion
+   ========================================================= */
+.omt-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  text-align: left;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--wp--preset--color--foreground, #0f172a);
+  padding: 0.75rem 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.omt-faq-trigger:hover {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.omt-faq-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+}
+.omt-faq-content {
+  font-size: 0.95rem;
+  color: rgba(15, 23, 42, 0.7);
+  line-height: 1.6;
+  padding-top: 0.5rem;
+}
+.omt-faq-content[hidden] { display: none; }
+
+/* =========================================================
+   24. Mobile menu toggle (header)
+   ========================================================= */
+.omt-menu-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--wp--preset--color--foreground, #0f172a);
+  cursor: pointer;
+}
+.omt-menu-toggle svg { width: 1.5rem; height: 1.5rem; }
+@media (min-width: 1024px) {
+  .omt-menu-toggle { display: none; }
+}
+
+/* =========================================================
+   25. Misc utilities (used by templates)
+   ========================================================= */
+.omt-blob {
+  position: absolute;
+  width: 32rem;
+  height: 32rem;
+  background: rgba(34, 197, 94, 0.15);
+  border-radius: 9999px;
+  filter: blur(80px);
+  pointer-events: none;
+}
+.omt-text-balance { text-wrap: balance; }
+.omt-text-pretty { text-wrap: pretty; }
+.omt-truncate-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* =========================================================
+   26. Enhanced Glass Effects (Next.js mirroring)
+   ========================================================= */
+.glass-card {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+.glass {
+  background-color: rgba(20, 83, 45, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: white;
+}
+.gradient-bg {
+  background: linear-gradient(180deg, #f8fbf7 0%, #ffffff 100%);
+}
+
+/* =========================================================
+   27. Decorative Patterns (Next.js mirroring)
+   ========================================================= */
+.leaf-pattern {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='60' height='60'><path d='M30 6 C 14 18 14 42 30 54 C 46 42 46 18 30 6 Z' fill='none' stroke='%2316a34a' stroke-opacity='0.25' stroke-width='1'/></svg>");
+  background-size: 60px 60px;
+}
+.omt-noise-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+.page-header-texture {
+  background:
+    radial-gradient(1200px 600px at 50% 0%, rgba(34, 197, 94, 0.12), transparent 60%),
+    radial-gradient(800px 400px at 50% 100%, rgba(34, 197, 94, 0.08), transparent 60%);
+}
+
+/* =========================================================
+   28. Enhanced Shadow System (Next.js mirroring)
+   ========================================================= */
+.shadow-soft { box-shadow: 0 6px 24px rgba(20, 83, 45, 0.08); }
+.shadow-medium { box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18); }
+.shadow-elevated { box-shadow: 0 18px 48px rgba(20, 83, 45, 0.22); }
+
+/* =========================================================
+   29. Enhanced Layout Utilities (Next.js mirroring)
+   ========================================================= */
+.omt-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.omt-hero-content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  padding: 5rem 1rem;
+}
+@media (min-width: 640px) {
+  .omt-hero-content { padding: 8rem 3rem; }
+}
+@media (min-width: 1024px) {
+  .omt-hero-content { padding: 8rem 5rem; }
+}
+.omt-section {
+  position: relative;
+  width: 100%;
+  padding: 5rem 1rem;
+  overflow: hidden;
+}
+@media (min-width: 640px) {
+  .omt-section { padding: 8rem 3rem; }
+}
+@media (min-width: 1024px) {
+  .omt-section { padding: 8rem 5rem; }
+}
+.omt-card {
+  background: #ffffff;
+  border: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 6px 24px rgba(20, 83, 45, 0.08);
+}
+@media (min-width: 640px) {
+  .omt-card { padding: 1.75rem; }
+}
+.omt-card-featured {
+  background: var(--wp--preset--color--white, #ffffff);
+  border: 1px solid var(--wp--preset--color--earth-200, #e8e1d2);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+}
+.omt-grid-2 {
+  display: grid;
+  gap: 1rem;
+}
+.omt-grid-3 {
+  display: grid;
+  gap: 1rem;
+}
+.omt-grid-4 {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 640px) {
+  .omt-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .omt-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+  .omt-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .omt-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .omt-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.omt-section-heading {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+@media (min-width: 640px) {
+  .omt-section-heading { margin-bottom: 5rem; }
+}
+.omt-section-heading h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.15;
+  color: var(--wp--preset--color--foreground, #0f172a);
+  margin: 0.5rem 0 1rem;
+}
+.omt-section-heading p {
+  font-size: 1rem;
+  color: rgba(15, 23, 42, 0.6);
+  max-width: 42rem;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+@media (min-width: 640px) {
+  .omt-section-heading p { font-size: 1.125rem; }
+}
+
+/* =========================================================
+   30. Icon Components (Next.js mirroring)
+   ========================================================= */
+.omt-icon-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.75rem;
+  background: var(--wp--preset--color--forest-100, #dcfce7);
+  flex-shrink: 0;
+}
+.omt-icon-badge svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.omt-icon-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: var(--wp--preset--color--forest-100, #dcfce7);
+  border: 1px solid var(--wp--preset--color--forest-200, #bbf7d0);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--wp--preset--color--forest-700, #15803d);
+}
+.omt-icon-pill svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+
+/* =========================================================
+   31. Hero Specific Styles (Next.js mirroring)
+   ========================================================= */
+.omt-hero-full {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.omt-hero-background {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 120%;
+  top: -10%;
+}
+.omt-hero-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.omt-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2), rgba(248, 250, 252, 0.8));
+}
+.omt-hero-overlay-side {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.3), transparent, rgba(255, 255, 255, 0.3));
+}
+.omt-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--wp--preset--color--forest-200, #bbf7d0);
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.1);
+}
+.omt-hero-badge img {
+  height: 1.5rem;
+  width: auto;
+}
+@media (min-width: 640px) {
+  .omt-hero-badge img { height: 2rem; }
+}
+.omt-hero-stat-card {
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border: 1px solid var(--wp--preset--color--forest-100, #dcfce7);
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.1);
+}
+@media (min-width: 640px) {
+  .omt-hero-stat-card { padding: 1rem 1.5rem; }
+}
+.omt-hero-stat-value {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--wp--preset--color--forest-600, #16a34a);
+  margin-bottom: 0.25rem;
+}
+@media (min-width: 640px) {
+  .omt-hero-stat-value { font-size: 1.875rem; }
+}
+@media (min-width: 768px) {
+  .omt-hero-stat-value { font-size: 2.25rem; }
+}
+.omt-hero-stat-label {
+  font-size: 0.75rem;
+  color: rgba(15, 23, 42, 0.6);
+}
+@media (min-width: 640px) {
+  .omt-hero-stat-label { font-size: 0.875rem; }
+}
+
+/* =========================================================
+   32. Hero Pattern Specific Utilities
+   ========================================================= */
+.custom-full-width img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.omt-hero-content > .wp-block-group {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* =========================================================
+   33. Donation Pattern Specific Utilities
+   ========================================================= */
+.page-header-texture .wp-block-group[style*="position:absolute"] {
+  position: absolute !important;
+}
+.page-header-texture .wp-block-group[style*="pointer-events:none"] {
+  pointer-events: none !important;
+}
+.omt-donation-card {
+  max-width: 100%;
+  margin: 0 auto;
+}
+@media (min-width: 768px) {
+  .omt-donation-card {
+    max-width: 400px;
+  }
+}
+
+/* =========================================================
+   34. Navigation Scroll States
+   ========================================================= */
+.site-navigation.is-scrolled {
+  background: rgba(255, 255, 255, 1) !important;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border-bottom: 1px solid var(--wp--preset--color--earth-200, #e2e8f0);
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.site-navigation:not(.is-scrolled) {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), transparent);
+}
+
+@media (max-width: 767px) {
+  .site-navigation:not(.is-scrolled) {
+    background: #ffffff;
+  }
+}
+
+/* Remove gap above navbar when scrolled */
+.site-navigation.is-scrolled {
+  top: 0 !important;
+}
+
+/* Tailwind utility classes for navigation */
+.bg-white\/98 {
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.backdrop-blur-xl {
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.border-earth-200 {
+  border-color: var(--wp--preset--color--earth-200, #e2e8f0);
+}
+
+.shadow-medium {
+  box-shadow: 0 10px 32px rgba(20, 83, 45, 0.18);
+}
+
+.md\:bg-gradient-to-b {
+  background: linear-gradient(to bottom, var(--tw-gradient-stops));
+}
+
+.md\:from-white\/90 {
+  --tw-gradient-from: rgba(255, 255, 255, 0.9);
+  --tw-gradient-to: rgba(255, 255, 255, 0);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+}
+
+/* =========================================================
+   36. Tailwind CSS Variable Mapping for Gutenberg
+   ========================================================= */
+/* Text Colors */
+.text-foreground {
+  color: var(--wp--preset--color--foreground, #0f172a);
+}
+.text-foreground\/70 {
+  color: rgba(15, 23, 42, 0.7);
+}
+.text-foreground\/50 {
+  color: rgba(15, 23, 42, 0.5);
+}
+.text-foreground\/40 {
+  color: rgba(15, 23, 42, 0.4);
+}
+.text-forest-600 {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.text-forest-700 {
+  color: var(--wp--preset--color--forest-700, #15803d);
+}
+.text-forest-300 {
+  color: var(--wp--preset--color--forest-300, #86efac);
+}
+.text-forest-200 {
+  color: var(--wp--preset--color--forest-200, #bbf7d0);
+}
+.text-white {
+  color: #ffffff;
+}
+
+/* Background Colors */
+.bg-white {
+  background-color: #ffffff;
+}
+.bg-forest-600 {
+  background-color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.bg-forest-700 {
+  background-color: var(--wp--preset--color--forest-700, #15803d);
+}
+.bg-forest-900 {
+  background-color: var(--wp--preset--color--forest-900, #14532d);
+}
+.bg-forest-950 {
+  background-color: var(--wp--preset--color--forest-950, #052e16);
+}
+.bg-background {
+  background-color: var(--wp--preset--color--background, #ffffff);
+}
+.bg-earth-50 {
+  background-color: var(--wp--preset--color--earth-50, #f8fafc);
+}
+.bg-forest-50 {
+  background-color: var(--wp--preset--color--forest-50, #f0fdf4);
+}
+
+/* Border Colors */
+.border-earth-200 {
+  border-color: var(--wp--preset--color--earth-200, #e2e8f0);
+}
+.border-forest-500 {
+  border-color: var(--wp--preset--color--forest-500, #22c55e);
+}
+.border-forest-200 {
+  border-color: var(--wp--preset--color--forest-200, #bbf7d0);
+}
+.border-forest-300 {
+  border-color: var(--wp--preset--color--forest-300, #86efac);
+}
+.border-forest-800 {
+  border-color: var(--wp--preset--color--forest-800, #166534);
+}
+
+/* Text Sizes */
+.text-xs {
+  font-size: 0.75rem;
+}
+.text-sm {
+  font-size: 0.875rem;
+}
+.text-base {
+  font-size: 1rem;
+}
+.text-lg {
+  font-size: 1.125rem;
+}
+.text-xl {
+  font-size: 1.25rem;
+}
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+/* Font Weights */
+.font-medium {
+  font-weight: 500;
+}
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
+
+/* Spacing */
+.p-2 {
+  padding: 0.5rem;
+}
+.p-3 {
+  padding: 0.75rem;
+}
+.p-4 {
+  padding: 1rem;
+}
+.p-6 {
+  padding: 1.5rem;
+}
+.p-8 {
+  padding: 2rem;
+}
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+}
+.px-6 {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+.py-2\.5 {
+  padding-top: 0.625rem;
+  padding-bottom: 0.625rem;
+}
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.py-6 {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+.py-16 {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+/* Margin */
+.mt-0 {
+  margin-top: 0;
+}
+.mt-3 {
+  margin-top: 0.75rem;
+}
+.mt-4 {
+  margin-top: 1rem;
+}
+.mt-6 {
+  margin-top: 1.5rem;
+}
+.mb-1 {
+  margin-bottom: 0.25rem;
+}
+.mb-4 {
+  margin-bottom: 1rem;
+}
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+.mb-8 {
+  margin-bottom: 2rem;
+}
+.mb-12 {
+  margin-bottom: 3rem;
+}
+.mb-16 {
+  margin-bottom: 4rem;
+}
+.mb-20 {
+  margin-bottom: 5rem;
+}
+.mb-24 {
+  margin-bottom: 6rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
+.mr-4 {
+  margin-right: 1rem;
+}
+.ml-2 {
+  margin-left: 0.5rem;
+}
+.ml-4 {
+  margin-left: 1rem;
+}
+
+/* Flexbox */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.flex-row {
+  flex-direction: row;
+}
+.items-center {
+  align-items: center;
+}
+.items-start {
+  align-items: flex-start;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-left {
+  justify-content: flex-start;
+}
+.gap-2 {
+  gap: 0.5rem;
+}
+.gap-3 {
+  gap: 0.75rem;
+}
+.gap-4 {
+  gap: 1rem;
+}
+.gap-6 {
+  gap: 1.5rem;
+}
+.gap-8 {
+  gap: 2rem;
+}
+.gap-12 {
+  gap: 3rem;
+}
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-nowrap {
+  flex-wrap: nowrap;
+}
+.flex-1 {
+  flex: 1 1 0%;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+}
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+.grid-cols-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.grid-cols-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.grid-cols-6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+/* Position */
+.fixed {
+  position: fixed;
+}
+.absolute {
+  position: absolute;
+}
+.relative {
+  position: relative;
+}
+.top-0 {
+  top: 0;
+}
+.left-0 {
+  left: 0;
+}
+.right-0 {
+  right: 0;
+}
+.bottom-0 {
+  bottom: 0;
+}
+.bottom-4 {
+  bottom: 1rem;
+}
+.bottom-full {
+  bottom: 100%;
+}
+
+/* Sizing */
+.w-full {
+  width: 100%;
+}
+.w-auto {
+  width: auto;
+}
+@media (min-width: 640px) {
+  .sm\:w-auto {
+    width: auto;
+  }
+}
+.h-16 {
+  height: 4rem;
+}
+.h-20 {
+  height: 5rem;
+}
+.h-6 {
+  height: 1.5rem;
+}
+.h-8 {
+  height: 2rem;
+}
+.h-10 {
+  height: 2.5rem;
+}
+.h-1\/2 {
+  height: 50%;
+}
+.min-h-screen {
+  min-height: 100vh;
+}
+.max-w-xs {
+  max-width: 20rem;
+}
+.max-w-sm {
+  max-width: 24rem;
+}
+.max-w-md {
+  max-width: 28rem;
+}
+.max-w-lg {
+  max-width: 32rem;
+}
+.max-w-xl {
+  max-width: 36rem;
+}
+.max-w-7xl {
+  max-width: 80rem;
+}
+
+/* Rounded */
+.rounded-full {
+  border-radius: 9999px;
+}
+.rounded-xl {
+  border-radius: 0.75rem;
+}
+.rounded-2xl {
+  border-radius: 1rem;
+}
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+/* Transitions */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.transition-colors {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.transition-transform {
+  transition-property: transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+.duration-300 {
+  transition-duration: 300ms;
+}
+.duration-500 {
+  transition-duration: 500ms;
+}
+.ease {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Opacity */
+.opacity-10 {
+  opacity: 0.1;
+}
+.opacity-90 {
+  opacity: 0.9;
+}
+.opacity-95 {
+  opacity: 0.95;
+}
+.opacity-98 {
+  opacity: 0.98;
+}
+
+/* Display */
+.hidden {
+  display: none;
+}
+.block {
+  display: block;
+}
+.inline-block {
+  display: inline-block;
+}
+.inline-flex {
+  display: inline-flex;
+}
+
+/* Overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Z-Index */
+.z-50 {
+  z-index: 50;
+}
+.z-60 {
+  z-index: 60;
+}
+.z-70 {
+  z-index: 70;
+}
+
+/* Line Height */
+.leading-snug {
+  line-height: 1.375;
+}
+
+/* Letter Spacing */
+.tracking-wider {
+  letter-spacing: 0.025em;
+}
+.uppercase {
+  text-transform: uppercase;
+}
+
+/* Text Alignment */
+.text-center {
+  text-align: center;
+}
+.text-left {
+  text-align: left;
+}
+
+/* Cursor */
+.pointer-events-none {
+  pointer-events: none;
+}
+
+/* White Space */
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
+/* Transform */
+.scale-105 {
+  transform: scale(1.05);
+}
+
+/* Flex Shrink */
+.flex-shrink-0 {
+  flex-shrink: 0;
+}
+
+/* Min Width */
+.min-w-0 {
+  min-width: 0;
+}
+
+/* Shadow */
+.shadow-soft {
+  box-shadow: 0 4px 14px rgba(20, 83, 45, 0.1);
+}
+.shadow-elevated {
+  box-shadow: 0 20px 40px rgba(20, 83, 45, 0.2);
+}
+
+/* Gap for specific elements */
+.space-y-3 > * + * {
+  margin-top: 0.75rem;
+}
+.space-y-4 > * + * {
+  margin-top: 1rem;
+}
+.space-x-3 > * + * {
+  margin-left: 0.75rem;
+}
+
+/* Line Clamp */
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Hover States */
+.hover\:text-forest-600:hover {
+  color: var(--wp--preset--color--forest-600, #16a34a);
+}
+.hover\:bg-forest-700:hover {
+  background-color: var(--wp--preset--color--forest-700, #15803d);
+}
+.hover\:bg-forest-50:hover {
+  background-color: var(--wp--preset--color--forest-50, #f0fdf4);
+}
+.hover\:border-forest-300:hover {
+  border-color: var(--wp--preset--color--forest-300, #86efac);
+}
+.hover\:shadow-elevated:hover {
+  box-shadow: 0 20px 40px rgba(20, 83, 45, 0.2);
+}
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+/* Focus States */
+.focus\:border-forest-500:focus {
+  border-color: var(--wp--preset--color--forest-500, #22c55e);
+}
+.focus\:outline-none:focus {
+  outline: none;
+}
+.focus\:ring-2:focus {
+  box-shadow: 0 0 0 2px var(--wp--preset--color--forest-200, #bbf7d0);
+}
+
+/* Responsive Utilities */
+@media (min-width: 640px) {
+  .sm\:px-6 {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  .sm\:w-auto {
+    width: auto;
+  }
+  .sm\:h-10 {
+    height: 2.5rem;
+  }
+  .sm\:text-xs {
+    font-size: 0.75rem;
+  }
+  .sm\:text-lg {
+    font-size: 1.125rem;
+  }
+  .sm\:flex-row {
+    flex-direction: row;
+  }
+  .sm\:w-64 {
+    width: 16rem;
+  }
+  .sm\:line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+@media (min-width: 768px) {
+  .md\:hidden {
+    display: none;
+  }
+  .md\:flex {
+    display: flex;
+  }
+  .md\:bg-transparent {
+    background: transparent;
+  }
+  .md\:bg-gradient-to-b {
+    background: linear-gradient(to bottom, var(--tw-gradient-stops));
+  }
+  .md\:from-white\/90 {
+    --tw-gradient-from: rgba(255, 255, 255, 0.9);
+    --tw-gradient-to: rgba(255, 255, 255, 0);
+    --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
+  }
+  .md\:to-transparent {
+    --tw-gradient-to: transparent;
+  }
+  .md\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .md\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .md\:col-span-1 {
+    grid-column: span 1 / span 1;
+  }
+  .md\:col-span-4 {
+    grid-column: span 4 / span 4;
+  }
+  .md\:flex-row {
+    flex-direction: row;
+  }
+  .md\:items-center {
+    align-items: center;
+  }
+  .md\:justify-between {
+    justify-content: space-between;
+  }
+  .md\:p-8 {
+    padding: 2rem;
+  }
+  .md\:py-6 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  .md\:text-xl {
+    font-size: 1.25rem;
+  }
+  .md\:mb-0 {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:px-12 {
+    padding-left: 3rem;
+    padding-right: 3rem;
+  }
+  .lg\:gap-12 {
+    gap: 3rem;
+  }
+  .lg\:grid-cols-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+  .lg\:text-sm {
+    font-size: 0.875rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .xl\:px-20 {
+    padding-left: 5rem;
+    padding-right: 5rem;
+  }
+  .xl\:text-sm {
+    font-size: 0.875rem;
+  }
+}
+
+/* =========================================================
+   35. Animated Underline for Navigation Links
+   ========================================================= */
+.animated-underline {
+  position: relative;
+}
+.animated-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--wp--preset--color--forest-600, #16a34a);
+  transition: width 0.3s ease;
+}
+.animated-underline:hover::after {
+  width: 100%;
+}
