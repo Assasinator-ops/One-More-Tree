@@ -92,6 +92,48 @@ function one_more_tree_register_rest_routes() {
         'callback'            => 'one_more_tree_rest_admin_newsletter_add',
         'permission_callback' => 'one_more_tree_rest_admin_permission',
     ]);
+
+    // 11. Debug/Analysis Endpoint
+    register_rest_route($namespace, '/admin/debug', [
+        'methods'             => 'GET',
+        'callback'            => 'one_more_tree_rest_admin_debug',
+        'permission_callback' => 'one_more_tree_rest_admin_permission',
+    ]);
+
+    // 12. CRUD Delete Endpoint
+    register_rest_route($namespace, '/admin/data/delete', [
+        'methods'             => 'POST',
+        'callback'            => 'one_more_tree_rest_admin_data_delete',
+        'permission_callback' => 'one_more_tree_rest_admin_permission',
+    ]);
+
+    // 13. Maintenance Endpoint (Direct mirror of /api/admin/maintenance)
+    register_rest_route($namespace, '/admin/maintenance', [
+        [
+            'methods'             => 'GET',
+            'callback'            => 'one_more_tree_rest_admin_maintenance_get',
+            'permission_callback' => '__return_true',
+        ],
+        [
+            'methods'             => 'POST',
+            'callback'            => 'one_more_tree_rest_admin_maintenance_post',
+            'permission_callback' => 'one_more_tree_rest_admin_permission',
+        ],
+    ]);
+
+    // 14. Under Construction Endpoint (Direct mirror of /api/admin/under-construction)
+    register_rest_route($namespace, '/admin/under-construction', [
+        [
+            'methods'             => 'GET',
+            'callback'            => 'one_more_tree_rest_admin_under_construction_get',
+            'permission_callback' => '__return_true',
+        ],
+        [
+            'methods'             => 'POST',
+            'callback'            => 'one_more_tree_rest_admin_under_construction_post',
+            'permission_callback' => 'one_more_tree_rest_admin_permission',
+        ],
+    ]);
 }
 add_action('rest_api_init', 'one_more_tree_register_rest_routes');
 
@@ -100,6 +142,87 @@ add_action('rest_api_init', 'one_more_tree_register_rest_routes');
  */
 function one_more_tree_rest_admin_permission() {
     return current_user_can('manage_options') || current_user_can('edit_posts');
+}
+
+function one_more_tree_admin_data_key_allowed($key) {
+    return in_array($key, [
+        'home_counters',
+        'impact_kpis',
+        'hero',
+        'mission',
+        'about_hero',
+        'about_values',
+        'about_deliverables',
+        'testimonials',
+        'stories',
+        'live_map',
+        'faq',
+        'donation_tiers',
+        'donate_hero',
+        'disclaimer',
+        'social',
+        'site_identity',
+        'nav_labels',
+        'footer',
+        'volunteer_page',
+        'contact_page',
+        'contact_submissions',
+        'newsletter_subscribers',
+        'modules',
+        'blog_settings',
+        'team',
+        'debug',
+        'maintenance',
+        'under_construction',
+    ], true);
+}
+
+function one_more_tree_normalize_live_map($value) {
+    $locations = is_array($value['locations'] ?? null) ? $value['locations'] : [];
+    $used_ids = [];
+    $normalized = [];
+
+    foreach ($locations as $location) {
+        if (!is_array($location)) continue;
+        $name = sanitize_text_field($location['name'] ?? 'Project');
+        $id = sanitize_title($location['id'] ?? '') ?: sanitize_title($name) ?: 'project';
+        $base_id = $id;
+        $suffix = 2;
+        while (isset($used_ids[$id])) {
+            $id = $base_id . '-' . $suffix++;
+        }
+        $used_ids[$id] = true;
+
+        $coords = is_array($location['coords'] ?? null) ? $location['coords'] : [];
+        $images = is_array($location['progressImages'] ?? null) ? $location['progressImages'] : [];
+        $normalized_images = [];
+        foreach ($images as $image) {
+            if (!is_array($image)) continue;
+            $normalized_images[] = [
+                'title' => sanitize_text_field($image['title'] ?? ''),
+                'description' => sanitize_textarea_field($image['description'] ?? ''),
+                'image' => esc_url_raw($image['image'] ?? ($image['image_url'] ?? '')),
+                'date' => sanitize_text_field($image['date'] ?? ''),
+            ];
+        }
+
+        $normalized[] = [
+            'id' => $id,
+            'name' => $name,
+            'region' => sanitize_text_field($location['region'] ?? ''),
+            'description' => sanitize_textarea_field($location['description'] ?? ''),
+            'coords' => [
+                'x' => sanitize_text_field($coords['x'] ?? '50%'),
+                'y' => sanitize_text_field($coords['y'] ?? '50%'),
+            ],
+            'treesPlanted' => max(0, (int) ($location['treesPlanted'] ?? 0)),
+            'volunteers' => max(0, (int) ($location['volunteers'] ?? 0)),
+            'status' => sanitize_text_field($location['status'] ?? ''),
+            'progressImages' => $normalized_images,
+        ];
+    }
+
+    return ['locations' => $normalized];
 }
 
 /**
@@ -512,6 +635,8 @@ function one_more_tree_get_default_admin_data($key) {
             'default_author_bio'   => 'Written by the OneMoreTree team.',
         ],
         'volunteer_submissions' => [],
+        'maintenance' => false,
+        'under_construction' => false,
     ];
 
     return $defaults[$key] ?? null;
@@ -524,6 +649,9 @@ function one_more_tree_rest_admin_data_get($request) {
     $key = sanitize_key($request->get_param('key'));
     if (empty($key)) {
         return new WP_Error('missing_key', 'Key parameter is required.', ['status' => 400]);
+    }
+    if (!one_more_tree_admin_data_key_allowed($key)) {
+        return new WP_Error('invalid_key', 'This administrator data key is not available.', ['status' => 400]);
     }
 
     $option_name = 'omt_admin_' . $key;
@@ -553,8 +681,17 @@ function one_more_tree_rest_admin_data_post($request) {
     if (empty($key)) {
         return new WP_Error('missing_key', 'Key parameter is required.', ['status' => 400]);
     }
+    if (!one_more_tree_admin_data_key_allowed($key)) {
+        return new WP_Error('invalid_key', 'This administrator data key is not available.', ['status' => 400]);
+    }
 
     $option_name = 'omt_admin_' . $key;
+    if ($key === 'live_map') {
+        $value = one_more_tree_normalize_live_map($value);
+    }
+    if ($key === 'maintenance' || $key === 'under_construction') {
+        $value = (bool)$value;
+    }
     update_option($option_name, $value);
 
     return rest_ensure_response([
@@ -703,3 +840,184 @@ function one_more_tree_rest_admin_newsletter_add($request) {
     update_option('omt_admin_newsletter_subscribers', $subscribers);
     return rest_ensure_response(['ok' => true, 'message' => 'Subscriber added.']);
 }
+
+/**
+ * Debug/Analysis Endpoint
+ */
+function one_more_tree_rest_admin_debug($request) {
+    global $wpdb;
+
+    $analysis = [
+        'availability' => [
+            'site_status' => [
+                'is_active' => get_option('blog_public') === '1',
+                'maintenance_mode' => (bool)get_option('omt_admin_maintenance', false) || wp_is_maintenance_mode(),
+                'under_construction' => (bool)get_option('omt_admin_under_construction', false),
+                'wp_debug' => defined('WP_DEBUG') && WP_DEBUG,
+            ],
+            'theme_status' => [
+                'active_theme' => get_stylesheet(),
+                'theme_version' => wp_get_theme()->get('Version'),
+                'theme_support' => [
+                    'custom_logo' => current_theme_supports('custom-logo'),
+                    'post-thumbnails' => current_theme_supports('post-thumbnails'),
+                ],
+            ],
+            'plugin_status' => [
+                'active_plugins' => get_option('active_plugins', []),
+                'acf_active' => is_plugin_active('advanced-custom-fields/acf.php') || is_plugin_active('advanced-custom-fields-pro/acf.php'),
+            ],
+        ],
+        'security' => [
+            'user_capabilities' => [
+                'current_user_id' => get_current_user_id(),
+                'current_user_roles' => wp_get_current_user()->roles,
+                'manage_options' => current_user_can('manage_options'),
+                'edit_posts' => current_user_can('edit_posts'),
+            ],
+            'api_security' => [
+                'rest_authentication' => rest_authorization_required_code(),
+                'nonce_available' => wp_verify_nonce(wp_create_nonce('wp_rest'), 'wp_rest'),
+            ],
+            'https_status' => [
+                'is_ssl' => is_ssl(),
+                'force_ssl' => get_option('force_ssl_admin'),
+            ],
+        ],
+        'data_metadata' => [
+            'options_table' => [
+                'omt_options_count' => $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->options} WHERE option_name LIKE 'omt_%'"),
+                'omt_options_size' => $wpdb->get_var("SELECT SUM(LENGTH(option_value)) FROM {$wpdb->options} WHERE option_name LIKE 'omt_%'"),
+            ],
+            'admin_data_keys' => [
+                'home_counters' => get_option('omt_admin_home_counters'),
+                'hero' => get_option('omt_admin_hero'),
+                'live_map' => get_option('omt_admin_live_map'),
+                'impact_kpis' => get_option('omt_admin_impact_kpis'),
+                'contact_submissions' => get_option('omt_admin_contact_submissions'),
+                'newsletter_subscribers' => get_option('omt_admin_newsletter_subscribers'),
+            ],
+            'acf_fields_status' => [
+                'acf_installed' => class_exists('ACF'),
+                'acf_groups_count' => function_exists('acf_get_field_groups') ? count(acf_get_field_groups()) : 0,
+            ],
+        ],
+        'counts' => [
+            'data' => [
+                'total_admin_options' => count(get_option('omt_admin_home_counters')) + count(get_option('omt_admin_hero')) + count(get_option('omt_admin_live_map')),
+                'contact_submissions' => count(get_option('omt_admin_contact_submissions', [])),
+                'newsletter_subscribers' => count(get_option('omt_admin_newsletter_subscribers', [])),
+                'live_map_locations' => count(get_option('omt_admin_live_map')['locations'] ?? []),
+            ],
+            'info' => [
+                'posts_count' => wp_count_posts()->publish,
+                'pages_count' => wp_count_posts('page')->publish,
+                'users_count' => count_users()['total_users'],
+            ],
+            'sections' => [
+                'registered_pages' => ['home', 'about', 'projects', 'impact', 'faq', 'get-involved', 'volunteer', 'contact', 'donate'],
+                'acf_templates' => ['front-page', 'page-about', 'page-projects', 'page-impact', 'page-faq', 'page-get-involved', 'page-volunteer', 'page-contact', 'page-donate'],
+            ],
+            'earnings' => [
+                'donation_tiers' => count(get_option('omt_admin_donation_tiers', [])),
+                'note' => 'Earnings tracking not implemented - donation data available via tiers',
+            ],
+        ],
+        'concurrency' => [
+            'active_sessions' => [
+                'current_time' => current_time('mysql'),
+                'timestamp' => time(),
+                'user_session' => wp_get_session_token(),
+            ],
+            'database_connections' => [
+                'wpdb_state' => method_exists($wpdb, 'db_connect') ? 'connected' : 'unknown',
+                'query_count' => $wpdb->num_queries,
+            ],
+            'cache_status' => [
+                'object_cache' => wp_using_ext_object_cache(),
+                'page_cache' => wp_cache_get('page_cache_check') !== false,
+            ],
+        ],
+        'health_check' => [
+            'critical_issues' => [],
+            'warnings' => [],
+            'recommendations' => [],
+        ],
+    ];
+
+    // Health checks
+    if ($analysis['availability']['theme_status']['active_theme'] !== 'one-more-tree') {
+        $analysis['health_check']['critical_issues'][] = 'One More Tree theme not active';
+    }
+    if (!$analysis['security']['https_status']['is_ssl']) {
+        $analysis['health_check']['warnings'][] = 'Site not using HTTPS';
+    }
+    if (!$analysis['availability']['plugin_status']['acf_active']) {
+        $analysis['health_check']['warnings'][] = 'ACF plugin not active';
+    }
+
+    return rest_ensure_response([
+        'ok' => true,
+        'timestamp' => current_time('mysql'),
+        'analysis' => $analysis,
+    ]);
+}
+
+/**
+ * CRUD Delete Endpoint
+ */
+function one_more_tree_rest_admin_data_delete($request) {
+    $params = $request->get_json_params();
+    $key = sanitize_key($params['key'] ?? '');
+
+    if (empty($key)) {
+        return new WP_Error('missing_key', 'Key parameter is required.', ['status' => 400]);
+    }
+    if (!one_more_tree_admin_data_key_allowed($key)) {
+        return new WP_Error('invalid_key', 'This administrator data key is not available for deletion.', ['status' => 400]);
+    }
+
+    $option_name = 'omt_admin_' . $key;
+    $deleted = delete_option($option_name);
+
+    if ($deleted) {
+        return rest_ensure_response([
+            'ok' => true,
+            'message' => "Deleted {$key} successfully",
+            'deletedAt' => current_time('mysql'),
+        ]);
+    } else {
+        return new WP_Error('delete_failed', "Failed to delete {$key} or it does not exist.", ['status' => 400]);
+    }
+}
+
+/**
+ * Dedicated Maintenance GET/POST Callbacks
+ */
+function one_more_tree_rest_admin_maintenance_get() {
+    $enabled = (bool)get_option('omt_admin_maintenance', false);
+    return rest_ensure_response(['ok' => true, 'enabled' => $enabled]);
+}
+
+function one_more_tree_rest_admin_maintenance_post($request) {
+    $params = $request->get_json_params();
+    $enabled = isset($params['enabled']) ? (bool)$params['enabled'] : false;
+    update_option('omt_admin_maintenance', $enabled);
+    return rest_ensure_response(['ok' => true, 'enabled' => $enabled]);
+}
+
+/**
+ * Dedicated Under Construction GET/POST Callbacks
+ */
+function one_more_tree_rest_admin_under_construction_get() {
+    $enabled = (bool)get_option('omt_admin_under_construction', false);
+    return rest_ensure_response(['ok' => true, 'enabled' => $enabled]);
+}
+
+function one_more_tree_rest_admin_under_construction_post($request) {
+    $params = $request->get_json_params();
+    $enabled = isset($params['enabled']) ? (bool)$params['enabled'] : false;
+    update_option('omt_admin_under_construction', $enabled);
+    return rest_ensure_response(['ok' => true, 'enabled' => $enabled]);
+}
+

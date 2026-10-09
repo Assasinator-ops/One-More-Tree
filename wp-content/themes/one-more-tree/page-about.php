@@ -142,9 +142,18 @@ get_header();
         ['value' => '15+', 'label' => 'Community partners'],
         ['value' => '4', 'label' => 'Active Spanish regions'],
     ];
-    $team_section_title = !empty($admin_team['sectionTitle']) ? $admin_team['sectionTitle'] : get_acf_field('team_section_badge', 'Our Team');
+    if (empty($admin_team['stats']) && isset($admin_team['stat1_val'], $admin_team['stat1_label'])) {
+      $team_stats = [];
+      for ($i = 1; $i <= 3; $i++) {
+        $team_stats[] = [
+          'value' => $admin_team["stat{$i}_val"] ?? '',
+          'label' => $admin_team["stat{$i}_label"] ?? '',
+        ];
+      }
+    }
+    $team_section_title = !empty($admin_team['sectionTitle']) ? $admin_team['sectionTitle'] : (!empty($admin_team['badge']) ? $admin_team['badge'] : get_acf_field('team_section_badge', 'Our Team'));
     $team_headline = !empty($admin_team['headline']) ? $admin_team['headline'] : get_acf_field('team_headline', 'People who make planting real');
-    $team_description = !empty($admin_team['description']) ? $admin_team['description'] : get_acf_field('team_description', 'From field work to reporting, our team and partners keep restoration accountable and alive.');
+    $team_description = !empty($admin_team['description']) ? $admin_team['description'] : (!empty($admin_team['subtitle']) ? $admin_team['subtitle'] : get_acf_field('team_description', 'From field work to reporting, our team and partners keep restoration accountable and alive.'));
     ?>
     <section id="team" class="relative min-h-[65vh] w-full py-20 sm:py-32 overflow-hidden gradient-bg">
       <div class="absolute inset-0 leaf-pattern opacity-20"></div>

@@ -65,7 +65,8 @@ function one_more_tree_setup() {
         'menu_position'       => 5,
         'menu_icon'           => 'dashicons-palmtree',
         'supports'            => ['title', 'editor', 'thumbnail', 'excerpt', 'custom-fields', 'revisions'],
-        'rewrite'             => ['slug' => 'projects'],
+        // Keep the page slug /projects reserved for the public projects template.
+        'rewrite'             => ['slug' => 'project'],
     ]);
 }
 add_action('after_setup_theme', 'one_more_tree_setup');
@@ -134,6 +135,22 @@ function one_more_tree_scripts() {
         true
     );
 
+    // Enqueue block patterns CSS for Gutenberg support
+    wp_enqueue_style(
+        'one-more-tree-block-patterns',
+        get_template_directory_uri() . '/assets/css/block-patterns.css',
+        [],
+        _S_VERSION
+    );
+
+    // Enqueue block styles CSS
+    wp_enqueue_style(
+        'one-more-tree-block-styles',
+        get_template_directory_uri() . '/assets/css/block-styles.css',
+        [],
+        _S_VERSION
+    );
+
     // Localize script data
     wp_localize_script('one-more-tree-main', 'omtData', [
         'ajaxUrl'   => admin_url('admin-ajax.php'),
@@ -163,6 +180,137 @@ require_once get_template_directory() . '/inc/template-functions.php';
 require_once get_template_directory() . '/inc/acf-fields.php';
 require_once get_template_directory() . '/inc/admin-api.php';
 require_once get_template_directory() . '/inc/wp-admin-settings.php';
+require_once get_template_directory() . '/inc/admin-debug-page.php';
+require_once get_template_directory() . '/inc/shortcodes.php';
+require_once get_template_directory() . '/inc/block-patterns.php';
+
+// Register block style variations
+function one_more_tree_register_block_styles() {
+    // Group block styles
+    register_block_style('core/group', [
+        'name'  => 'glass-card',
+        'label' => __('Glass Card', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'forest-gradient',
+        'label' => __('Forest Gradient', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'stat-card',
+        'label' => __('Stat Card', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'value-card',
+        'label' => __('Value Card', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'donation-tier',
+        'label' => __('Donation Tier', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'newsletter-card',
+        'label' => __('Newsletter Card', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'counter-card',
+        'label' => __('Counter Card', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'testimonial-card',
+        'label' => __('Testimonial Card', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/group', [
+        'name'  => 'section-gradient',
+        'label' => __('Section Gradient', 'one-more-tree'),
+    ]);
+    
+    // Heading styles
+    register_block_style('core/heading', [
+        'name'  => 'hero-text',
+        'label' => __('Hero Text', 'one-more-tree'),
+    ]);
+    
+    // Button styles
+    register_block_style('core/button', [
+        'name'  => 'forest-button',
+        'label' => __('Forest Button', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/button', [
+        'name'  => 'glass-button',
+        'label' => __('Glass Button', 'one-more-tree'),
+    ]);
+
+    register_block_style('core/button', [
+        'name'  => 'outline',
+        'label' => __('Outline Button', 'one-more-tree'),
+    ]);
+
+    // Separator styles
+    register_block_style('core/separator', [
+        'name'  => 'forest-separator',
+        'label' => __('Forest Separator', 'one-more-tree'),
+    ]);
+    
+    // Column styles
+    register_block_style('core/columns', [
+        'name'  => 'value-grid',
+        'label' => __('Value Grid', 'one-more-tree'),
+    ]);
+
+    register_block_style('core/column', [
+        'name'  => 'value-card',
+        'label' => __('Value Card', 'one-more-tree'),
+    ]);
+
+    // Paragraph styles
+    register_block_style('core/paragraph', [
+        'name'  => 'lead-text',
+        'label' => __('Lead Text', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/paragraph', [
+        'name'  => 'small-text',
+        'label' => __('Small Text', 'one-more-tree'),
+    ]);
+    
+    // Separator styles
+    register_block_style('core/separator', [
+        'name'  => 'forest-separator',
+        'label' => __('Forest Separator', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/separator', [
+        'name'  => 'gradient-separator',
+        'label' => __('Gradient Separator', 'one-more-tree'),
+    ]);
+    
+    // Quote styles
+    register_block_style('core/quote', [
+        'name'  => 'testimonial-quote',
+        'label' => __('Testimonial Quote', 'one-more-tree'),
+    ]);
+    
+    // Image styles
+    register_block_style('core/image', [
+        'name'  => 'rounded-image',
+        'label' => __('Rounded Image', 'one-more-tree'),
+    ]);
+    
+    register_block_style('core/image', [
+        'name'  => 'shadow-image',
+        'label' => __('Shadow Image', 'one-more-tree'),
+    ]);
+}
+add_action('init', 'one_more_tree_register_block_styles');
 
 /**
  * Page Templates declaration
@@ -188,14 +336,66 @@ add_filter('theme_page_templates', 'one_more_tree_page_templates');
 function one_more_tree_admin_rewrite_rules() {
     add_rewrite_rule('^administrator/?$', 'index.php?omt_administrator=1', 'top');
     add_rewrite_rule('^admin/?$', 'index.php?omt_administrator=1', 'top');
+    add_rewrite_rule('^maintenance/?$', 'index.php?omt_maintenance_page=1', 'top');
 }
 add_action('init', 'one_more_tree_admin_rewrite_rules');
 
 function one_more_tree_query_vars($vars) {
     $vars[] = 'omt_administrator';
+    $vars[] = 'omt_maintenance_page';
     return $vars;
 }
 add_filter('query_vars', 'one_more_tree_query_vars');
+
+/**
+ * Maintenance Mode Interceptor
+ * Serves 503 maintenance page when maintenance mode is active.
+ * Allows logged-in administrators (God Mode) and exempt routes (/admin, wp-login, etc.)
+ */
+function one_more_tree_maintenance_interceptor() {
+    $request_path = trim(parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH), '/');
+
+    // 1. If someone explicitly visits /maintenance, serve the template
+    if ($request_path === 'maintenance' || get_query_var('omt_maintenance_page')) {
+        require get_template_directory() . '/maintenance.php';
+        exit;
+    }
+
+    // 2. If administrator view, don't intercept
+    if ($request_path === 'administrator' || $request_path === 'admin' || get_query_var('omt_administrator')) {
+        return;
+    }
+
+    // 3. Exclude admin areas, wp-login, cron, CLI, REST API calls
+    if (is_admin() || (defined('DOING_CRON') && DOING_CRON) || (defined('WP_CLI') && WP_CLI)) {
+        return;
+    }
+    if (isset($GLOBALS['pagenow']) && $GLOBALS['pagenow'] === 'wp-login.php') {
+        return;
+    }
+    if (defined('REST_REQUEST') && REST_REQUEST) {
+        return;
+    }
+
+    // 4. Check if maintenance mode is enabled
+    $maintenance_enabled = (bool)get_option('omt_admin_maintenance', false);
+    if (!$maintenance_enabled) {
+        return;
+    }
+
+    // 5. God Mode / Admin bypass: authenticated admins can view the live site
+    if (is_user_logged_in() && (current_user_can('manage_options') || current_user_can('edit_posts'))) {
+        return;
+    }
+
+    // 6. Serve maintenance screen with 503 Service Unavailable
+    status_header(503);
+    nocache_headers();
+    header('Retry-After: 3600');
+    require get_template_directory() . '/maintenance.php';
+    exit;
+}
+add_action('template_redirect', 'one_more_tree_maintenance_interceptor', 5);
 
 function one_more_tree_admin_template_redirect() {
     if (get_query_var('omt_administrator')) {
@@ -206,11 +406,21 @@ function one_more_tree_admin_template_redirect() {
 add_action('template_redirect', 'one_more_tree_admin_template_redirect');
 
 /**
- * FORCE TEMPLATE ROUTING
- * Ensures that specific slugs always use their dedicated PHP templates, 
- * bypassing Gutenberg or database-level template assignments.
+ * HYBRID TEMPLATE ROUTING
+ * Allows choosing between PHP templates (default) and Gutenberg per page
+ * Pages with 'use_gutenberg' meta will use default WordPress template routing
+ * Other pages will use forced PHP templates for consistency
  */
 add_filter('template_include', function($template) {
+    global $post;
+    
+    // Check if current page is set to use Gutenberg
+    if ($post && get_post_meta($post->ID, 'use_gutenberg', true) === '1') {
+        // Let WordPress handle template routing for Gutenberg pages
+        return $template;
+    }
+    
+    // Force PHP templates for pages not using Gutenberg
     $routes = [
         'projects'     => 'page-projects.php',
         'about'        => 'page-about.php',
@@ -232,11 +442,73 @@ add_filter('template_include', function($template) {
 });
 
 /**
- * DISABLE GUTENBERG (BLOCK EDITOR)
- * Switches the admin editor back to the Classic editor to prevent 
- * block-based content from overriding custom PHP layouts.
+ * HYBRID SYSTEM: ADD META BOX FOR GUTENBERG TOGGLE
+ * Adds a meta box to page editor to enable/disable Gutenberg per page
  */
-add_filter('use_block_editor_for_post', '__return_false', 10);
+function one_more_tree_add_gutenberg_meta_box() {
+    add_meta_box(
+        'omt_gutenberg_toggle',
+        __('Template System', 'one-more-tree'),
+        'one_more_tree_gutenberg_meta_box_callback',
+        'page',
+        'side',
+        'default'
+    );
+}
+add_action('add_meta_boxes', 'one_more_tree_add_gutenberg_meta_box');
+
+function one_more_tree_gutenberg_meta_box_callback($post) {
+    wp_nonce_field('omt_gutenberg_nonce', 'omt_gutenberg_nonce');
+    $use_gutenberg = get_post_meta($post->ID, 'use_gutenberg', true);
+    ?>
+    <p>
+        <label>
+            <input type="checkbox" name="use_gutenberg" value="1" <?php checked($use_gutenberg, '1'); ?>>
+            <?php _e('Use Gutenberg Block Editor', 'one-more-tree'); ?>
+        </label>
+    </p>
+    <p class="description">
+        <?php _e('Check to use Gutenberg block editor instead of PHP template. Uncheck to use PHP template (default).', 'one-more-tree'); ?>
+    </p>
+    <?php
+}
+
+function one_more_tree_save_gutenberg_meta($post_id) {
+    if (!isset($_POST['omt_gutenberg_nonce']) || !wp_verify_nonce($_POST['omt_gutenberg_nonce'], 'omt_gutenberg_nonce')) {
+        return;
+    }
+    
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    $use_gutenberg = isset($_POST['use_gutenberg']) ? '1' : '0';
+    update_post_meta($post_id, 'use_gutenberg', $use_gutenberg);
+}
+add_action('save_post', 'one_more_tree_save_gutenberg_meta');
+
+/**
+ * HYBRID SYSTEM: CONDITIONAL GUTENBERG DISABLE
+ * Allows choosing between PHP templates (default) and Gutenberg per page
+ * Set page meta 'use_gutenberg' to true to enable Gutenberg for specific pages
+ */
+function one_more_tree_conditional_gutenberg($use_block_editor, $post) {
+    // Check if page has meta to enable Gutenberg
+    $use_gutenberg = get_post_meta($post->ID, 'use_gutenberg', true);
+    
+    // If explicitly set to use Gutenberg, enable it
+    if ($use_gutenberg === '1' || $use_gutenberg === true) {
+        return true;
+    }
+    
+    // Otherwise, disable Gutenberg for PHP templates (default)
+    return false;
+}
+add_filter('use_block_editor_for_post', 'one_more_tree_conditional_gutenberg', 10, 2);
 
 /**
  * ENSURE ROUTE EXISTENCE
@@ -287,6 +559,11 @@ function one_more_tree_provision_default_pages() {
 
     $home_page_id = 0;
     $blog_page_id = 0;
+    $page_author = get_current_user_id();
+    if (!$page_author) {
+        $administrators = get_users(['role' => 'administrator', 'number' => 1, 'fields' => 'ID']);
+        $page_author = !empty($administrators[0]) ? (int) $administrators[0] : 0;
+    }
 
     foreach ($pages as $p) {
         $existing = get_page_by_path($p['slug']);
@@ -297,7 +574,7 @@ function one_more_tree_provision_default_pages() {
                 'post_status'  => 'publish',
                 'post_type'    => 'page',
                 'post_name'    => $p['slug'],
-                'post_author'  => 1,
+                'post_author'  => $page_author,
             ]);
             if ($page_id && !is_wp_error($page_id)) {
                 update_post_meta($page_id, '_wp_page_template', $p['template']);
@@ -334,11 +611,25 @@ function omt_newsletter_subscribe_handler() {
     if (!is_email($email)) {
         wp_send_json_error(['message' => 'Please enter a valid email address.']);
     }
-    $subscribers = get_option('omt_newsletter_subscribers', []);
+    $subscribers = get_option('omt_admin_newsletter_subscribers', []);
     if (!is_array($subscribers)) $subscribers = [];
-    if (!in_array($email, $subscribers)) {
-        $subscribers[] = $email;
-        update_option('omt_newsletter_subscribers', $subscribers);
+    $exists = false;
+    foreach ($subscribers as $subscriber) {
+        $existing_email = is_array($subscriber) ? ($subscriber['email'] ?? '') : $subscriber;
+        if (strtolower((string) $existing_email) === strtolower($email)) {
+            $exists = true;
+            break;
+        }
+    }
+    if (!$exists) {
+        array_unshift($subscribers, [
+            'id'        => uniqid('nl_'),
+            'email'     => $email,
+            'date'      => current_time('mysql'),
+            'timestamp' => time(),
+            'status'    => 'active',
+        ]);
+        update_option('omt_admin_newsletter_subscribers', array_slice($subscribers, 0, 1000));
     }
     wp_send_json_success(['message' => 'Thanks for subscribing!']);
 }
@@ -359,15 +650,20 @@ function omt_contact_submit_handler() {
         wp_send_json_error(['message' => 'Please enter a valid email address.']);
     }
 
-    $inbox = get_option('omt_contact_messages', []);
+    $inbox = get_option('omt_admin_contact_submissions', []);
     if (!is_array($inbox)) $inbox = [];
-    $inbox[] = [
+    array_unshift($inbox, [
+        'id'        => uniqid('sub_'),
         'name'      => $name,
         'email'     => $email,
         'message'   => $message,
+        'interest'  => 'General Contact',
+        'type'      => 'contact',
         'date'      => current_time('mysql'),
-    ];
-    update_option('omt_contact_messages', $inbox);
+        'timestamp' => time(),
+        'status'    => 'unread',
+    ]);
+    update_option('omt_admin_contact_submissions', array_slice($inbox, 0, 500));
 
     wp_send_json_success(['message' => 'Message sent! We saved it to the admin inbox.']);
 }
@@ -388,15 +684,20 @@ function omt_volunteer_submit_handler() {
         wp_send_json_error(['message' => 'Please enter a valid email address.']);
     }
 
-    $volunteers = get_option('omt_volunteer_signups', []);
-    if (!is_array($volunteers)) $volunteers = [];
-    $volunteers[] = [
+    $submissions = get_option('omt_admin_contact_submissions', []);
+    if (!is_array($submissions)) $submissions = [];
+    array_unshift($submissions, [
+        'id'        => uniqid('vol_'),
         'name'      => $name,
         'email'     => $email,
         'interest'  => $interest,
+        'message'   => "Volunteer Interest: {$interest}",
+        'type'      => 'volunteer',
         'date'      => current_time('mysql'),
-    ];
-    update_option('omt_volunteer_signups', $volunteers);
+        'timestamp' => time(),
+        'status'    => 'unread',
+    ]);
+    update_option('omt_admin_contact_submissions', array_slice($submissions, 0, 500));
 
     wp_send_json_success(['message' => 'Thank you for signing up to volunteer! We will reach out with nearby planting events.']);
 }

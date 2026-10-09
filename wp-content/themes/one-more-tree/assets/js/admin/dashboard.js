@@ -88,7 +88,11 @@ window.AdminDashboard = class AdminDashboard {
 
     escapeHtml(unsafe) {
         if (unsafe === null || unsafe === undefined) return '';
-        return String(unsafe).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        try {
+            return String(unsafe).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        } catch(e) {
+            return String(unsafe);
+        }
     }
 
     safeValue(value) {
@@ -401,22 +405,24 @@ window.AdminDashboard = class AdminDashboard {
     }
 
     async loadProjects() {
-        let data = await this.api.fetchData('projects') || {items:[]};
-        if(!data.items) data.items = [];
+        const mapData = await this.api.fetchData('live_map') || {locations: []};
+        const data = {
+            locations: Array.isArray(mapData.locations) ? mapData.locations : []
+        };
         
         const render = () => {
-            let pHtml = data.items.map((p, i) => `
+            let pHtml = data.locations.map((p, i) => `
                 <div class="p-4 bg-white rounded-2xl border border-earth-200 mb-4">
                     <div class="flex justify-between items-center mb-2">
-                        <h3 class="font-bold">${this.escapeHtml(p.title) || 'New Project'}</h3>
+                        <h3 class="font-bold">${this.escapeHtml(p.name) || 'New Project'}</h3>
                         <button data-idx="${i}" class="del-btn text-xs px-2 py-1 bg-red-100 text-red-600 rounded-full">Delete</button>
                     </div>
                     <div class="grid grid-cols-2 gap-2">
-                        <input id="pj-t-${i}" placeholder="Title" value="${this.escapeHtml(p.title)}" class="px-2 py-1 border rounded">
+                        <input id="pj-t-${i}" placeholder="Title" value="${this.escapeHtml(p.name)}" class="px-2 py-1 border rounded">
                         <input id="pj-r-${i}" placeholder="Region" value="${this.escapeHtml(p.region)}" class="px-2 py-1 border rounded">
-                        <input id="pj-tr-${i}" placeholder="Trees" value="${this.escapeHtml(p.trees)}" class="px-2 py-1 border rounded">
+                        <input id="pj-tr-${i}" placeholder="Trees" value="${this.escapeHtml(p.treesPlanted)}" class="px-2 py-1 border rounded">
                         <input id="pj-s-${i}" placeholder="Status" value="${this.escapeHtml(p.status)}" class="px-2 py-1 border rounded">
-                        <input id="pj-u-${i}" placeholder="Image URL" value="${this.escapeHtml(p.image_url)}" class="px-2 py-1 border rounded col-span-2">
+                        <input id="pj-u-${i}" placeholder="Primary image URL" value="${this.escapeHtml(p.image_url || p.image || p.progressImages?.[0]?.image || '')}" class="px-2 py-1 border rounded col-span-2">
                         <textarea id="pj-d-${i}" placeholder="Description" class="px-2 py-1 border rounded col-span-2">${this.escapeHtml(p.description)}</textarea>
                     </div>
                 </div>
@@ -431,23 +437,44 @@ window.AdminDashboard = class AdminDashboard {
                 </div>`;
 
             const sync = () => {
-                data.items = data.items.map((_, i) => ({
-                    title: document.getElementById(`pj-t-${i}`).value,
-                    region: document.getElementById(`pj-r-${i}`).value,
-                    trees: document.getElementById(`pj-tr-${i}`).value,
-                    status: document.getElementById(`pj-s-${i}`).value,
-                    image_url: document.getElementById(`pj-u-${i}`).value,
-                    description: document.getElementById(`pj-d-${i}`).value
-                }));
+                data.locations = data.locations.map((location, i) => {
+                    const imageUrl = document.getElementById(`pj-u-${i}`).value;
+                    const progressImages = Array.isArray(location.progressImages) ? [...location.progressImages] : [];
+                    if (imageUrl) {
+                        progressImages[0] = { ...(progressImages[0] || {}), image: imageUrl };
+                    }
+                    return {
+                        ...location,
+                        name: document.getElementById(`pj-t-${i}`).value,
+                        region: document.getElementById(`pj-r-${i}`).value,
+                        treesPlanted: document.getElementById(`pj-tr-${i}`).value,
+                        status: document.getElementById(`pj-s-${i}`).value,
+                        description: document.getElementById(`pj-d-${i}`).value,
+                        progressImages
+                    };
+                });
             };
 
-            document.getElementById('add-p').addEventListener('click', () => { sync(); data.items.push({}); render(); });
+            document.getElementById('add-p').addEventListener('click', () => {
+                sync();
+                data.locations.push({
+                    id: `project-${Date.now()}`,
+                    name: '',
+                    region: '',
+                    coords: { x: '50%', y: '50%' },
+                    treesPlanted: 0,
+                    volunteers: 0,
+                    description: '',
+                    progressImages: []
+                });
+                render();
+            });
             document.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', (e) => {
-                sync(); data.items.splice(e.target.dataset.idx, 1); render();
+                sync(); data.locations.splice(e.target.dataset.idx, 1); render();
             }));
             document.getElementById('sv').addEventListener('click', async () => {
                 sync();
-                const res = await this.api.saveData('projects', data);
+                const res = await this.api.saveData('live_map', data);
                 this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
             });
         };
@@ -695,7 +722,7 @@ window.AdminDashboard = class AdminDashboard {
 
     async loadNavLabels() {
         let data = await this.api.fetchData('nav_labels') || {};
-        const fields = Array.from({length:10}, (_, i) => `nav_link_${i+1}`).concat(['cta_text', 'cta_url']);
+        const fields = ['home', 'about', 'projects', 'impact', 'faq', 'get_involved', 'volunteer', 'contact', 'donate', 'cta_text', 'cta_url'];
         this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Nav Labels</h2>
             <div class="grid gap-4 sm:grid-cols-2">${fields.map(f => this.textInput(f, f, data[f])).join('')}</div>
             <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
@@ -804,16 +831,177 @@ window.AdminDashboard = class AdminDashboard {
     }
 
     async loadModuleStatus() {
-        let data = await this.api.fetchData('modules') || {};
+        let [modulesData, maintenanceData, underConstructionData] = await Promise.all([
+            this.api.fetchData('modules', true) || {},
+            this.api.fetchData('maintenance', true),
+            this.api.fetchData('under_construction', true)
+        ]);
+
+        let modules = modulesData || {};
+        let maintenanceEnabled = Boolean(maintenanceData);
+        let underConstructionEnabled = Boolean(underConstructionData);
+
         const toggles = ['home_hero', 'home_counters', 'home_story', 'home_donation', 'home_testimonials', 'live_map', 'impact_story', 'faq_section'];
-        this.moduleContent.innerHTML = `<div class="space-y-6 animate-in fade-in"><h2 class="font-serif text-2xl font-bold">Module Visibility</h2>
-            <div class="grid gap-4 sm:grid-cols-2">${toggles.map(t => this.checkboxInput(`mod-${t}`, t, data[t])).join('')}</div>
-            <div class="flex justify-end"><button id="sv" class="px-6 py-2.5 bg-forest-600 text-white rounded-full text-sm">Save</button></div><div id="tst"></div></div>`;
-        document.getElementById('sv').addEventListener('click', async () => {
-            toggles.forEach(t => data[t] = document.getElementById(`mod-${t}`).checked);
-            const res = await this.api.saveData('modules', data);
-            this.api.showToast('tst', res.ok?'Saved':'Error', res.ok);
-        });
+
+        const render = () => {
+            this.moduleContent.innerHTML = `
+                <div class="space-y-6 animate-in fade-in">
+                    <div>
+                        <h2 class="font-serif text-2xl font-bold text-foreground">Module Visibility</h2>
+                        <p class="text-foreground/70 mt-1 text-sm">
+                            Enable or disable page-level modules and sections. This controls whether the public UI renders each area.
+                        </p>
+                    </div>
+
+                    <!-- Global website maintenance card -->
+                    <div class="rounded-3xl border border-earth-200 bg-white/70 p-5 sm:p-6 shadow-sm">
+                        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <h3 class="font-semibold text-foreground text-base sm:text-lg">Global website maintenance</h3>
+                                <p class="text-foreground/70 mt-1 text-sm max-w-xl">
+                                    Disable the whole public website and show a maintenance page. Admin routes remain available while maintenance mode is active.
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                id="toggle-maintenance-btn"
+                                class="${
+                                    maintenanceEnabled
+                                        ? 'rounded-2xl bg-forest-600 px-5 py-3 text-white hover:bg-forest-700 transition font-medium text-sm whitespace-nowrap shadow-sm'
+                                        : 'rounded-2xl bg-red-600 px-5 py-3 text-white hover:bg-red-700 transition font-medium text-sm whitespace-nowrap shadow-sm'
+                                }"
+                            >
+                                ${maintenanceEnabled ? 'Enable public website' : 'Disable public website'}
+                            </button>
+                        </div>
+                        <div class="mt-4 text-sm text-foreground/70">
+                            ${
+                                maintenanceEnabled
+                                    ? 'Maintenance mode is active. Only /administrator and admins can view the site.'
+                                    : 'Public pages are live. Click the button to disable them and show a maintenance page.'
+                            }
+                        </div>
+                        <div id="maintenance-toast" class="hidden mt-3 text-xs font-semibold px-4 py-2.5 rounded-xl border"></div>
+                    </div>
+
+                    <!-- Under construction watermark card -->
+                    <div class="rounded-3xl border border-earth-200 bg-white/70 p-5 sm:p-6 shadow-sm">
+                        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                            <div>
+                                <h3 class="font-semibold text-foreground text-base sm:text-lg">Under construction watermark</h3>
+                                <p class="text-foreground/70 mt-1 text-sm max-w-xl">
+                                    Show an "Under Construction" watermark on the website. Users can still navigate the site normally, but it will be marked as preview only.
+                                </p>
+                            </div>
+                            <button
+                                type="button"
+                                id="toggle-watermark-btn"
+                                class="${
+                                    underConstructionEnabled
+                                        ? 'rounded-2xl bg-forest-600 px-5 py-3 text-white hover:bg-forest-700 transition font-medium text-sm whitespace-nowrap shadow-sm'
+                                        : 'rounded-2xl bg-amber-600 px-5 py-3 text-white hover:bg-amber-700 transition font-medium text-sm whitespace-nowrap shadow-sm'
+                                }"
+                            >
+                                ${underConstructionEnabled ? 'Disable watermark' : 'Enable watermark'}
+                            </button>
+                        </div>
+                        <div class="mt-4 text-sm text-foreground/70">
+                            ${
+                                underConstructionEnabled
+                                    ? 'Watermark is active. Website shows "Under Construction" overlay to visitors.'
+                                    : 'Watermark is disabled. Website appears normally to visitors.'
+                            }
+                        </div>
+                        <div id="watermark-toast" class="hidden mt-3 text-xs font-semibold px-4 py-2.5 rounded-xl border"></div>
+                    </div>
+
+                    <!-- Section modules card -->
+                    <div class="rounded-3xl border border-earth-200 bg-white/70 p-5 sm:p-6 shadow-sm">
+                        <h3 class="font-semibold text-foreground text-base sm:text-lg mb-3">Page Sections</h3>
+                        <div class="grid gap-4 sm:grid-cols-2">
+                            ${toggles.map(t => this.checkboxInput(`mod-${t}`, t.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()), modules[t])).join('')}
+                        </div>
+                        <div class="flex justify-end mt-6">
+                            <button id="sv-modules" class="px-6 py-2.5 bg-forest-600 hover:bg-forest-700 text-white rounded-full text-sm font-medium transition shadow-sm">Save Sections</button>
+                        </div>
+                        <div id="tst-modules" class="mt-2"></div>
+                    </div>
+                </div>
+            `;
+
+            // Maintenance Toggle Event
+            const mBtn = document.getElementById('toggle-maintenance-btn');
+            if (mBtn) {
+                mBtn.addEventListener('click', async () => {
+                    mBtn.disabled = true;
+                    mBtn.textContent = 'Updating…';
+                    const next = !maintenanceEnabled;
+                    const res = await this.api.saveData('maintenance', next);
+                    if (res && res.ok) {
+                        maintenanceEnabled = next;
+                        render();
+                        const toast = document.getElementById('maintenance-toast');
+                        if (toast) {
+                            toast.className = 'mt-3 text-xs font-semibold px-4 py-2.5 rounded-xl border bg-forest-50 text-forest-800 border-forest-200 block';
+                            toast.textContent = next
+                                ? 'Maintenance mode enabled. Public pages will now show the maintenance page.'
+                                : 'Maintenance mode disabled. Public website is live again.';
+                        }
+                    } else {
+                        mBtn.disabled = false;
+                        const toast = document.getElementById('maintenance-toast');
+                        if (toast) {
+                            toast.className = 'mt-3 text-xs font-semibold px-4 py-2.5 rounded-xl border bg-red-50 text-red-800 border-red-200 block';
+                            toast.textContent = res.error || 'Failed to update maintenance status.';
+                        }
+                    }
+                });
+            }
+
+            // Watermark Toggle Event
+            const wBtn = document.getElementById('toggle-watermark-btn');
+            if (wBtn) {
+                wBtn.addEventListener('click', async () => {
+                    wBtn.disabled = true;
+                    wBtn.textContent = 'Updating…';
+                    const next = !underConstructionEnabled;
+                    const res = await this.api.saveData('under_construction', next);
+                    if (res && res.ok) {
+                        underConstructionEnabled = next;
+                        render();
+                        const toast = document.getElementById('watermark-toast');
+                        if (toast) {
+                            toast.className = 'mt-3 text-xs font-semibold px-4 py-2.5 rounded-xl border bg-forest-50 text-forest-800 border-forest-200 block';
+                            toast.textContent = next
+                                ? 'Under construction watermark enabled. Website will show preview watermark.'
+                                : 'Under construction watermark disabled. Website is fully live.';
+                        }
+                    } else {
+                        wBtn.disabled = false;
+                        const toast = document.getElementById('watermark-toast');
+                        if (toast) {
+                            toast.className = 'mt-3 text-xs font-semibold px-4 py-2.5 rounded-xl border bg-red-50 text-red-800 border-red-200 block';
+                            toast.textContent = res.error || 'Failed to update watermark status.';
+                        }
+                    }
+                });
+            }
+
+            // Sections Save Event
+            const sBtn = document.getElementById('sv-modules');
+            if (sBtn) {
+                sBtn.addEventListener('click', async () => {
+                    toggles.forEach(t => {
+                        const el = document.getElementById(`mod-${t}`);
+                        if (el) modules[t] = el.checked;
+                    });
+                    const res = await this.api.saveData('modules', modules);
+                    this.api.showToast('tst-modules', res.ok ? 'Sections saved successfully' : 'Error saving sections', res.ok);
+                });
+            }
+        };
+
+        render();
     }
 
     async loadBlog() {

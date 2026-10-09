@@ -117,16 +117,25 @@ $admin_map = get_option('omt_admin_live_map');
 $raw_locs = !empty($admin_map['locations']) ? $admin_map['locations'] : ($admin_map ?: []);
 if (!empty($raw_locs) && is_array($raw_locs)) {
     // Merge admin data (name, region, description, treesPlanted, volunteers) over defaults
-    $locations = array_map(function($admin_loc) use ($default_locations) {
+    $locations = array_map(function($admin_loc, $index) use ($default_locations) {
+      $admin_loc = is_array($admin_loc) ? $admin_loc : [];
         $default = null;
         foreach ($default_locations as $d) {
-            if (($d['id'] ?? '') === ($admin_loc['id'] ?? '')) {
+        if (($d['id'] ?? '') === ($admin_loc['id'] ?? '') || ($d['name'] ?? '') === ($admin_loc['name'] ?? '')) {
                 $default = $d;
                 break;
             }
         }
-        return array_merge($default ?? $default_locations[0], (array)$admin_loc);
-    }, $raw_locs);
+      $location = array_merge($default ?? [], $admin_loc);
+      $location['id'] = !empty($admin_loc['id'])
+        ? sanitize_title($admin_loc['id'])
+        : (sanitize_title($admin_loc['name'] ?? '') ?: 'location-' . ($index + 1));
+      $location['coords'] = is_array($location['coords'] ?? null) ? $location['coords'] : ['x' => '50%', 'y' => '50%'];
+      $location['coords']['x'] = $location['coords']['x'] ?? '50%';
+      $location['coords']['y'] = $location['coords']['y'] ?? '50%';
+      $location['progressImages'] = is_array($location['progressImages'] ?? null) ? $location['progressImages'] : [];
+      return $location;
+    }, $raw_locs, array_keys($raw_locs));
 } else {
     $locations = $default_locations;
 }

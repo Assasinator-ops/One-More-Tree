@@ -12,7 +12,7 @@ get_header();
 // Pull ALL impact data from unified admin options
 $admin_kpis        = get_option('omt_admin_impact_kpis', []);
 $admin_goal        = get_option('omt_admin_impact_goal', []);
-$admin_stories     = get_option('omt_admin_impact_stories', []);
+$admin_stories     = get_option('omt_admin_impact_stories', get_option('omt_admin_stories', []));
 $admin_counters    = get_option('omt_admin_home_counters', []);
 
 // Goal progress (from omt_admin_impact_goal)

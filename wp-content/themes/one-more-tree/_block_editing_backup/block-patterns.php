@@ -654,3 +654,4 @@ function one_more_tree_register_block_patterns() {
     );
 }
 add_action('init', 'one_more_tree_register_block_patterns');
+*/

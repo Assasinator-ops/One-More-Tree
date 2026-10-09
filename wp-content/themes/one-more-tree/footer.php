@@ -163,6 +163,31 @@ $newsletter_enabled = get_option('omt_newsletter_enabled', '1') === '1' || get_o
         </div>
       </div>
     </footer>
+
+    <?php
+    $omt_under_construction = (bool)get_option('omt_admin_under_construction', false);
+    $omt_identity           = get_option('omt_admin_site_identity', []);
+    $omt_logo_url           = !empty($omt_identity['logo_url']) ? esc_url($omt_identity['logo_url']) : get_template_directory_uri() . '/assets/images/logo.png';
+    if ($omt_under_construction && !get_query_var('omt_administrator')):
+    ?>
+    <!-- Under Construction Watermark - Exact mirror of Next.js UnderConstructionWatermark.tsx -->
+    <div id="under-construction-watermark" class="fixed inset-0 pointer-events-none z-50 flex items-center justify-center" aria-hidden="true">
+      <div class="flex flex-col items-center justify-center opacity-20 select-none text-center px-4">
+        <img 
+          src="<?php echo esc_url($omt_logo_url); ?>" 
+          alt="One More Tree Logo" 
+          class="w-64 h-64 sm:w-96 sm:h-96 object-contain"
+        />
+        <div class="mt-4 text-4xl sm:text-6xl font-bold text-foreground tracking-wider uppercase">
+          UNDER CONSTRUCTION
+        </div>
+        <div class="mt-2 text-xl sm:text-2xl text-foreground/80">
+          Preview Only
+        </div>
+      </div>
+    </div>
+    <?php endif; ?>
+
 </div><!-- #page -->
 
 <?php wp_footer(); ?>

@@ -47,6 +47,11 @@ add_filter('excerpt_more', 'one_more_tree_excerpt_more');
  */
 function one_more_tree_seed_sample_posts() {
     $existing = get_posts(['numberposts' => 1, 'post_type' => 'post', 'post_status' => 'publish']);
+    $seed_author = get_current_user_id();
+    if (!$seed_author) {
+        $administrators = get_users(['role' => 'administrator', 'number' => 1, 'fields' => 'ID']);
+        $seed_author = !empty($administrators[0]) ? (int) $administrators[0] : 0;
+    }
     // If only the default "Hello world!" post exists or no posts
     if (count($existing) <= 1 && (!empty($existing) && $existing[0]->post_name === 'hello-world' || empty($existing))) {
         // Delete default hello world post
@@ -160,7 +165,7 @@ function one_more_tree_seed_sample_posts() {
                     'post_excerpt'  => $post_data['excerpt'],
                     'post_status'   => 'publish',
                     'post_type'     => 'post',
-                    'post_author'   => 1,
+                    'post_author'   => $seed_author,
                     'post_category' => $cat_id ? [$cat_id] : [],
                 ]);
             }

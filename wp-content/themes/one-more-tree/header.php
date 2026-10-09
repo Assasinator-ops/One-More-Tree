@@ -39,7 +39,7 @@
     <!-- Disclaimer Ribbon - Exact mirror of Next.js PublicChrome / DisclaimerRibbon -->
     <?php
     $omt_disclaimer = get_option('omt_admin_disclaimer');
-    $disclaimer_show = isset($omt_disclaimer['show']) ? (bool)$omt_disclaimer['show'] : true;
+    $disclaimer_show = isset($omt_disclaimer['enabled']) ? (bool)$omt_disclaimer['enabled'] : true;
     $disclaimer_msg  = !empty($omt_disclaimer['message'])
         ? $omt_disclaimer['message']
         : '🌳 OneMoreTree NGO is a volunteer-led initiative. All donations go directly to tree planting, site restoration, and community programs. We are a registered non-profit — receipts are issued on request.';

@@ -1,0 +1,411 @@
+/**
+ * Block Style Variations
+ * 
+ * Predefined style variations for core Gutenberg blocks
+ * These styles can be applied via the block inspector in the editor
+ */
+
+/* ========================================
+   Glass Card Style
+   ======================================== */
+
+.wp-block-group.is-style-glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+/* ========================================
+   Forest Gradient Style
+   ======================================== */
+
+.wp-block-group.is-style-forest-gradient {
+  background: linear-gradient(135deg, #15803d 0%, #16a34a 50%, #059669 100%);
+  color: white;
+  border-radius: 1rem;
+  padding: 2rem;
+}
+
+.wp-block-group.is-style-forest-gradient h1,
+.wp-block-group.is-style-forest-gradient h2,
+.wp-block-group.is-style-forest-gradient h3,
+.wp-block-group.is-style-forest-gradient h4,
+.wp-block-group.is-style-forest-gradient h5,
+.wp-block-group.is-style-forest-gradient h6 {
+  color: white;
+}
+
+/* ========================================
+   Value Card Style
+   ======================================== */
+
+.wp-block-column.is-style-value-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wp-block-column.is-style-value-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================
+   Forest Separator Style
+   ======================================== */
+
+.wp-block-separator.is-style-forest-separator {
+  border-color: var(--wp--preset--color--forest-200);
+  border-width: 2px;
+  height: 2px;
+  opacity: 0.5;
+}
+
+/* ========================================
+   Outline Button Style
+   ======================================== */
+
+.wp-block-button.is-style-outline .wp-block-button__link {
+  background: transparent;
+  border: 2px solid var(--wp--preset--color--forest-200);
+  color: var(--wp--preset--color--forest-700);
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.wp-block-button.is-style-outline .wp-block-button__link:hover {
+  background: var(--wp--preset--color--forest-50);
+  border-color: var(--wp--preset--color--forest-600);
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   Hero Text Style
+   ======================================== */
+
+.wp-block-heading.is-style-hero-text {
+  font-family: var(--wp--preset--font-family--playfair);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--wp--preset--color--foreground);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Stat Card Style
+   ======================================== */
+
+.wp-block-group.is-style-stat-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wp-block-group.is-style-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Value Card Style
+   ======================================== */
+
+.wp-block-group.is-style-value-card {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(34, 197, 94, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem 1.75rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wp-block-group.is-style-value-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Donation Tier Card Style
+   ======================================== */
+
+.wp-block-group.is-style-donation-tier {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2px solid var(--wp--preset--color--earth-200);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.wp-block-group.is-style-donation-tier:hover {
+  border-color: var(--wp--preset--color--forest-500);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-4px);
+}
+
+.wp-block-group.is-style-donation-tier.selected {
+  border-color: var(--wp--preset--color--forest-600);
+  background: rgba(34, 197, 94, 0.05);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+}
+
+/* ========================================
+   Newsletter Card Style
+   ======================================== */
+
+.wp-block-group.is-style-newsletter-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--wp--preset--color--earth-200);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+}
+
+/* ========================================
+   Counter Card Style
+   ======================================== */
+
+.wp-block-group.is-style-counter-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--wp--preset--color--earth-200);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wp-block-group.is-style-counter-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   Testimonial Card Style
+   ======================================== */
+
+.wp-block-group.is-style-testimonial-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--wp--preset--color--earth-200);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.wp-block-group.is-style-testimonial-card:hover {
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   Section Gradient Style
+   ======================================== */
+
+.wp-block-group.is-style-section-gradient {
+  background: linear-gradient(180deg, #f0fdf4 0%, #e8f5e9 50%, #f8fafc 100%);
+  border-radius: 0;
+  padding: 3rem 0;
+}
+
+/* ========================================
+   Social Link Style
+   ======================================== */
+
+.wp-block-social-link.is-style-social-icon {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid var(--wp--preset--color--earth-200);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+
+.wp-block-social-link.is-style-social-icon:hover {
+  background: var(--wp--preset--color--forest-50);
+  border-color: var(--wp--preset--color--forest-300);
+  transform: translateY(-2px);
+}
+
+/* ========================================
+   Button Variations
+   ======================================== */
+
+.wp-block-button.is-style-forest-button .wp-block-button__link {
+  background: var(--wp--preset--color--forest-600);
+  color: var(--wp--preset--color--white);
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.wp-block-button.is-style-forest-button .wp-block-button__link:hover {
+  background: var(--wp--preset--color--forest-700);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.wp-block-button.is-style-glass-button .wp-block-button__link {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--wp--preset--color--forest-200);
+  color: var(--wp--preset--color--forest-700);
+  border-radius: 9999px;
+  padding: 0.75rem 1.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.wp-block-button.is-style-glass-button .wp-block-button__link:hover {
+  background: var(--wp--preset--color--white);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   Column Layout Variations
+   ======================================== */
+
+.wp-block-columns.is-style-value-grid {
+  gap: 1rem;
+}
+
+@media (min-width: 782px) {
+  .wp-block-columns.is-style-value-grid {
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .wp-block-columns.is-style-value-grid {
+    gap: 2rem;
+  }
+}
+
+/* ========================================
+   Paragraph Variations
+   ======================================== */
+
+.wp-block-paragraph.is-style-lead-text {
+  font-size: var(--wp--preset--font-size--lg);
+  line-height: 1.8;
+  color: var(--wp--preset--color--foreground);
+  opacity: 0.8;
+}
+
+.wp-block-paragraph.is-style-small-text {
+  font-size: var(--wp--preset--font-size--sm);
+  line-height: 1.6;
+  color: var(--wp--preset--color--foreground);
+  opacity: 0.7;
+}
+
+/* ========================================
+   Separator Variations
+   ======================================== */
+
+.wp-block-separator.is-style-forest-separator {
+  border-color: var(--wp--preset--color--forest-200);
+  height: 2px;
+}
+
+.wp-block-separator.is-style-gradient-separator {
+  background: linear-gradient(90deg, transparent, var(--wp--preset--color--forest-400), transparent);
+  height: 2px;
+  border: none;
+}
+
+/* ========================================
+   Quote Variations
+   ======================================== */
+
+.wp-block-quote.is-style-testimonial-quote {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-left: 4px solid var(--wp--preset--color--forest-600);
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.wp-block-quote.is-style-testimonial-quote p {
+  font-size: var(--wp--preset--font-size--lg);
+  line-height: 1.8;
+  font-style: italic;
+  color: var(--wp--preset--color--foreground);
+}
+
+/* ========================================
+   Image Variations
+   ======================================== */
+
+.wp-block-image.is-style-rounded-image img {
+  border-radius: 1rem;
+}
+
+.wp-block-image.is-style-shadow-image img {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 0.5rem;
+}
+
+/* ========================================
+   Editor-only styles
+   ======================================== */
+
+.editor-styles-wrapper .wp-block-group.is-style-glass-card {
+  outline: 2px dashed var(--wp--preset--color--forest-400);
+  outline-offset: 2px;
+}
+
+.editor-styles-wrapper .wp-block-group.is-style-donation-tier:hover {
+  outline: 2px solid var(--wp--preset--color--forest-600);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   Responsive adjustments
+   ======================================== */
+
+@media (max-width: 782px) {
+  .wp-block-group.is-style-value-card,
+  .wp-block-group.is-style-donation-tier {
+    padding: 1rem 1.25rem;
+  }
+  
+  .wp-block-group.is-style-stat-card {
+    padding: 0.75rem 1rem;
+  }
+  
+  .wp-block-button.is-style-forest-button .wp-block-button__link,
+  .wp-block-button.is-style-glass-button .wp-block-button__link {
+    padding: 0.625rem 1.5rem;
+    font-size: var(--wp--preset--font-size--sm);
+  }
+}
