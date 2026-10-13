@@ -1,33 +1,6 @@
 {
   "$schema": "https://schemas.wp.org/trunk/theme.json",
-  "version": 2,
-  "customTemplates": [
-    {
-      "name": "page-home",
-      "title": "Home Page",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-about",
-      "title": "About Page",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-projects",
-      "title": "Projects Page",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "page-contact",
-      "title": "Contact Page",
-      "postTypes": ["page"]
-    },
-    {
-      "name": "single-post",
-      "title": "Single Post",
-      "postTypes": ["post"]
-    }
-  ],
+  "version": 3,
   "templateParts": [
     {
       "name": "header",
@@ -36,18 +9,20 @@
     },
     {
       "name": "footer",
-      "title": "Footer", 
+      "title": "Footer",
       "area": "footer"
+    }
+  ],
+  "customTemplates": [
+    {
+      "name": "page-no-title",
+      "title": "Page (No Title / Hero Canvas)",
+      "postTypes": ["page", "post", "project"]
     },
     {
-      "name": "sidebar",
-      "title": "Sidebar",
-      "area": "uncategorized"
-    },
-    {
-      "name": "comments",
-      "title": "Comments",
-      "area": "uncategorized"
+      "name": "page-canvas",
+      "title": "Full Width Block Canvas",
+      "postTypes": ["page", "post", "project"]
     }
   ],
   "settings": {

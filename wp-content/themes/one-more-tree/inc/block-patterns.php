@@ -19,11 +19,16 @@ function one_more_tree_register_block_patterns() {
         return;
     }
 
-    // Register Category
-    register_block_pattern_category(
-        'one-more-tree',
-        ['label' => __('One More Tree Patterns', 'one-more-tree')]
-    );
+    // Register Granular Pattern Categories
+    register_block_pattern_category('one-more-tree', ['label' => __('One More Tree (All)', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-pages', ['label' => __('OMT: Full Page Templates', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-heroes', ['label' => __('OMT: Heroes & Banners', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-features', ['label' => __('OMT: Features & Values', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-stats', ['label' => __('OMT: Stats & Counters', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-donations', ['label' => __('OMT: Donation Tiers & Impact', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-cta', ['label' => __('OMT: Calls to Action & Newsletters', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-testimonials', ['label' => __('OMT: Testimonials & Quotes', 'one-more-tree')]);
+    register_block_pattern_category('one-more-tree-forms', ['label' => __('OMT: Forms & Signups', 'one-more-tree')]);
 
     $theme_uri = get_template_directory_uri();
 
@@ -1485,6 +1490,44 @@ function one_more_tree_register_block_patterns() {
 <!-- wp:button {"backgroundColor":"forest-600","textColor":"white","className":"is-style-forest-button"} -->
 <div class="wp-block-button"><a class="wp-block-button__link has-white-color has-forest-600-background-color has-text-color has-background wp-element-button is-style-forest-button" href="/get-involved">Donate Now</a></div>
 <!-- /wp:button -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className="md:hidden"} -->
+<div class="wp-block-group md:hidden">
+<!-- wp:button {"style":{},"className":"mobile-menu-toggle"} -->
+<div class="wp-block-button mobile-menu-toggle"><button class="wp-block-button__link" aria-label="Toggle menu">☰</button></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"className="hidden md:hidden absolute top-full left-0 right-0 bg-white border-b-2 border-forest-200"} -->
+<div class="wp-block-group hidden md:hidden absolute top-full left-0 right-0 bg-white border-b-2 border-forest-200">
+<!-- wp:group {"className="px-4 py-6 space-y-4"} -->
+<div class="wp-block-group px-4 py-6 space-y-4">
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem"}}} -->
+<p class="has-text-color" style="font-size:1rem"><a href="/" class="block text-foreground/70 hover:text-forest-600 transition-colors py-2">Home</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem"}}} -->
+<p class="has-text-color" style="font-size:1rem"><a href="/about" class="block text-foreground/70 hover:text-forest-600 transition-colors py-2">About</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem"}}} -->
+<p class="has-text-color" style="font-size:1rem"><a href="/projects" class="block text-foreground/70 hover:text-forest-600 transition-colors py-2">Projects</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem"}}} -->
+<p class="has-text-color" style="font-size:1rem"><a href="/impact" class="block text-foreground/70 hover:text-forest-600 transition-colors py-2">Impact</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem"}}} -->
+<p class="has-text-color" style="font-size:1rem"><a href="/faq" class="block text-foreground/70 hover:text-forest-600 transition-colors py-2">FAQ</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:paragraph {"style":{"typography":{"fontSize":"1rem"}}} -->
+<p class="has-text-color" style="font-size:1rem"><a href="/get-involved" class="block text-foreground/70 hover:text-forest-600 transition-colors py-2">Get Involved</a></p>
+<!-- /wp:paragraph -->
+<!-- wp:button {"backgroundColor":"forest-600","textColor":"white","className":"is-style-forest-button"} -->
+<div class="wp-block-button"><a class="wp-block-button__link has-white-color has-forest-600-background-color has-text-color has-background wp-element-button is-style-forest-button" href="/get-involved">Donate Now</a></div>
+<!-- /wp:button -->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:group -->
 

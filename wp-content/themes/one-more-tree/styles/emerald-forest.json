@@ -1,0 +1,60 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "title": "Emerald Forest",
+  "settings": {
+    "color": {
+      "palette": [
+        {
+          "slug": "primary",
+          "color": "#16a34a",
+          "name": "Primary (Forest 600)"
+        },
+        {
+          "slug": "secondary",
+          "color": "#15803d",
+          "name": "Secondary (Forest 700)"
+        },
+        {
+          "slug": "foreground",
+          "color": "#0f172a",
+          "name": "Foreground"
+        },
+        {
+          "slug": "background",
+          "color": "#ffffff",
+          "name": "Background"
+        },
+        {
+          "slug": "surface",
+          "color": "#f0fdf4",
+          "name": "Surface (Forest 50)"
+        },
+        {
+          "slug": "border",
+          "color": "#bbf7d0",
+          "name": "Border (Forest 200)"
+        }
+      ]
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "#ffffff",
+      "text": "#0f172a"
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "#16a34a"
+        }
+      },
+      "button": {
+        "color": {
+          "background": "#16a34a",
+          "text": "#ffffff"
+        }
+      }
+    }
+  }
+}

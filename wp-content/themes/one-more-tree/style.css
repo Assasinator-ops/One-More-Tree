@@ -1,14 +1,18 @@
 /*
 Theme Name: One More Tree
-Theme URI: https://onemoretree.eu
-Author: One More Tree NGO
-Author URI: https://onemoretree.eu
-Description: Custom blank theme for One More Tree NGO - built to replicate Next.js frontend with Tailwind CSS
-Version: 1.0.0
+Theme URI: https://onemortree.org
+Author: One More Tree Team
+Author URI: https://onemortree.org
+Description: A reforestation nonprofit theme with full site editing, drag-and-drop block patterns, and the One More Tree design system. Plant trees. Restore forests.
+Version: 2.0.0
+Requires at least: 6.4
+Tested up to: 6.7
+Requires PHP: 7.4
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Text Domain: one-more-tree
-Tags: custom-background, threaded-comments, translation-ready
+Tags: full-site-editing, block-patterns, custom-colors, custom-logo, editor-style, featured-images, rtl-language-support, translation-ready, wide-blocks, block-styles, style-variations, accessibility-ready, nonprofit, environment
 */
 
-/* This file is intentionally minimal. All styles are compiled via Tailwind CSS */
+/* This file is intentionally minimal. All styles are compiled via Tailwind CSS & wp-containers.css */
+

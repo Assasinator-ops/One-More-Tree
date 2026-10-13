@@ -127,6 +127,16 @@ $faqs = (!empty($raw_faqs) && is_array($raw_faqs))
         </div>
       </div>
     </section>
+
+    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+      <?php if (trim(get_the_content()) !== ''): ?>
+        <section class="omt-custom-content relative w-full py-12 sm:py-16 px-4 sm:px-6 lg:px-12 xl:px-20 bg-background">
+          <div class="max-w-7xl mx-auto">
+            <?php the_content(); ?>
+          </div>
+        </section>
+      <?php endif; ?>
+    <?php endwhile; endif; ?>
   </main>
 </div>
 

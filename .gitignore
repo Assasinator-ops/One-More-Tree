@@ -5,3 +5,4 @@ node_modules/
 dist/
 build/
 mysql-data/
+wp-content/uploads/

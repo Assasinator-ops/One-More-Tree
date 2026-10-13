@@ -68,6 +68,21 @@ function one_more_tree_setup() {
         // Keep the page slug /projects reserved for the public projects template.
         'rewrite'             => ['slug' => 'project'],
     ]);
+
+    // Gutenberg block theme supports
+    add_theme_support('block-templates');
+    add_theme_support('block-template-parts');
+    add_theme_support('align-wide');
+    add_theme_support('wp-block-styles');
+    add_theme_support('responsive-embeds');
+    add_theme_support('editor-styles');
+    add_editor_style([
+        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap',
+        'assets/css/main.css',
+        'assets/css/block-patterns.css',
+        'assets/css/block-styles.css',
+        'assets/css/wp-containers.css',
+    ]);
 }
 add_action('after_setup_theme', 'one_more_tree_setup');
 
@@ -99,11 +114,29 @@ function one_more_tree_scripts() {
         _S_VERSION
     );
 
-    // Dequeue default WordPress block library styles to avoid CSS pollution
-    wp_dequeue_style('wp-block-library');
-    wp_dequeue_style('wp-block-library-theme');
-    wp_dequeue_style('global-styles');
-    wp_dequeue_style('classic-theme-styles');
+    // Enqueue block patterns CSS for Gutenberg support
+    wp_enqueue_style(
+        'one-more-tree-block-patterns',
+        get_template_directory_uri() . '/assets/css/block-patterns.css',
+        [],
+        _S_VERSION
+    );
+
+    // Enqueue block styles CSS
+    wp_enqueue_style(
+        'one-more-tree-block-styles',
+        get_template_directory_uri() . '/assets/css/block-styles.css',
+        [],
+        _S_VERSION
+    );
+
+    // Enqueue WordPress container and block styling
+    wp_enqueue_style(
+        'one-more-tree-wp-containers',
+        get_template_directory_uri() . '/assets/css/wp-containers.css',
+        ['one-more-tree-style'],
+        _S_VERSION
+    );
 
     // Remove WordPress emoji scripts and styles
     remove_action('wp_head', 'print_emoji_detection_script', 7);
@@ -135,20 +168,13 @@ function one_more_tree_scripts() {
         true
     );
 
-    // Enqueue block patterns CSS for Gutenberg support
-    wp_enqueue_style(
-        'one-more-tree-block-patterns',
-        get_template_directory_uri() . '/assets/css/block-patterns.css',
+    // Enqueue navigation pattern script for Gutenberg navigation
+    wp_enqueue_script(
+        'one-more-tree-navigation-pattern',
+        get_template_directory_uri() . '/assets/js/navigation-pattern.js',
         [],
-        _S_VERSION
-    );
-
-    // Enqueue block styles CSS
-    wp_enqueue_style(
-        'one-more-tree-block-styles',
-        get_template_directory_uri() . '/assets/css/block-styles.css',
-        [],
-        _S_VERSION
+        _S_VERSION,
+        true
     );
 
     // Localize script data
@@ -161,6 +187,47 @@ function one_more_tree_scripts() {
     ]);
 }
 add_action('wp_enqueue_scripts', 'one_more_tree_scripts', 100);
+
+/**
+ * Enqueue scripts and styles into Gutenberg block editor canvas
+ */
+function one_more_tree_block_editor_assets() {
+    wp_enqueue_style(
+        'one-more-tree-editor-fonts',
+        'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&display=swap',
+        [],
+        null
+    );
+
+    wp_enqueue_style(
+        'one-more-tree-editor-tailwind',
+        get_template_directory_uri() . '/assets/css/main.css',
+        [],
+        _S_VERSION
+    );
+
+    wp_enqueue_style(
+        'one-more-tree-editor-patterns',
+        get_template_directory_uri() . '/assets/css/block-patterns.css',
+        [],
+        _S_VERSION
+    );
+
+    wp_enqueue_style(
+        'one-more-tree-editor-block-styles',
+        get_template_directory_uri() . '/assets/css/block-styles.css',
+        [],
+        _S_VERSION
+    );
+
+    wp_enqueue_style(
+        'one-more-tree-editor-wp-containers',
+        get_template_directory_uri() . '/assets/css/wp-containers.css',
+        [],
+        _S_VERSION
+    );
+}
+add_action('enqueue_block_editor_assets', 'one_more_tree_block_editor_assets');
 
 /**
  * Remove unwanted generator and manifest headers
@@ -183,6 +250,7 @@ require_once get_template_directory() . '/inc/wp-admin-settings.php';
 require_once get_template_directory() . '/inc/admin-debug-page.php';
 require_once get_template_directory() . '/inc/shortcodes.php';
 require_once get_template_directory() . '/inc/block-patterns.php';
+require_once get_template_directory() . '/inc/full-page-patterns.php';
 
 // Register block style variations
 function one_more_tree_register_block_styles() {
@@ -299,15 +367,27 @@ function one_more_tree_register_block_styles() {
         'label' => __('Testimonial Quote', 'one-more-tree'),
     ]);
     
-    // Image styles
-    register_block_style('core/image', [
-        'name'  => 'rounded-image',
-        'label' => __('Rounded Image', 'one-more-tree'),
+    // List styles
+    register_block_style('core/list', [
+        'name'  => 'checkmark-list',
+        'label' => __('Checkmark List', 'one-more-tree'),
     ]);
-    
-    register_block_style('core/image', [
-        'name'  => 'shadow-image',
-        'label' => __('Shadow Image', 'one-more-tree'),
+
+    // Group extra styles
+    register_block_style('core/group', [
+        'name'  => 'feature-card',
+        'label' => __('Feature Card', 'one-more-tree'),
+    ]);
+
+    register_block_style('core/group', [
+        'name'  => 'badge',
+        'label' => __('Pill Badge', 'one-more-tree'),
+    ]);
+
+    // Columns extra styles
+    register_block_style('core/columns', [
+        'name'  => 'cards-grid',
+        'label' => __('Cards Grid', 'one-more-tree'),
     ]);
 }
 add_action('init', 'one_more_tree_register_block_styles');
@@ -316,17 +396,24 @@ add_action('init', 'one_more_tree_register_block_styles');
  * Page Templates declaration
  */
 function one_more_tree_page_templates($templates) {
-    return [
-        'front-page.php'        => 'Home Page Template',
-        'page-about.php'        => 'About Page Template',
-        'page-projects.php'     => 'Projects Page Template',
-        'page-impact.php'       => 'Impact Page Template',
-        'page-faq.php'          => 'FAQ Page Template',
-        'page-get-involved.php' => 'Get Involved Page Template',
-        'page-volunteer.php'    => 'Volunteer Page Template',
-        'page-contact.php'      => 'Contact Page Template',
-        'page-donate.php'       => 'Donate Page Template',
+    // Filter out backup folder entries
+    foreach (array_keys((array)$templates) as $file) {
+        if (strpos($file, '_block_editing_backup') !== false) {
+            unset($templates[$file]);
+        }
+    }
+    $custom = [
+        'front-page.php'        => __('Home Page (PHP Template)', 'one-more-tree'),
+        'page-about.php'        => __('About Page (PHP Template)', 'one-more-tree'),
+        'page-projects.php'     => __('Projects Page (PHP Template)', 'one-more-tree'),
+        'page-impact.php'       => __('Impact Page (PHP Template)', 'one-more-tree'),
+        'page-faq.php'          => __('FAQ Page (PHP Template)', 'one-more-tree'),
+        'page-get-involved.php' => __('Get Involved Page (PHP Template)', 'one-more-tree'),
+        'page-volunteer.php'    => __('Volunteer Page (PHP Template)', 'one-more-tree'),
+        'page-contact.php'      => __('Contact Page (PHP Template)', 'one-more-tree'),
+        'page-donate.php'       => __('Donate Page (PHP Template)', 'one-more-tree'),
     ];
+    return array_merge((array)$templates, $custom);
 }
 add_filter('theme_page_templates', 'one_more_tree_page_templates');
 
@@ -407,27 +494,37 @@ add_action('template_redirect', 'one_more_tree_admin_template_redirect');
 
 /**
  * HYBRID TEMPLATE ROUTING
- * Allows choosing between PHP templates (default) and Gutenberg per page
- * Pages with 'use_gutenberg' meta will use default WordPress template routing
- * Other pages will use forced PHP templates for consistency
+ * Allows choosing between custom Gutenberg canvas templates and default PHP templates.
+ * 1. If an explicit custom template is selected (e.g. Full Width Block Canvas), honor it.
+ * 2. If default template is active, route core slugs to their respective PHP templates.
+ * 3. Otherwise, use WordPress standard template hierarchy.
  */
 add_filter('template_include', function($template) {
     global $post;
-    
-    // Check if current page is set to use Gutenberg
-    if ($post && get_post_meta($post->ID, 'use_gutenberg', true) === '1') {
-        // Let WordPress handle template routing for Gutenberg pages
+
+    if (!$post || !is_page()) {
         return $template;
     }
-    
-    // Force PHP templates for pages not using Gutenberg
+
+    // 1. If page has an assigned custom page template, always honor it!
+    $page_template_slug = get_page_template_slug($post->ID);
+    if (!empty($page_template_slug) && 'default' !== $page_template_slug) {
+        $located = locate_template($page_template_slug);
+        if ($located) {
+            return $located;
+        }
+        // It is a block template (e.g. 'page-no-title', 'page-canvas', or user-created template in Site Editor)
+        return $template;
+    }
+
+    // 2. Default routing for core pages if no explicit template was chosen
     $routes = [
         'projects'     => 'page-projects.php',
         'about'        => 'page-about.php',
         'impact'       => 'page-impact.php',
         'faq'          => 'page-faq.php',
         'get-involved' => 'page-get-involved.php',
-        'volunteer'     => 'page-volunteer.php',
+        'volunteer'    => 'page-volunteer.php',
         'contact'      => 'page-contact.php',
         'donate'       => 'page-donate.php',
     ];
@@ -435,80 +532,14 @@ add_filter('template_include', function($template) {
     foreach ($routes as $slug => $file) {
         if (is_page($slug)) {
             $custom_template = locate_template($file);
-            if ($custom_template) return $custom_template;
+            if ($custom_template) {
+                return $custom_template;
+            }
         }
     }
+
     return $template;
 });
-
-/**
- * HYBRID SYSTEM: ADD META BOX FOR GUTENBERG TOGGLE
- * Adds a meta box to page editor to enable/disable Gutenberg per page
- */
-function one_more_tree_add_gutenberg_meta_box() {
-    add_meta_box(
-        'omt_gutenberg_toggle',
-        __('Template System', 'one-more-tree'),
-        'one_more_tree_gutenberg_meta_box_callback',
-        'page',
-        'side',
-        'default'
-    );
-}
-add_action('add_meta_boxes', 'one_more_tree_add_gutenberg_meta_box');
-
-function one_more_tree_gutenberg_meta_box_callback($post) {
-    wp_nonce_field('omt_gutenberg_nonce', 'omt_gutenberg_nonce');
-    $use_gutenberg = get_post_meta($post->ID, 'use_gutenberg', true);
-    ?>
-    <p>
-        <label>
-            <input type="checkbox" name="use_gutenberg" value="1" <?php checked($use_gutenberg, '1'); ?>>
-            <?php _e('Use Gutenberg Block Editor', 'one-more-tree'); ?>
-        </label>
-    </p>
-    <p class="description">
-        <?php _e('Check to use Gutenberg block editor instead of PHP template. Uncheck to use PHP template (default).', 'one-more-tree'); ?>
-    </p>
-    <?php
-}
-
-function one_more_tree_save_gutenberg_meta($post_id) {
-    if (!isset($_POST['omt_gutenberg_nonce']) || !wp_verify_nonce($_POST['omt_gutenberg_nonce'], 'omt_gutenberg_nonce')) {
-        return;
-    }
-    
-    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-        return;
-    }
-    
-    if (!current_user_can('edit_post', $post_id)) {
-        return;
-    }
-    
-    $use_gutenberg = isset($_POST['use_gutenberg']) ? '1' : '0';
-    update_post_meta($post_id, 'use_gutenberg', $use_gutenberg);
-}
-add_action('save_post', 'one_more_tree_save_gutenberg_meta');
-
-/**
- * HYBRID SYSTEM: CONDITIONAL GUTENBERG DISABLE
- * Allows choosing between PHP templates (default) and Gutenberg per page
- * Set page meta 'use_gutenberg' to true to enable Gutenberg for specific pages
- */
-function one_more_tree_conditional_gutenberg($use_block_editor, $post) {
-    // Check if page has meta to enable Gutenberg
-    $use_gutenberg = get_post_meta($post->ID, 'use_gutenberg', true);
-    
-    // If explicitly set to use Gutenberg, enable it
-    if ($use_gutenberg === '1' || $use_gutenberg === true) {
-        return true;
-    }
-    
-    // Otherwise, disable Gutenberg for PHP templates (default)
-    return false;
-}
-add_filter('use_block_editor_for_post', 'one_more_tree_conditional_gutenberg', 10, 2);
 
 /**
  * ENSURE ROUTE EXISTENCE
