@@ -1,0 +1,6 @@
+/* One More Tree — Newsletters admin panel.
+ *
+ * All admin styles are currently injected in omt-newsletters.php via admin_head,
+ * so this file is not required for the menu to render. It is reserved for any
+ * future front-end enhancements to the subscriber list or send form.
+ */

@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "slug": "default",
+  "title": "Main",
+  "description": "Default starter assembled from Lennox patterns.",
+  "screenshot": "screenshot.jpg",
+  "typeset": "geist-lexend",
+  "colors": {
+    "custom-accent": "#2b7fff",
+    "custom-hover": "#1447e6",
+    "custom-text": "#1a1a1a",
+    "custom-headings": "#000000",
+    "custom-border": "#DADADA",
+    "custom-dark-background": "#141618",
+    "custom-light-background": "#f3f2f0",
+    "custom-background": "#fafaf8"
+  },
+  "pages": [
+    { "slug": "home", "title": "Home", "isFrontPage": true, "patterns": ["hero1", "about1", "services1", "stats1", "case-studies1", "testimonials1", "cta1"] },
+    { "slug": "about", "title": "About", "patterns": ["about1", "stats1", "testimonials1", "cta1"] },
+    { "slug": "services", "title": "Services", "patterns": ["services1", "services2", "case-studies1", "cta1"] },
+    { "slug": "contact", "title": "Contact", "patterns": ["cta1"] }
+  ],
+  "navigation": ["home", "about", "services", "contact"]
+}

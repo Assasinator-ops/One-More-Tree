@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "slug": "bold",
+  "title": "Bold",
+  "description": "Bold starter with a compact page set.",
+  "screenshot": "screenshot.jpg",
+  "typeset": "archivo-geist",
+  "headerOverlay": false,
+  "colors": {
+    "custom-accent": "#B4232C",
+    "custom-hover": "#8F1C24",
+    "custom-text": "#2A2324",
+    "custom-headings": "#181213",
+    "custom-border": "#DED4D3",
+    "custom-dark-background": "#171214",
+    "custom-light-background": "#F5F2F1",
+    "custom-background": "#FBF8F7"
+  },
+  "pages": [
+    { "slug": "home", "title": "Home", "isFrontPage": true, "patterns": ["hidden-starter-bold"] },
+    { "slug": "about", "title": "About", "template": "canvas", "patterns": ["about2", "testimonials2", "cta2"] },
+    { "slug": "services", "title": "Services", "template": "canvas", "patterns": ["services2", "case-studies2", "cta2"] }
+  ],
+  "navigation": ["home", "about", "services"]
+}

@@ -1,0 +1,126 @@
+/*
+Theme Name: Lennox
+Author: emberWP
+Author URI: https://emberwp.com
+Theme URI: https://emberwp.com/themes/lennox
+Description: A clean full site editing WordPress theme for SEO agencies, designed to showcase services, case studies, and lead generation with flexible layouts and full customization through Global Styles, patterns, and page templates.
+Tags: full-site-editing, editor-style, block-styles, block-patterns, blog, portfolio, theme-options, translation-ready, featured-images, custom-logo
+Text Domain: lennox
+Requires at least: 6.6
+Requires PHP: 7.4
+Tested up to: 7.1
+Version: 1.0.0
+
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+*/
+
+/* Styles intended only for the front.*/
+html {
+	scroll-behavior: smooth;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+body {
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	font-family: var(--wp--preset--font-family--geist);
+	font-weight: 300;
+}
+
+footer.wp-block-template-part {
+	margin-top: 0;
+}
+
+a {
+	transition: color 0.2s;
+}
+
+.wp-block-button__link {
+	transition: all 0.2s;
+}
+
+.has-card-hover {
+	transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.has-card-hover:hover {
+	box-shadow: var(--wp--preset--shadow--md) !important;
+}
+
+.is-cursive {
+	font-family: cursive;
+}
+
+/* Header */
+.has-sticky-header,
+.has-header-overlay {
+	position: sticky;
+	top: var(--wp-admin--admin-bar--height, 0);
+	z-index: 100;
+}
+
+.has-header-overlay {
+	position: absolute;
+	width: 100%;
+	left: 0;
+	transition: color 0.2s ease;
+}
+
+.has-header-overlay .wp-block-group,
+.has-header-overlay a,
+.has-header-overlay .wp-block-site-tagline,
+.has-header-overlay .wp-block-navigation-item__content,
+.has-header-overlay .wp-block-navigation__responsive-container-open,
+.has-header-overlay .wp-block-navigation__submenu-icon,
+.has-header-overlay .wp-block-navigation-submenu__toggle {
+	transition: background-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.has-transparent-header {
+	color: #fff;
+}
+
+.has-sticky-header.has-header-overlay {
+	position: fixed;
+}
+
+@media screen and (max-width: 600px) {
+
+	body.admin-bar .has-sticky-header,
+	body.admin-bar .has-header-overlay {
+		top: 0;
+	}
+}
+
+.has-transparent-header .wp-block-group {
+	background-color: transparent !important;
+}
+
+.has-transparent-header a,
+.has-transparent-header .wp-block-site-title a,
+.has-transparent-header .wp-block-site-tagline,
+.has-transparent-header .wp-block-navigation-item__content,
+.has-transparent-header .wp-block-navigation__responsive-container-open,
+.has-transparent-header .wp-block-navigation__submenu-icon,
+.has-transparent-header .wp-block-navigation-submenu__toggle {
+	color: inherit !important;
+}
+
+/* Responsive data tables: any table wider than its column scrolls
+   horizontally inside its own figure instead of pushing the page wider
+   than the viewport on small screens. */
+.wp-block-table {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.wp-block-table table {
+	min-width: max-content;
+}

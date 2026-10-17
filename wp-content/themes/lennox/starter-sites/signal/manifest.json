@@ -1,0 +1,220 @@
+{
+  "version": 1,
+  "slug": "signal",
+  "title": "Signal",
+  "description": "A premium, conversion-led starter for ambitious SEO agencies.",
+  "screenshot": "screenshot.jpg",
+  "isPro": true,
+  "typeset": "archivo-geist",
+  "headerOverlay": false,
+  "colors": {
+    "custom-accent": "#00843D",
+    "custom-hover": "#006D32",
+    "custom-text": "#3C4038",
+    "custom-headings": "#11130F",
+    "custom-border": "#D6DACD",
+    "custom-dark-background": "#11130F",
+    "custom-light-background": "#ECEFE5",
+    "custom-background": "#F8F7F2"
+  },
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "isFrontPage": true,
+      "template": "canvas",
+      "patterns": ["hero-9", "about-6", "services-6", "stats-4", "case-studies-7", "testimonials-6", "cta-4"]
+    },
+    {
+      "slug": "services",
+      "title": "Services",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        { "pattern": "services-7", "removeBackground": true, "removeLinkBlocks": true },
+        "stats-6",
+        "cta-6"
+      ]
+    },
+    {
+      "slug": "work",
+      "title": "Work",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        "case-studies-6",
+        "testimonials-6",
+        "cta-6"
+      ]
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "pattern": "page-about-2",
+          "removeRootBlocksContaining": [
+            "The Team Behind the Rankings",
+            "Let's write your success story"
+          ]
+        },
+        "cta-6"
+      ]
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "pattern": "page-contact-2",
+          "removeLeafBlock": {
+            "block": "core/paragraph",
+            "text": "Contact"
+          },
+          "wrapper": {
+            "block": "core/group",
+            "attrs": {
+              "align": "full",
+              "style": {
+                "spacing": {
+                  "margin": {
+                    "top": "0",
+                    "bottom": "0"
+                  },
+                  "padding": {
+                    "top": "var:preset|spacing|60",
+                    "bottom": "var:preset|spacing|60"
+                  }
+                }
+              },
+              "layout": {
+                "type": "constrained"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "navigation": ["home", "services", "work", "about", "contact"]
+}

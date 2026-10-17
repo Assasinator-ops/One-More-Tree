@@ -1,0 +1,259 @@
+{
+  "version": 1,
+  "slug": "summit",
+  "title": "Summit",
+  "description": "A strategy-led Pro starter for full-service SEO agencies.",
+  "screenshot": "screenshot.jpg",
+  "isPro": true,
+  "typeset": "archivo-geist",
+  "headerOverlay": false,
+  "colors": {
+    "custom-accent": "#C2410C",
+    "custom-hover": "#9A3412",
+    "custom-text": "#44403C",
+    "custom-headings": "#1C1917",
+    "custom-border": "#D6D3D1",
+    "custom-dark-background": "#1C1917",
+    "custom-light-background": "#FFF7ED",
+    "custom-background": "#FFFCF8"
+  },
+  "pages": [
+    {
+      "slug": "home",
+      "title": "Home",
+      "isFrontPage": true,
+      "template": "canvas",
+      "patterns": ["hero-8", "about-8", "services-5", "stats-8", "case-studies-8", "testimonials-8", "cta-8"]
+    },
+    {
+      "slug": "services",
+      "title": "Services",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "pattern": "services-3",
+          "wrapper": {
+            "block": "core/group",
+            "attrs": {
+              "align": "full",
+              "style": {
+                "color": {
+                  "background": "#ffffff"
+                },
+                "spacing": {
+                  "margin": {
+                    "top": "0",
+                    "bottom": "0"
+                  }
+                }
+              },
+              "layout": {
+                "type": "default"
+              }
+            }
+          }
+        },
+        "pricing-6",
+        "cta-8"
+      ]
+    },
+    {
+      "slug": "work",
+      "title": "Work",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "pattern": "case-studies-4",
+          "wrapper": {
+            "block": "core/group",
+            "attrs": {
+              "align": "full",
+              "style": {
+                "color": {
+                  "background": "#ffffff"
+                },
+                "spacing": {
+                  "margin": {
+                    "top": "0",
+                    "bottom": "0"
+                  }
+                }
+              },
+              "layout": {
+                "type": "default"
+              }
+            }
+          }
+        },
+        "testimonials-8",
+        "cta-8"
+      ]
+    },
+    {
+      "slug": "about",
+      "title": "About",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        "about-8",
+        "testimonials-8",
+        "cta-8"
+      ]
+    },
+    {
+      "slug": "contact",
+      "title": "Contact",
+      "template": "canvas",
+      "patterns": [
+        {
+          "block": "core/group",
+          "attrs": {
+            "align": "full",
+            "backgroundColor": "custom-light-background",
+            "style": {
+              "spacing": {
+                "margin": { "bottom": "0" },
+                "padding": {
+                  "top": "var:preset|spacing|60",
+                  "right": "var:preset|spacing|20",
+                  "bottom": "var:preset|spacing|60",
+                  "left": "var:preset|spacing|20"
+                }
+              }
+            },
+            "layout": { "type": "constrained" }
+          },
+          "innerBlocks": [
+            {
+              "block": "core/post-title",
+              "attrs": {
+                "textAlign": "center",
+                "level": 1,
+                "align": "wide",
+                "style": { "spacing": { "margin": { "bottom": "0", "top": "0" } } }
+              }
+            }
+          ]
+        },
+        {
+          "pattern": "page-contact-1",
+          "removeLeafBlock": {
+            "block": "core/paragraph",
+            "text": "Contact"
+          },
+          "wrapper": {
+            "block": "core/group",
+            "attrs": {
+              "align": "full",
+              "style": {
+                "spacing": {
+                  "margin": {
+                    "top": "0",
+                    "bottom": "0"
+                  },
+                  "padding": {
+                    "top": "var:preset|spacing|60",
+                    "bottom": "var:preset|spacing|60"
+                  }
+                }
+              },
+              "layout": {
+                "type": "constrained"
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "navigation": ["home", "services", "work", "about", "contact"]
+}

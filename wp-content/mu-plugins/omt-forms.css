@@ -1,0 +1,247 @@
+/**
+ * One More Tree — form block styles.
+ * Built on the Lennox theme design tokens so the forms match the rest of the site.
+ */
+
+.omt-form {
+	/* Container, not viewport, drives the field grid: the contact form sits in a
+	   ~460px column on desktop, so a viewport media query would wrongly split
+	   the fields into two cramped halves. */
+	container-type: inline-size;
+	--omt-radius: 10px;
+	--omt-field-bg: #fff;
+	--omt-field-text: var(--wp--preset--color--custom-text, #22312a);
+	/* Deliberately not custom-border (#133924): that token is tuned for
+	   borders inside dark blocks and reads as a heavy outline around a text
+	   field on a light background. */
+	--omt-field-border: #d3e0d8;
+	--omt-accent: var(--wp--preset--color--custom-accent, #007a37);
+	--omt-accent-hover: var(--wp--preset--color--custom-hover, #006b30);
+	max-width: 620px;
+}
+
+.omt-form__heading {
+	margin: 0 0 0.5em;
+	font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+	line-height: 1.25;
+}
+
+.omt-form__intro {
+	margin: 0 0 1.5em;
+	opacity: 0.85;
+	max-width: 52ch;
+}
+
+.omt-form__form {
+	margin: 0;
+}
+
+/* ---------- newsletter: single inline row ---------- */
+
+.omt-form--newsletter .omt-form__row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.6rem;
+}
+
+.omt-form--newsletter .omt-form__input {
+	flex: 1 1 15rem;
+	min-width: 0;
+}
+
+/* ---------- contact: two column grid ---------- */
+
+.omt-form__grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+@container (min-width: 560px) {
+	.omt-form__grid {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+/* Browsers without container query support stay on the single-column
+   fallback declared above, which remains perfectly usable. */
+.omt-form__field--full {
+	grid-column: 1 / -1;
+}
+
+/* ---------- fields ---------- */
+
+.omt-form__field {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+.omt-form__field label,
+.omt-form__field > label {
+	font-size: 0.875rem;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+}
+
+/* `.omt-form` is repeated in the selector on purpose: the theme sets
+   `input[type=email] { border-radius: 5px }` in style-shared.css, which would
+   otherwise out-specify a single-class rule. */
+.omt-form .omt-form__input {
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0.75rem 0.9rem;
+	font: inherit;
+	font-size: 1rem;
+	color: var(--omt-field-text);
+	background: var(--omt-field-bg);
+	border: 1px solid var(--omt-field-border);
+	border-radius: var(--omt-radius);
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.omt-form__input::placeholder {
+	color: currentColor;
+	opacity: 0.45;
+}
+
+.omt-form__input:focus-visible {
+	outline: 2px solid transparent;
+	outline-offset: 2px;
+	border-color: var(--omt-accent);
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--omt-accent) 22%, transparent);
+}
+
+.omt-form textarea.omt-form__input {
+	resize: vertical;
+	min-height: 8rem;
+}
+
+.omt-form select.omt-form__input {
+	appearance: none;
+	background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+		linear-gradient(135deg, currentColor 50%, transparent 50%);
+	background-position: calc(100% - 1.25rem) 1.2rem, calc(100% - 0.85rem) 1.2rem;
+	background-size: 6px 6px, 6px 6px;
+	background-repeat: no-repeat;
+	padding-right: 2.5rem;
+}
+
+/* ---------- submit ---------- */
+
+.omt-form__submit {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	flex: 0 0 auto;
+	padding: 0.8rem 1.6rem;
+	font: inherit;
+	font-size: 1rem;
+	font-weight: 600;
+	color: #fff;
+	background: var(--omt-accent);
+	border: 1px solid transparent;
+	border-radius: var(--omt-radius);
+	cursor: pointer;
+	transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.omt-form__submit:hover {
+	background: var(--omt-accent-hover);
+}
+
+.omt-form__submit:focus-visible {
+	outline: 2px solid var(--omt-accent);
+	outline-offset: 2px;
+}
+
+.omt-form__submit:active {
+	transform: translateY(1px);
+}
+
+.omt-form--contact .omt-form__submit {
+	margin-top: 0.25rem;
+}
+
+/* ---------- notes and notices ---------- */
+
+.omt-form__note {
+	margin: 0.85rem 0 0;
+	font-size: 0.8125rem;
+	line-height: 1.5;
+	opacity: 0.7;
+}
+
+.omt-form__notice {
+	margin: 0 0 1rem;
+	padding: 0.75rem 1rem;
+	border-radius: var(--omt-radius);
+	border: 1px solid;
+	font-size: 0.9375rem;
+}
+
+.omt-form__notice--ok {
+	border-color: var(--omt-accent);
+	background: color-mix(in srgb, var(--omt-accent) 10%, transparent);
+}
+
+.omt-form__notice--error {
+	border-color: #b3261e;
+	background: color-mix(in srgb, #b3261e 8%, transparent);
+	color: #8c1d18;
+}
+
+/* ---------- honeypot: hidden from people ---------- */
+
+.omt-form__hp {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+/* ---------- on dark backgrounds (footer, CTA bands) ---------- */
+
+.omt-form--on-dark {
+	--omt-field-bg: rgba(255, 255, 255, 0.06);
+	--omt-field-border: rgba(255, 255, 255, 0.24);
+	--omt-field-text: #fff;
+	color: #fff;
+	max-width: none;
+}
+
+.omt-form--on-dark .omt-form__intro,
+.omt-form--on-dark .omt-form__note {
+	opacity: 0.75;
+}
+
+.omt-form--on-dark .omt-form__input:focus-visible {
+	border-color: #fff;
+	box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+.omt-form--on-dark .omt-form__submit {
+	color: var(--wp--preset--color--custom-dark-background, #0b2818);
+	background: #fff;
+}
+
+.omt-form--on-dark .omt-form__submit:hover {
+	background: color-mix(in srgb, #fff 85%, var(--omt-accent));
+}
+
+/* ---------- compact variant used in the footer ---------- */
+
+.omt-form--compact .omt-form__heading {
+	font-size: 1rem;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	opacity: 0.9;
+}
+
+.omt-form--compact .omt-form__intro {
+	font-size: 0.9375rem;
+	margin-bottom: 1rem;
+}

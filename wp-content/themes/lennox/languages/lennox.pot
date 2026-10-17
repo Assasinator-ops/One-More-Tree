@@ -1,0 +1,1807 @@
+# Copyright (C) 2026 emberWP
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Lennox 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/theme/lennox\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-06T13:26:48+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: lennox\n"
+
+#. Theme Name of the theme
+#: style.css
+#: inc/admin/class-lennox-theme-dashboard.php:173
+#: inc/admin/class-lennox-theme-dashboard.php:174
+#: inc/admin/class-lennox-theme-dashboard.php:263
+#: src/admin/dashboard/index.js:1133
+msgid "Lennox"
+msgstr ""
+
+#. Theme URI of the theme
+#: style.css
+msgid "https://emberwp.com/themes/lennox"
+msgstr ""
+
+#. Description of the theme
+#: style.css
+msgid "A clean full site editing WordPress theme for SEO agencies, designed to showcase services, case studies, and lead generation with flexible layouts and full customization through Global Styles, patterns, and page templates."
+msgstr ""
+
+#. Author of the theme
+#: style.css
+msgid "emberWP"
+msgstr ""
+
+#. Author URI of the theme
+#: style.css
+msgid "https://emberwp.com"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:54
+msgid "Invalid request nonce."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:63
+msgid "You are not allowed to perform this action."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:74
+#: inc/class-lennox-starter-sites.php:153
+msgid "Invalid starter site."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:93
+#: src/admin/dashboard/index.js:911
+msgid "Starter site imported."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:243
+msgid "The Lennox theme dashboard app is not available because the React build files are missing. Run the dashboard build to generate the admin assets."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:249
+msgid "The Lennox theme dashboard requires JavaScript to render."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:264
+msgid "Welcome to the Lennox theme dashboard. Use the tabs below to explore the welcome resources and compare the free and pro editions."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:267
+msgid "Welcome to the Lennox theme dashboard. Use the tabs below to explore the available resources."
+msgstr ""
+
+#. translators: %s: Theme title.
+#. translators: %s: Theme name.
+#: inc/admin/class-lennox-theme-dashboard.php:284
+#: src/admin/dashboard/index.js:834
+#, php-format,js-format
+msgid "Welcome to %s"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:287
+msgid "Use these resources to jump into the main block theme editing areas and keep the core documentation close by."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:290
+#: inc/admin/class-lennox-theme-dashboard.php:304
+#: inc/admin/class-lennox-theme-dashboard.php:466
+msgid "Starter Sites"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:291
+msgid "Import bundled starter content, navigation, and styles."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:292
+#: src/admin/dashboard/index.js:863
+msgid "Browse Starter Sites"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:297
+#: inc/admin/class-lennox-theme-dashboard.php:473
+msgid "Free vs Pro"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:298
+msgid "Compare the key differences between Lennox Free and Lennox Pro."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:299
+#: src/admin/dashboard/index.js:630
+#: src/admin/dashboard/index.js:1321
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:305
+msgid "Import a bundled starter site with pages, navigation, and global styles."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:358
+msgid "Modules"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:359
+msgid "Unlock optional feature modules with Lennox Pro."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:382
+msgid "Back to top"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:383
+msgid "Show a floating button that scrolls visitors back to the top."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:388
+msgid "Floating Contact Buttons"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:389
+msgid "Display quick contact actions in a floating frontend stack."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:394
+msgid "Footer Reveal Effect"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:395
+msgid "Reveal the footer with a layered scroll effect as visitors reach the bottom of the page."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:400
+msgid "Reading Progress Bar"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:401
+msgid "Show a progress indicator that tracks how much of the post the visitor has read."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:406
+msgid "Smart Sticky Header"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:407
+msgid "Auto-hide the sticky header while scrolling down and reveal it when scrolling up."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:412
+msgid "Animations"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:413
+msgid "Animate elements when they enter the viewport for subtle motion across page sections."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:418
+msgid "Custom Cursor"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:419
+msgid "Replace the native cursor with an accent dot and trailing ring on pointer devices."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:424
+msgid "Hover Colors"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:425
+msgid "Add hover state colors for text, background, and borders to blocks, with transition controls."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:430
+msgid "Maintenance Mode"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:431
+msgid "Show a branded maintenance or coming-soon screen while you keep building the site."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:462
+msgid "Welcome"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:544
+msgid "Quick Actions"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:549
+msgid "Resources & Documentation"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:566
+msgid "Support forum"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:567
+msgid "Ask questions and find answers from the WordPress community."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:572
+msgid "Email support"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:573
+msgid "Contact the support team directly for account or technical help."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:579
+msgid "Documentation"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:580
+msgid "Browse setup guides and theme development references."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:599
+msgid "Global styles"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:600
+msgid "Customize colors and design tokens."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:605
+msgid "Colors"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:606
+msgid "Edit your color palette."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:617
+msgid "Typography"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:618
+msgid "Adjust font settings and sizes."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:631
+msgid "Templates"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:632
+msgid "Browse page and post templates."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:637
+#: inc/class-lennox-starter-sites.php:1298
+msgid "Header"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:638
+msgid "Edit the site header template part."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:650
+msgid "Footer"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:651
+msgid "Edit the site footer template part."
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:675
+msgid "Site templates"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:676
+#: inc/admin/class-lennox-theme-dashboard.php:677
+msgid "17"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:680
+msgid "Starter sites"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:681
+msgid "2"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:682
+msgid "4"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:685
+msgid "Patterns"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:686
+msgid "20 total"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:687
+msgid "75 total"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:690
+msgid "Six visual styles"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:691
+#: inc/admin/class-lennox-theme-dashboard.php:692
+#: inc/admin/class-lennox-theme-dashboard.php:696
+#: inc/admin/class-lennox-theme-dashboard.php:697
+#: inc/admin/class-lennox-theme-dashboard.php:701
+#: inc/admin/class-lennox-theme-dashboard.php:702
+#: inc/admin/class-lennox-theme-dashboard.php:712
+#: inc/admin/class-lennox-theme-dashboard.php:717
+#: inc/admin/class-lennox-theme-dashboard.php:722
+#: inc/admin/class-lennox-theme-dashboard.php:727
+#: inc/admin/class-lennox-theme-dashboard.php:732
+#: inc/admin/class-lennox-theme-dashboard.php:737
+#: inc/admin/class-lennox-theme-dashboard.php:742
+#: inc/admin/class-lennox-theme-dashboard.php:747
+#: inc/admin/class-lennox-theme-dashboard.php:752
+#: src/admin/dashboard/index.js:54
+msgid "Yes"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:695
+msgid "Global Styles and Site Editor support"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:700
+msgid "WooCommerce templates"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:705
+msgid "Complete page layouts (About, Contact, etc.)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:706
+msgid "None"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:707
+msgid "6"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:710
+msgid "Entrance animations (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:711
+#: inc/admin/class-lennox-theme-dashboard.php:716
+#: inc/admin/class-lennox-theme-dashboard.php:721
+#: inc/admin/class-lennox-theme-dashboard.php:726
+#: inc/admin/class-lennox-theme-dashboard.php:731
+#: inc/admin/class-lennox-theme-dashboard.php:736
+#: inc/admin/class-lennox-theme-dashboard.php:741
+#: inc/admin/class-lennox-theme-dashboard.php:746
+#: inc/admin/class-lennox-theme-dashboard.php:751
+#: src/admin/dashboard/index.js:55
+msgid "No"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:715
+msgid "Smart sticky header (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:720
+msgid "Hover colors (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:725
+msgid "Floating contact buttons (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:730
+msgid "Reading progress bar (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:735
+msgid "Back to top (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:740
+msgid "Custom cursor (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:745
+msgid "Footer reveal effect (Module)"
+msgstr ""
+
+#: inc/admin/class-lennox-theme-dashboard.php:750
+msgid "Maintenance and coming soon mode (Module)"
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:96
+msgid "This starter site requires Lennox Pro."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:247
+msgid "Starter site manifest could not be read."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:253
+#: inc/class-lennox-starter-sites.php:302
+msgid "Starter site manifest is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:257
+msgid "Starter site manifest slug is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:261
+msgid "Starter site manifest has no pages."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:310
+#: inc/class-lennox-starter-sites.php:316
+msgid "Starter site page data is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:325
+msgid "Starter site page template is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:389
+#: inc/class-lennox-starter-sites.php:403
+#: inc/class-lennox-starter-sites.php:422
+#: inc/class-lennox-starter-sites.php:439
+msgid "Starter site pattern override is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:493
+msgid "Starter site pattern slug is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:514
+msgid "Starter site pattern file is missing."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:537
+msgid "Starter site pattern background could not be removed."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:594
+msgid "Starter site pattern links could not be removed."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:689
+msgid "Starter site pattern block could not be removed."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:799
+msgid "Starter site pattern blocks could not be removed."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:816
+msgid "Starter site pattern wrapper is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:858
+#: inc/class-lennox-starter-sites.php:864
+msgid "Starter site block definition is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:871
+msgid "Starter site block attributes are invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:881
+#: inc/class-lennox-starter-sites.php:886
+msgid "Starter site inner blocks are invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:923
+msgid "Starter site block container is not supported."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:951
+msgid "Starter site Group block tag is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:961
+msgid "Starter site Group block alignment is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:971
+msgid "Starter site Group block background color is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:980
+#: inc/class-lennox-starter-sites.php:986
+msgid "Starter site Group block class is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:1002
+msgid "Starter site Group block styles are invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:1186
+msgid "Front Page"
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:1218
+msgid "Starter site navigation is invalid."
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:1249
+msgid "Lennox Starter Navigation"
+msgstr ""
+
+#: inc/class-lennox-starter-sites.php:1394
+msgid "Custom Styles"
+msgstr ""
+
+#: inc/filters.php:18
+msgctxt "Used if posts or pages has no title"
+msgid "(No title)"
+msgstr ""
+
+#: inc/notices/class-lennox-notices-base.php:97
+msgid "Notice ID is required"
+msgstr ""
+
+#: inc/notices/class-lennox-notices-base.php:100
+msgid "Notice message is required"
+msgstr ""
+
+#: inc/notices/class-lennox-notices-base.php:182
+msgid "Dismiss"
+msgstr ""
+
+#: inc/notices/class-lennox-notices-base.php:186
+msgid "Remind me later"
+msgstr ""
+
+#. translators: %s: Theme name.
+#: inc/notices/class-lennox-review-notice.php:30
+#, php-format
+msgid "You've been using %s for a while now! We truly hope it helps! If you're enjoying the theme, would you mind leaving us a review?"
+msgstr ""
+
+#: inc/notices/class-lennox-review-notice.php:38
+msgid "Leave a Review"
+msgstr ""
+
+#: inc/register-block-patterns.php:23
+msgid "Posts"
+msgstr ""
+
+#: inc/register-block-patterns.php:24
+msgid "Common"
+msgstr ""
+
+#: inc/register-block-patterns.php:25
+msgid "Lennox: Heroes"
+msgstr ""
+
+#: inc/register-block-patterns.php:26
+msgid "Lennox: About"
+msgstr ""
+
+#: inc/register-block-patterns.php:27
+msgid "Lennox: Services"
+msgstr ""
+
+#: inc/register-block-patterns.php:28
+msgid "Lennox: Case Studies"
+msgstr ""
+
+#: inc/register-block-patterns.php:29
+msgid "Lennox: Testimonials"
+msgstr ""
+
+#: inc/register-block-patterns.php:30
+msgid "Lennox: Stats"
+msgstr ""
+
+#: inc/register-block-patterns.php:31
+msgid "Lennox: Calls to Action"
+msgstr ""
+
+#: inc/register-block-styles.php:22
+msgid "Underlined list items"
+msgstr ""
+
+#: inc/register-block-styles.php:30
+#: inc/register-block-styles.php:38
+#: inc/register-block-styles.php:46
+msgid "Box shadow"
+msgstr ""
+
+#: inc/register-block-styles.php:54
+msgid "Plus & minus"
+msgstr ""
+
+#: patterns/about1.php
+msgctxt "Pattern title"
+msgid "About 1"
+msgstr ""
+
+#: patterns/about1.php
+msgctxt "Pattern description"
+msgid "Simple about section with a heading on the left and text on the right."
+msgstr ""
+
+#: patterns/about1.php:19
+#: patterns/about2.php:25
+msgid "Built for Sustainable Search Growth"
+msgstr ""
+
+#: patterns/about1.php:33
+#: patterns/about2.php:43
+msgid "157 Verified Reviews"
+msgstr ""
+
+#: patterns/about1.php:41
+#: patterns/about2.php:29
+msgid "We partner with ambitious brands that want more than temporary traffic spikes. Our work combines technical SEO, content strategy, and performance insights to build search visibility that compounds over time."
+msgstr ""
+
+#: patterns/about1.php:45
+msgid "From audits and on-page improvements to long-term growth planning, we focus on practical actions that help businesses attract the right audience and turn organic search into steady revenue."
+msgstr ""
+
+#: patterns/about2.php
+msgctxt "Pattern title"
+msgid "About 2"
+msgstr ""
+
+#: patterns/about2.php
+msgctxt "Pattern description"
+msgid "About section with a feature image, supporting copy, and review proof."
+msgstr ""
+
+#: patterns/about2.php:18
+#: patterns/about2.php:19
+msgid "Team discussing campaign strategy around a presentation screen"
+msgstr ""
+
+#: patterns/case-studies1.php
+msgctxt "Pattern title"
+msgid "Case Studies 1"
+msgstr ""
+
+#: patterns/case-studies1.php
+msgctxt "Pattern description"
+msgid "Empty case studies section placeholder for the front page."
+msgstr ""
+
+#: patterns/case-studies1.php:18
+#: patterns/case-studies2.php:18
+msgid "Real Results for Real Businesses"
+msgstr ""
+
+#: patterns/case-studies1.php:22
+#: patterns/case-studies2.php:22
+#: patterns/hidden-starter-bold.php:215
+msgid "See how we've helped brands across industries turn organic search into their most reliable growth channel."
+msgstr ""
+
+#: patterns/case-studies1.php:31
+#: patterns/case-studies2.php:31
+#: patterns/hidden-starter-bold.php:222
+msgid "eCommerce"
+msgstr ""
+
+#: patterns/case-studies1.php:35
+#: patterns/case-studies2.php:35
+msgid "How We Grew Organic Revenue by 340% in 8 Months"
+msgstr ""
+
+#: patterns/case-studies1.php:39
+#: patterns/case-studies2.php:39
+msgid "A mid-size retailer struggling with thin content and technical debt. We rebuilt their SEO foundation from the ground up."
+msgstr ""
+
+#: patterns/case-studies1.php:49
+#: patterns/case-studies2.php:49
+msgid "Revenue Growth"
+msgstr ""
+
+#: patterns/case-studies1.php:59
+#: patterns/case-studies2.php:59
+#: patterns/hidden-starter-bold.php:182
+#: patterns/stats2.php:46
+msgid "Keywords Ranked"
+msgstr ""
+
+#: patterns/case-studies1.php:71
+#: patterns/case-studies2.php:71
+#: patterns/hidden-starter-bold.php:246
+msgid "Healthcare"
+msgstr ""
+
+#: patterns/case-studies1.php:75
+#: patterns/case-studies2.php:75
+msgid "From Page 5 to Position 1 for a National Clinic Network"
+msgstr ""
+
+#: patterns/case-studies1.php:85
+#: patterns/case-studies2.php:89
+msgid "Traffic Increase"
+msgstr ""
+
+#: patterns/case-studies1.php:95
+#: patterns/case-studies2.php:99
+msgid "Top-3 Rankings"
+msgstr ""
+
+#: patterns/case-studies1.php:107
+#: patterns/case-studies2.php:111
+#: patterns/hidden-starter-bold.php:270
+msgid "SaaS"
+msgstr ""
+
+#: patterns/case-studies1.php:111
+#: patterns/case-studies2.php:115
+msgid "Scaling a SaaS Startup to 50K Monthly Organic Visits"
+msgstr ""
+
+#: patterns/case-studies1.php:121
+#: patterns/case-studies2.php:129
+msgid "Monthly Visits"
+msgstr ""
+
+#: patterns/case-studies1.php:131
+#: patterns/case-studies2.php:139
+msgid "ROI"
+msgstr ""
+
+#: patterns/case-studies2.php
+msgctxt "Pattern title"
+msgid "Case Studies 2"
+msgstr ""
+
+#: patterns/case-studies2.php
+msgctxt "Pattern description"
+msgid "Three-column case studies section with image cards."
+msgstr ""
+
+#: patterns/case-studies2.php:79
+msgid "A healthcare network invisible in local search. We implemented a location-based SEO strategy that delivered results."
+msgstr ""
+
+#: patterns/case-studies2.php:119
+msgid "A B2B startup with zero organic presence. We built a content engine and technical foundation that drove sustainable growth."
+msgstr ""
+
+#: patterns/comments.php
+msgctxt "Pattern title"
+msgid "Comments"
+msgstr ""
+
+#: patterns/comments.php:17
+msgid "Comments"
+msgstr ""
+
+#: patterns/cta1.php
+msgctxt "Pattern title"
+msgid "CTA 1"
+msgstr ""
+
+#: patterns/cta1.php
+#: patterns/cta2.php
+msgctxt "Pattern description"
+msgid "Centered call to action section with an accent background, title, and white button."
+msgstr ""
+
+#: patterns/cta1.php:17
+#: patterns/cta2.php:18
+msgid "Ready to launch a site that turns visitors into customers?"
+msgstr ""
+
+#: patterns/cta1.php:22
+#: patterns/cta2.php:23
+msgid "Get in touch"
+msgstr ""
+
+#: patterns/cta2.php
+msgctxt "Pattern title"
+msgid "CTA 2"
+msgstr ""
+
+#: patterns/footer.php
+msgctxt "Pattern title"
+msgid "Footer"
+msgstr ""
+
+#: patterns/footer.php
+msgctxt "Pattern description"
+msgid "Compact footer bar with copyright and privacy policy link."
+msgstr ""
+
+#. translators: 1: Current year. 2: Site title.
+#: patterns/footer.php:18
+#, php-format
+msgid "© %1$s %2$s. All rights reserved."
+msgstr ""
+
+#: patterns/footer.php:24
+msgid "Privacy Policy"
+msgstr ""
+
+#: patterns/hero1.php
+msgctxt "Pattern title"
+msgid "Hero 1"
+msgstr ""
+
+#: patterns/hero1.php
+#: patterns/hero2.php
+msgctxt "Pattern description"
+msgid "Full-width SEO agency hero with proof points, calls to action, and a supporting image."
+msgstr ""
+
+#: patterns/hero1.php:15
+#: patterns/hero1.php:16
+msgid "SEO agency team collaborating"
+msgstr ""
+
+#: patterns/hero1.php:19
+#: patterns/hero1.php:23
+#: patterns/hero1.php:27
+#: patterns/hero1.php:31
+msgid "Client"
+msgstr ""
+
+#: patterns/hero1.php:36
+msgid "Trusted by"
+msgstr ""
+
+#: patterns/hero1.php:36
+msgid "businesses worldwide"
+msgstr ""
+
+#: patterns/hero1.php:42
+#: patterns/hero2.php:23
+msgid "We Help Brands Dominate Search and Drive Growth"
+msgstr ""
+
+#: patterns/hero1.php:46
+msgid "We build data-driven SEO strategies that increase your organic visibility, attract qualified traffic, <br>and turn search rankings into measurable revenue."
+msgstr ""
+
+#: patterns/hero1.php:51
+msgid "Get Started"
+msgstr ""
+
+#: patterns/hero1.php:55
+msgid "Learn More"
+msgstr ""
+
+#: patterns/hero1.php:61
+msgid "Arrow"
+msgstr ""
+
+#: patterns/hero1.php:65
+msgid "Let's start your<br>journey here!"
+msgstr ""
+
+#: patterns/hero2.php
+msgctxt "Pattern title"
+msgid "Hero 2"
+msgstr ""
+
+#: patterns/hero2.php:19
+msgid "Best Marketing Agency of 2026"
+msgstr ""
+
+#: patterns/hero2.php:28
+msgid "Get in Touch"
+msgstr ""
+
+#: patterns/hero2.php:39
+msgid "Clients Satisfied and Repeating"
+msgstr ""
+
+#: patterns/hero2.php:49
+msgid "Projects Completed in 24 Countries"
+msgstr ""
+
+#: patterns/hero2.php:57
+#: patterns/hidden-starter-bold.php:42
+#: patterns/stats1.php:81
+msgid "Person presenting strategy notes on a whiteboard"
+msgstr ""
+
+#: patterns/hidden-404.php
+msgctxt "Pattern title"
+msgid "404 Error Page"
+msgstr ""
+
+#: patterns/hidden-404.php:14
+msgid "Page not found"
+msgstr ""
+
+#: patterns/hidden-404.php:18
+msgid "It looks like nothing was found at this location. Maybe try a search?"
+msgstr ""
+
+#: patterns/hidden-404.php:21
+msgid "Search"
+msgstr ""
+
+#: patterns/hidden-search.php
+msgctxt "Pattern title"
+msgid "Search"
+msgstr ""
+
+#: patterns/hidden-search.php:9
+msgctxt "Search form label."
+msgid "Search"
+msgstr ""
+
+#: patterns/hidden-search.php:9
+msgctxt "Button text."
+msgid "Search"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php
+msgctxt "Pattern title"
+msgid "Bold Starter"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:18
+msgid "We grow organic revenue. And we show you the"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:18
+msgid "exact numbers."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:22
+msgid "A senior, in-house SEO team for mid-market ecommerce and SaaS companies in New York. Technical SEO, content, and link-building under one roof - measured against revenue, reported every month."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:27
+#: patterns/hidden-starter-bold.php:306
+msgid "Get a Free SEO Audit"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:31
+msgid "See the case studies"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:36
+#: patterns/hidden-starter-bold.php:310
+msgid "Talk to a strategist"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:36
+msgid "(123) 456-7890"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:51
+#: patterns/services1.php:18
+msgid "Services built for measurable search growth"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:58
+#: patterns/services1.php:25
+msgid "01"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:62
+#: patterns/services1.php:29
+msgid "SEO"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:66
+#: patterns/services1.php:33
+msgid "Technical foundations, on-page architecture, and high-intent keyword strategy built for competitive metro search."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:72
+#: patterns/services1.php:39
+msgid "02"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:76
+#: patterns/services1.php:43
+msgid "Local SEO"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:80
+#: patterns/services1.php:47
+msgid "Borough-level visibility - Google Business Profile, map pack, and neighborhood landing pages tuned to local intent."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:86
+#: patterns/services1.php:53
+msgid "03"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:90
+#: patterns/services1.php:57
+msgid "Content Marketing"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:94
+#: patterns/services1.php:61
+msgid "Editorial and conversion content that earns rankings and moves buyers - written by people who understand your market."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:100
+#: patterns/services1.php:67
+msgid "04"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:104
+#: patterns/services1.php:71
+msgid "Paid Media"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:108
+#: patterns/services1.php:75
+msgid "Google, Bing, and paid social managed against pipeline - not impressions - and coordinated with organic so the two don't compete."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:114
+#: patterns/services1.php:81
+msgid "05"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:118
+#: patterns/services1.php:85
+msgid "Technical & Web"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:122
+#: patterns/services1.php:89
+msgid "Core Web Vitals, site speed, and conversion-focused builds so the traffic you earn actually turns into revenue."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:128
+#: patterns/services1.php:95
+msgid "06"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:132
+#: patterns/services1.php:99
+msgid "Digital PR & Links"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:136
+#: patterns/services1.php:103
+msgid "Earned coverage and authority links from real publications - the kind that hold up to algorithm updates."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:142
+#: patterns/hidden-starter-bold.php:143
+msgid "Marketing team reviewing campaign results"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:145
+msgid "“They 3x'd our organic pipeline in eight months - and handed us the dashboards to prove every dollar of it.”"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:149
+msgid "Dana Reyes - VP of Growth, Northwind"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:157
+#: patterns/stats1.php:19
+#: patterns/stats2.php:18
+msgid "The Numbers Behind Our SEO Strategy"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:161
+#: patterns/stats1.php:23
+msgid "Every metric we track ties directly to business growth. We don't chase vanity numbers - we deliver rankings, traffic, and revenue you can measure."
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:172
+#: patterns/stats1.php:34
+#: patterns/stats2.php:34
+msgid "Clients Served"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:192
+#: patterns/stats2.php:58
+msgid "Client Retention"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:202
+#: patterns/stats2.php:70
+msgid "Avg. Traffic Growth"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:211
+msgid "Real results for real businesses"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:226
+msgid "Rebuilt an SEO foundation into 340% revenue growth"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:235
+msgid "Organic revenue"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:240
+#: patterns/hidden-starter-bold.php:264
+#: patterns/hidden-starter-bold.php:288
+msgid "Read case study →"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:250
+msgid "From page 5 to position 1 for a national clinic network"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:259
+msgid "Traffic increase"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:274
+msgid "Scaled a SaaS startup to 50K monthly organic visits"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:283
+msgid "Pipeline ROI"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:297
+msgid "Ready to make organic search your most reliable growth channel?"
+msgstr ""
+
+#: patterns/hidden-starter-bold.php:301
+msgid "Book a free, no-obligation SEO audit. We'll show you exactly where the revenue is - and how we'd capture it."
+msgstr ""
+
+#: patterns/services1.php
+msgctxt "Pattern title"
+msgid "Services 1"
+msgstr ""
+
+#: patterns/services1.php
+msgctxt "Pattern description"
+msgid "Light-background services section with six elevated service cards."
+msgstr ""
+
+#: patterns/services2.php
+msgctxt "Pattern title"
+msgid "Services 2"
+msgstr ""
+
+#: patterns/services2.php
+msgctxt "Pattern description"
+msgid "Image-led services section with three cards and supporting copy."
+msgstr ""
+
+#: patterns/services2.php:18
+msgid "Campaigns backed by strategy, content, and technical execution"
+msgstr ""
+
+#: patterns/services2.php:22
+msgid "Each engagement is designed to move search visibility forward in a measurable way."
+msgstr ""
+
+#: patterns/services2.php:29
+msgid "Team planning work around a desk with notes and coffee"
+msgstr ""
+
+#: patterns/services2.php:33
+msgid "SEO Strategy"
+msgstr ""
+
+#: patterns/services2.php:37
+msgid "Roadmaps built around audits, analysis, and clear priorities that align with business goals."
+msgstr ""
+
+#: patterns/services2.php:41
+#: patterns/services2.php:59
+#: patterns/services2.php:77
+#: patterns/services2.php:95
+msgid "Learn more"
+msgstr ""
+
+#: patterns/services2.php:47
+msgid "Desk setup with dual monitors, keyboard, and coffee mug"
+msgstr ""
+
+#: patterns/services2.php:51
+msgid "Content Systems"
+msgstr ""
+
+#: patterns/services2.php:55
+msgid "Editorial frameworks and landing page plans that help brands publish with consistency and results."
+msgstr ""
+
+#: patterns/services2.php:65
+msgid "Tablet showing marketing analysis charts on a work desk"
+msgstr ""
+
+#: patterns/services2.php:69
+msgid "Performance Reporting"
+msgstr ""
+
+#: patterns/services2.php:73
+msgid "Transparent reporting that connects rankings, traffic, and conversions so teams can see what is working."
+msgstr ""
+
+#: patterns/services2.php:83
+msgid "Hands typing beside notes and a computer keyboard during planning work"
+msgstr ""
+
+#: patterns/services2.php:87
+msgid "Technical SEO"
+msgstr ""
+
+#: patterns/services2.php:91
+msgid "Site audits, crawl fixes, and infrastructure improvements that remove barriers to indexing and ranking."
+msgstr ""
+
+#: patterns/stats1.php
+msgctxt "Pattern title"
+msgid "Stats 1"
+msgstr ""
+
+#: patterns/stats1.php
+#: patterns/stats2.php
+msgctxt "Pattern description"
+msgid "Placeholder stats section for the front page."
+msgstr ""
+
+#: patterns/stats1.php:46
+msgid "Keywords ranked"
+msgstr ""
+
+#: patterns/stats1.php:60
+msgid "Client retention"
+msgstr ""
+
+#: patterns/stats1.php:72
+msgid "Avg. traffic growth"
+msgstr ""
+
+#: patterns/stats2.php
+msgctxt "Pattern title"
+msgid "Stats 2"
+msgstr ""
+
+#: patterns/stats2.php:22
+msgid "Every metric we track ties directly to business growth. We don't chase vanity numbers — we deliver rankings, traffic, and revenue you can measure."
+msgstr ""
+
+#: patterns/template-query-posts.php
+msgctxt "Pattern title"
+msgid "Posts list"
+msgstr ""
+
+#: patterns/template-query-posts.php
+msgctxt "Pattern description"
+msgid "Template for displaying a list of posts with featured images and excerpts"
+msgstr ""
+
+#: patterns/template-query-posts.php:27
+msgid "Continue reading"
+msgstr ""
+
+#: patterns/template-query-posts.php:46
+msgctxt "Message explaining there are no results."
+msgid "Sorry, but nothing was found."
+msgstr ""
+
+#: patterns/testimonials1.php
+msgctxt "Pattern title"
+msgid "Testimonials 1"
+msgstr ""
+
+#: patterns/testimonials1.php
+#: patterns/testimonials2.php
+msgctxt "Pattern description"
+msgid "Empty testimonials section placeholder for the front page."
+msgstr ""
+
+#: patterns/testimonials1.php:18
+msgid "Closing quote icon"
+msgstr ""
+
+#: patterns/testimonials1.php:22
+#: patterns/testimonials2.php:23
+msgid "Trusted by teams that care about steady growth"
+msgstr ""
+
+#: patterns/testimonials1.php:26
+#: patterns/testimonials2.php:27
+msgid "These testimonials speak to the clarity, momentum, and measurable results clients value most after partnering on long-term search growth."
+msgstr ""
+
+#: patterns/testimonials1.php:38
+#: patterns/testimonials2.php:39
+msgid "\"The strategy gave our team direction. Within months, we had clearer priorities, better content decisions, and steady gains in organic traffic.\""
+msgstr ""
+
+#: patterns/testimonials1.php:43
+#: patterns/testimonials2.php:44
+msgid "Sarah Chen smiling during a client meeting"
+msgstr ""
+
+#: patterns/testimonials1.php:48
+#: patterns/testimonials2.php:49
+msgid "Sarah Chen, Marketing Director"
+msgstr ""
+
+#: patterns/testimonials1.php:52
+#: patterns/testimonials2.php:53
+msgid "Northline Studio"
+msgstr ""
+
+#: patterns/testimonials1.php:66
+#: patterns/testimonials2.php:65
+msgid "\"What stood out was the consistency. We stopped guessing, launched pages with confidence, and saw the content start contributing to leads.\""
+msgstr ""
+
+#: patterns/testimonials1.php:71
+#: patterns/testimonials2.php:70
+msgid "David Romero in a planning session"
+msgstr ""
+
+#: patterns/testimonials1.php:76
+#: patterns/testimonials2.php:75
+msgid "David Romero, Founder"
+msgstr ""
+
+#: patterns/testimonials1.php:80
+#: patterns/testimonials2.php:79
+msgid "Harbor Peak Advisory"
+msgstr ""
+
+#: patterns/testimonials2.php
+msgctxt "Pattern title"
+msgid "Testimonials 2"
+msgstr ""
+
+#: patterns/testimonials2.php:19
+msgid "Quote icon"
+msgstr ""
+
+#: src/admin/dashboard/index.js:345
+#: src/admin/dashboard/index.js:967
+#: src/admin/dashboard/index.js:1094
+#: src/admin/dashboard/index.js:1136
+msgid "Pro"
+msgstr ""
+
+#: src/admin/dashboard/index.js:546
+msgid "Unable to save module settings."
+msgstr ""
+
+#: src/admin/dashboard/index.js:572
+msgid "Open"
+msgstr ""
+
+#: src/admin/dashboard/index.js:602
+msgid "This module is available only in Lennox Pro."
+msgstr ""
+
+#: src/admin/dashboard/index.js:622
+msgid "Build Better with Modules"
+msgstr ""
+
+#: src/admin/dashboard/index.js:692
+#: src/admin/dashboard/index.js:714
+msgid "Edit"
+msgstr ""
+
+#: src/admin/dashboard/index.js:785
+msgid "Cancel"
+msgstr ""
+
+#: src/admin/dashboard/index.js:793
+msgid "Save"
+msgstr ""
+
+#. translators: %s: Theme version number.
+#: src/admin/dashboard/index.js:842
+#, js-format
+msgid "v%s"
+msgstr ""
+
+#: src/admin/dashboard/index.js:919
+msgid "Unable to import starter site."
+msgstr ""
+
+#: src/admin/dashboard/index.js:936
+msgid "View site"
+msgstr ""
+
+#: src/admin/dashboard/index.js:988
+msgid "Preview"
+msgstr ""
+
+#: src/admin/dashboard/index.js:996
+msgid "Upgrade Now"
+msgstr ""
+
+#: src/admin/dashboard/index.js:1010
+msgid "Importing"
+msgstr ""
+
+#: src/admin/dashboard/index.js:1011
+msgid "Import"
+msgstr ""
+
+#: src/admin/dashboard/index.js:1023
+msgid "No bundled starter sites are available."
+msgstr ""
+
+#: src/admin/dashboard/index.js:1092
+msgid "Feature"
+msgstr ""
+
+#: src/admin/dashboard/index.js:1093
+msgid "Free"
+msgstr ""
+
+#: src/admin/dashboard/index.js:1275
+msgid "Dashboard data is unavailable."
+msgstr ""
+
+#: src/admin/dashboard/index.js:1290
+msgid "Dashboard sections"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Accent Dark"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Accent Light"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Hover Dark"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Hover Light"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Overlay Dark"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Overlay Light"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Monochrome"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Duotone name"
+msgid "Subtle Gray"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Accent"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Hover"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Text"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Headings"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Borders"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Dark Background"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Light Background"
+msgstr ""
+
+#: theme.json
+#: styles/amethyst.json
+#: styles/crimson.json
+#: styles/emerald.json
+#: styles/midnight-gold.json
+#: styles/nocturne-teal.json
+msgctxt "Color name"
+msgid "Site background"
+msgstr ""
+
+#: theme.json
+msgctxt "Shadow name"
+msgid "Extra Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Shadow name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Shadow name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json
+msgctxt "Shadow name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Shadow name"
+msgid "Extra Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Tiny"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "X-Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Regular"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "X-Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Space size name"
+msgid "XX-Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "System"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Serif"
+msgstr ""
+
+#: theme.json
+msgctxt "Font family name"
+msgid "Monospace"
+msgstr ""
+
+#: theme.json
+#: styles/typography/archivo-geist.json
+#: styles/typography/geist-lexend.json
+msgctxt "Font family name"
+msgid "Geist"
+msgstr ""
+
+#: theme.json
+#: styles/typography/geist-lexend.json
+msgctxt "Font family name"
+msgid "Lexend"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Small"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Medium"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Extra Extra Large"
+msgstr ""
+
+#: theme.json
+msgctxt "Font size name"
+msgid "Gigantic"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Header"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Footer"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Sidebar"
+msgstr ""
+
+#: theme.json
+msgctxt "Template part name"
+msgid "Post navigation"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Canvas"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Page with sidebar"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Post with sidebar"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Single product"
+msgstr ""
+
+#: theme.json
+msgctxt "Custom template name"
+msgid "Shop (Product archive)"
+msgstr ""
+
+#: styles/amethyst.json
+msgctxt "Style variation name"
+msgid "Amethyst"
+msgstr ""
+
+#: styles/crimson.json
+msgctxt "Style variation name"
+msgid "Crimson"
+msgstr ""
+
+#: styles/emerald.json
+msgctxt "Style variation name"
+msgid "Emerald"
+msgstr ""
+
+#: styles/midnight-gold.json
+msgctxt "Style variation name"
+msgid "Midnight Gold"
+msgstr ""
+
+#: styles/nocturne-teal.json
+msgctxt "Style variation name"
+msgid "Nocturne Teal"
+msgstr ""
+
+#: styles/typography/archivo-geist.json
+msgctxt "Style variation name"
+msgid "Archivo / Geist"
+msgstr ""
+
+#: styles/typography/archivo-geist.json
+msgctxt "Font family name"
+msgid "Archivo"
+msgstr ""
+
+#: styles/typography/geist-lexend.json
+msgctxt "Style variation name"
+msgid "Geist / Lexend"
+msgstr ""

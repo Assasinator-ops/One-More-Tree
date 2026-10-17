@@ -12,4 +12,6 @@ prod/
 wp-config.php
 *.sql
 *.sql.gz
+*.tar.gz
 .freebuff/
+wp-content/wflogs/

@@ -1,0 +1,4 @@
+/* Add breathing room inside the off-canvas menu panel */
+.wp-block-navigation__responsive-container.is-menu-open.has-modal-open {
+	padding: var(--wp--preset--spacing--40);
+}

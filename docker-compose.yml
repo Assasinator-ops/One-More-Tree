@@ -3,7 +3,11 @@ services:
     image: wordpress:latest
     container_name: one-more-tree-wp
     ports:
-      - "8888:80"
+      - "0.0.0.0:8888:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - omt-net
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: wordpress
@@ -27,3 +31,9 @@ services:
     volumes:
       - ./mysql-data:/var/lib/mysql
     restart: unless-stopped
+    networks:
+      - omt-net
+
+networks:
+  omt-net:
+    driver: bridge

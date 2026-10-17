@@ -1,0 +1,116 @@
+{
+  "version": 3,
+  "title": "Emerald",
+  "settings": {
+    "color": {
+      "duotone": [
+        {
+          "name": "Accent Dark",
+          "slug": "accent-dark",
+          "colors": [
+            "#159A63",
+            "#000000"
+          ]
+        },
+        {
+          "name": "Accent Light",
+          "slug": "accent-light",
+          "colors": [
+            "#159A63",
+            "#FFFFFF"
+          ]
+        },
+        {
+          "name": "Hover Dark",
+          "slug": "hover-dark",
+          "colors": [
+            "#0F7D50",
+            "#000000"
+          ]
+        },
+        {
+          "name": "Hover Light",
+          "slug": "hover-light",
+          "colors": [
+            "#0F7D50",
+            "#FFFFFF"
+          ]
+        },
+        {
+          "name": "Overlay Dark",
+          "slug": "overlay-dark",
+          "colors": [
+            "#101511",
+            "#000000"
+          ]
+        },
+        {
+          "name": "Overlay Light",
+          "slug": "overlay-light",
+          "colors": [
+            "#101511",
+            "#FFFFFF"
+          ]
+        },
+        {
+          "name": "Monochrome",
+          "slug": "monochrome",
+          "colors": [
+            "#000000",
+            "#FFFFFF"
+          ]
+        },
+        {
+          "name": "Subtle Gray",
+          "slug": "subtle-gray",
+          "colors": [
+            "#D6DED9",
+            "#000000"
+          ]
+        }
+      ],
+      "palette": [
+        {
+          "color": "#159A63",
+          "name": "Accent",
+          "slug": "custom-accent"
+        },
+        {
+          "color": "#0F7D50",
+          "name": "Hover",
+          "slug": "custom-hover"
+        },
+        {
+          "color": "#1F2A24",
+          "name": "Text",
+          "slug": "custom-text"
+        },
+        {
+          "color": "#121914",
+          "name": "Headings",
+          "slug": "custom-headings"
+        },
+        {
+          "color": "#D6DED9",
+          "name": "Borders",
+          "slug": "custom-border"
+        },
+        {
+          "color": "#101511",
+          "name": "Dark Background",
+          "slug": "custom-dark-background"
+        },
+        {
+          "color": "#F2F6F3",
+          "name": "Light Background",
+          "slug": "custom-light-background"
+        },
+        {
+          "color": "#F8FBF8",
+          "name": "Site background",
+          "slug": "custom-background"
+        }
+      ]
+    }
+  }
+}

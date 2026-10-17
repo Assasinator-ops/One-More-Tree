@@ -1,0 +1,66 @@
+/*
+ * CSS for registered block styles.
+ * See inc/register-block-styles.php.
+ */
+
+/* Box shadow */
+.is-style-lennox-box-shadow {
+	box-shadow: var(--wp--preset--shadow--md);
+}
+
+/* Lists */
+.is-style-lennox-list-underline li {
+	border-bottom: 1px solid currentcolor;
+}
+
+.is-style-lennox-list-underline ul {
+	border-top: 1px solid currentcolor;
+}
+
+.is-style-lennox-list-underline ul li {
+	border: none;
+}
+
+/* Post meta */
+.is-post-meta > *:not(:last-child) {
+	position: relative;
+	padding-right: 0.9em;
+}
+
+.is-post-meta > *:not(:last-child)::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0.3em;
+	height: 0.3em;
+	border-radius: 50%;
+	background: currentcolor;
+	opacity: 0.6;
+	transform: translateY(-50%);
+}
+
+/* Form fields */
+input[type="text"],
+input[type="search"],
+input[type="email"],
+input[type="url"],
+input[type="tel"],
+input[type="password"],
+textarea {
+	border-radius: 5px;
+}
+
+details.is-style-lennox-plus > summary {
+	list-style-type: "+ ";
+}
+
+details[open].is-style-lennox-plus > summary {
+	list-style-type: "- ";
+}
+
+details.is-style-lennox-plus > summary::marker {
+	font-weight: 700;
+	font-size: 1em;
+	font-family: var(--wp--preset--font-family--monospace);
+}
