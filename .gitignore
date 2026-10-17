@@ -6,3 +6,10 @@ dist/
 build/
 mysql-data/
 wp-content/uploads/
+# Security: never commit credentials, working secrets or prod-only artifacts
+tmp/
+prod/
+wp-config.php
+*.sql
+*.sql.gz
+.freebuff/
