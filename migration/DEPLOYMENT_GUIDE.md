@@ -133,15 +133,14 @@ gets used carefully and deleted right after.
 
 These steps apply no matter which method you used:
 
-1. **Delete or reset the inherited `admin` user.** The dump carries the local users,
-   including an `admin` account whose password is publicly known from an old dev
-   script. In Adminer/phpMyAdmin run:
+1. **Confirm the user situation.** The dump now ships **one user only** (`Natnael`,
+   administrator) — the known-password `admin` account was removed from the source
+   before export. Quick check in Adminer/phpMyAdmin:
    ```sql
-   DELETE FROM wp_usermeta WHERE user_id = 2;
-   DELETE FROM wp_users WHERE ID = 2;
+   SELECT ID, user_login FROM wp_users;
    ```
-   (Your real login after import is the user `Natnael` / the email on that account —
-   use the password you used locally.)
+   Expected: exactly one row. Your login after import is that account, with the
+   password you used locally.
 2. **Re-save permalinks:** wp-admin → Settings → Permalinks → Save (any value; just
    press Save). This flushes nginx/Apache rewrite rules for the new content.
 3. **Purge caches** — any cache plugin button, and if your host has a "purge cache"
@@ -150,6 +149,17 @@ These steps apply no matter which method you used:
 4. **Check Wordfence:** wp-admin → Wordfence → Firewall. It will detect the new server
    automatically; if it asks to "optimize the Wordfence firewall," click it and let it
    run once. Then enable Login Security / brute-force protection in its settings.
+5. **Add the same hardening constants to the production `wp-config.php`** (inside the
+   PHP block, near the other `define()` lines — this mirrors what the local
+   `wp-config.php` now has):
+   ```php
+   define( 'DISALLOW_FILE_EDIT', true );
+   define( 'WP_POST_REVISIONS', 5 );
+   define( 'EMPTY_TRASH_DAYS', 7 );
+   ```
+   `DISALLOW_FILE_EDIT` removes the theme/plugin code editor from wp-admin — a
+   standard lock-down so an attacker with a stolen admin session cannot edit PHP
+   directly.
 
 ---
 
@@ -164,6 +174,8 @@ These steps apply no matter which method you used:
 | Form actually submits | fill the newsletter box on the homepage, submit | "Thank you" message appears; the entry shows under Contact messages in wp-admin |
 | Admin menus | wp-admin → Submissions, Contact messages, Newsletter | all three menus present |
 | Media | homepage logo + hero image | load with no 404 in the browser console |
+| Favicon | homepage `<head>` source | `<link rel="icon"` present, pointing at `logo-1-*.png` |
+| SEO tags | homepage `<head>` source | `<meta name="description"` and `og:` tags present |
 | Old URLs | `https://onemoretree.eu/wp-sitemap.xml` | no `-2` slugs; pages listed match the 10 real pages |
 | Privacy page | `/privacy-policy/` | renders (the footer links to it) |
 

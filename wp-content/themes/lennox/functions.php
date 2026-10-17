@@ -145,3 +145,51 @@ function lennox_register_theme_dashboard() {
 	$theme_dashboard->register_hooks();
 }
 add_action( 'after_setup_theme', 'lennox_register_theme_dashboard' );
+
+/**
+ * Minimal SEO: meta description + Open Graph tags.
+ *
+ * Prints a description (post excerpt/content on singular views, otherwise the
+ * site tagline) and the core Open Graph tags so shared links render properly.
+ *
+ * @since 1.0.0
+ */
+function lennox_seo_meta() {
+	if ( is_admin() || is_feed() || is_404() ) {
+		return;
+	}
+
+	$description = get_bloginfo( 'description', 'display' );
+
+	if ( is_singular() ) {
+		$queried = get_queried_object();
+
+		if ( $queried instanceof WP_Post ) {
+			$text = $queried->post_excerpt ? $queried->post_excerpt : wp_strip_all_tags( $queried->post_content );
+			$text = trim( preg_replace( '/\s+/', ' ', $text ) );
+
+			if ( '' !== $text ) {
+				$description = wp_html_excerpt( $text, 155, '…' );
+			}
+		}
+	}
+
+	$description = esc_attr( $description );
+	$title       = wp_get_document_title();
+
+	echo '<meta name="description" content="' . $description . '" />' . "\n";
+	echo '<meta property="og:site_name" content="' . esc_attr( get_bloginfo( 'name' ) ) . '" />' . "\n";
+	echo '<meta property="og:title" content="' . esc_attr( $title ) . '" />' . "\n";
+	echo '<meta property="og:description" content="' . $description . '" />' . "\n";
+	echo '<meta property="og:type" content="' . ( is_singular( 'post' ) ? 'article' : 'website' ) . '" />' . "\n";
+	echo '<meta property="og:url" content="' . esc_url( home_url( add_query_arg( array() ) ) ) . '" />' . "\n";
+
+	if ( is_singular() ) {
+		$sharing = wp_get_attachment_image_url( get_post_thumbnail_id(), 'large' );
+
+		if ( $sharing ) {
+			echo '<meta property="og:image" content="' . esc_url( $sharing ) . '" />' . "\n";
+		}
+	}
+}
+add_action( 'wp_head', 'lennox_seo_meta', 1 );

@@ -43,7 +43,7 @@
 <!-- /wp:heading -->
 
 <!-- wp:paragraph {"align":"center","style":{"spacing":{"margin":{"top":"0","bottom":"var:preset|spacing|50"}},"color":{"text":"#ffffffbd"}}} -->
-<p class="has-text-align-center has-text-color" style="color:#ffffffbd;margin-top:0;margin-bottom:var(--wp--preset--spacing--50)"><?php echo wp_kses_post( __( 'This hero section is now editable. To change the text, images, buttons, or layout, go to your WordPress dashboard, click 'Appearance' > 'Editor', then click on the front page template or this hero block pattern to customize it directly in the block editor.,\lennox' ) ); ?></p>
+<p class="has-text-align-center has-text-color" style="color:#ffffffbd;margin-top:0;margin-bottom:var(--wp--preset--spacing--50)"><?php echo wp_kses_post( __( 'This hero section is now editable. To change the text, images, buttons, or layout, go to your WordPress dashboard, click Appearance > Editor, then click on the front page template or this hero block pattern to customize it directly in the block editor.', 'lennox' ) ); ?></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:buttons {"style":{"spacing":{"margin":{"top":"0","bottom":"0"},"blockGap":"var:preset|spacing|30"}},"layout":{"type":"flex","justifyContent":"center"}} -->
@@ -52,7 +52,7 @@
 <!-- /wp:button -->
 
 <!-- wp:button {"className":"is-style-outline"} -->
-<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="#"><?php echo esc_html__( 'Learn More', 'lennox' ); ?></a></div>
+<div class="wp-block-button is-style-outline"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php echo esc_html__( 'Learn More', 'lennox' ); ?></a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons -->
 
@@ -62,7 +62,7 @@
 <!-- /wp:image -->
 
 <!-- wp:paragraph {"className":"is-cursive","style":{"color":{"text":"#ffffff"},"typography":{"fontStyle":"italic","lineHeight":"1.3"},"spacing":{"margin":{"top":"0","bottom":"0"}}},"fontSize":"medium"} -->
-<p class="is-cursive has-text-color has-medium-font-size" style="color:#ffffff;margin-top:0;margin-bottom:0;font-style:italic;line-height:1.3"><?php echo wp_kses_post( __( 'Let's start your<br>journey here!', 'lennox' ) ); ?></p>
+<p class="is-cursive has-text-color has-medium-font-size" style="color:#ffffff;margin-top:0;margin-bottom:0;font-style:italic;line-height:1.3"><?php echo wp_kses_post( __( 'Let\'s start your<br>journey here!', 'lennox' ) ); ?></p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group --></div>
 <!-- /wp:group --></div></div>

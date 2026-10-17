@@ -62,7 +62,7 @@ Run it:
 docker compose up -d      # starts one-more-tree-wp (:8888) + one-more-tree-db
 ```
 
-- Site: http://localhost:8888 (DB prefix `omT_`, credentials `wordpress`/`wordpress`)
+- Site: http://localhost:8888 — bound to `127.0.0.1` only (DB prefix `omT_`, credentials `wordpress`/`wordpress`)
 - WP-CLI is available inside the container:
   `docker exec --user www-data one-more-tree-wp wp --allow-root <command>`
 
@@ -94,6 +94,11 @@ verification gate. The guide explains why at the end.
 - Forms: render-time CSRF nonce (cannot be stale), honeypot + minimum-submit-time
   trap, per-IP rate limits, hashed IP storage (raw addresses never persisted),
   `wp_safe_redirect` target validation, narrow `wp_kses` whitelist for form markup.
+- `wp-config.php` hardening constants: `DISALLOW_FILE_EDIT` (no theme/plugin code
+  editor in wp-admin), `WP_POST_REVISIONS 5`, `EMPTY_TRASH_DAYS 7`.
+- SEO: the theme emits a meta description and Open Graph tags
+  (`lennox_seo_meta` in `functions.php`); the site icon (favicon) is set from the
+  uploaded logo.
 - The production DB password was exposed once and should be rotated; the full plan and
   remaining hardening (security headers, etc.) is in [SECURITY_FIXES.md](SECURITY_FIXES.md).
 - Secrets never enter git: `.gitignore` excludes `tmp/`, `prod/`, `wp-config.php`,

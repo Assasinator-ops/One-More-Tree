@@ -1,5 +1,14 @@
 # One More Tree — Full Website Audit
 
+> **Status update (2026-10-17, after final sweep):** P0-1 (forms) and P0-2/P0-3
+> (duplicate `-2` pages, drift) are **resolved in the migration package** — the
+> rebuilt dump + files bundle carry working mu-plugins, canonical pages only, and
+> Wordfence. P1-5 (SEO) is **fixed in code**: meta description, Open Graph tags and
+> a favicon now render. P1-6 (security headers), P1-7 (locale) and the DB password
+> rotation remain **server-side actions** — steps are in
+> `migration/DEPLOYMENT_GUIDE.md` and `SECURITY_FIXES.md`. P2-8 (jQuery) and P2-10
+> (photography) are still open content/product decisions.
+
 Date: 2026-10-17 · Local: Docker (`one-more-tree-wp`, port 8888) · Production: https://onemoretree.eu (TransIP, nginx)
 
 Method: live HTTP checks against production (25 URLs), DB checks in the local container,

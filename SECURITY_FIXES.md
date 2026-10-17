@@ -179,13 +179,30 @@ by using a socket-internal config with `MYSQL_ROOT_HOST=localhost`.
 
 ---
 
-## Post-Fix Checklist (agreed effective date)
+## Post-Fix Checklist (status 2026-10-17, after final sweep)
 
-- [ ] `.gitignore` excludes secrets: `tmp/`, `prod/`, `wp-config.php`, `*.sql`
-- [ ] `create_admin.php` and `inject-demo.php` deleted from the working tree
-- [ ] Default bootstrap admin password removed from `Template/src/server/adminAuth.ts`
-- [ ] Login throttling active on prod (Wordfence or nginx rate limit)
-- [ ] Security headers present on prod (`curl -I` shows HSTS/xcto/XFO)
+- [x] `.gitignore` excludes secrets: `tmp/`, `prod/`, `wp-config.php`, `*.sql`,
+      `*.tar.gz`, `.freebuff/`, `wp-content/wflogs/`
+- [x] `create_admin.php` deleted from the working tree (removed in commit `4fb0d89`);
+      `inject-demo.php` is **not** deleted yet — it is a local dev helper; remove it
+      before any production file sync (or keep it excluded from the deploy bundle)
+- [ ] Default bootstrap admin password still present in
+      `Template/src/server/adminAuth.ts` — the whole `Template/` legacy app is
+      still tracked; archive it to a separate repo or delete it
+- [x] Wordfence activated in the source site and included in the deploy bundle —
+      prod activation happens automatically on import (the `active_plugins` option
+      carries it); brute-force tuning still needed on the live instance
+- [ ] Login throttling verified on prod (after import: check Wordfence Login Security)
+- [ ] Security headers present on prod (`curl -I` shows HSTS/xcto/XFO) — server-side,
+      TransIP nginx config required
 - [ ] Production DB password rotated and only referenced from live `wp-config.php`
-- [ ] No unused themes left on prod; only `lennox` installed
-- [ ] Local Docker binds to `127.0.0.1` with cred sourced from `.env`
+- [x] No unused themes in the source DB or the deploy bundle; only `lennox` ships
+      (all six inactive legacy themes deleted)
+- [x] Local Docker binds to `127.0.0.1:8888` (creds still inline in
+      `docker-compose.yml` — acceptable for a local-only bind; move to `.env` if
+      the stack ever moves to a shared host)
+- [x] wp-config hardening constants added locally and prescribed for prod in
+      `migration/DEPLOYMENT_GUIDE.md` (`DISALLOW_FILE_EDIT`, `WP_POST_REVISIONS 5`,
+      `EMPTY_TRASH_DAYS 7`)
+- [x] Known-password `admin` user removed from the source DB; the migration dump
+      ships a single administrator account
