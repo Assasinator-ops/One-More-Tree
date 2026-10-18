@@ -46,15 +46,29 @@ the theme and media that render it are already in place.
 2. Upload `omt-files-bundle.tar.gz` into that root.
 3. Extract it (the file manager usually has an "Extract" button; on SSH:
    `tar -xzf omt-files-bundle.tar.gz`). This creates a temporary `files/` folder.
-4. Move the contents of `files/` into place:
+4. Move the contents of `files/` into place — **use copy (`cp -a` or the file manager's
+   copy/merge), never `mv`**: when the extracted `files/` folder and the web root live on
+   different filesystems a move can attempt a cross-device transfer and partially fail
+   with only suppressed errors, which results in files silently missing after deployment
+   (found and confirmed during the 2026-10-18 production test — see
+   `PRODUCTION_TEST_LOG.md`, BUG-2):
    - `files/themes-lennox/` → `wp-content/themes/lennox/` (replace the old folder entirely)
    - `files/mu-plugins/` → `wp-content/mu-plugins/` (replace entirely — **this is what
      makes the contact and newsletter forms work**)
    - `files/plugins/gdpr-cookie-compliance`, `files/plugins/updraftplus`,
      `files/plugins/wordfence` → `wp-content/plugins/` (replace each)
-   - `files/uploads/*` → `wp-content/uploads/` (merge; keep any existing files too)
-5. Delete the leftover `files/` folder and the `.tar.gz` from the web root when done.
+   - `files/uploads/` → `wp-content/uploads/` (merge; keep any existing files too;
+     includes the `logo-1*` favicon set the site icon option references)
+5. **Verify the copy completed** (any failure here aborts before the database import):
+   ```bash
+   # On the server, from the WP root:
+   test "$(ls wp-content/mu-plugins | wc -l)" -ge 7 && echo 'mu-plugins OK'
+   test "$(find wp-content/uploads -type f -size +0 | wc -l)" -ge 13 && echo 'media OK'
+   test -f wp-content/uploads/2026/10/logo-1.png && echo 'favicon OK'
+   ```
+   Do not continue to the database import (Phase 2) until all three report OK.
 6. Set permissions so WordPress can manage media: `chmod -R u+rwX wp-content/uploads`.
+7. Delete the leftover `files/` folder and the `.tar.gz` from the web root when done.
 
 **Expected result:** the site may still show the *old* pages at this point (the DB swap
 hasn't happened), but it must not be a fatal error. If you see "critical error" now,

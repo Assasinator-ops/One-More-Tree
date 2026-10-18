@@ -42,17 +42,26 @@ Upload `omt-files-bundle.tar.gz` to the server, then:
 ```bash
 cd <path-to>/<site-root>/wp-content
 tar -xzf ~/omt-files-bundle.tar.gz
-# bundle extracts to ./files/ - place each piece:
-rm -rf wp-content/themes/lennox          # replace outdated theme copy
-mv files/themes-lennox wp-content/themes/lennox   # (adjust relative to extraction dir)
+# bundle extracts to ./files/ - place each piece with cp -a (mv can silently
+# drop entries when /tmp and the web root are on different filesystems when
+# the panel extracts archives elsewhere):
+rm -rf wp-content/themes/lennox
+cp -a files/themes-lennox wp-content/themes/lennox
 rm -rf wp-content/mu-plugins
-mv files/mu-plugins wp-content/mu-plugins
+cp -a files/mu-plugins wp-content/mu-plugins
 rm -rf wp-content/plugins/gdpr-cookie-compliance wp-content/plugins/updraftplus
-mv files/plugins/gdpr-cookie-compliance wp-content/plugins/
-mv files/plugins/updraftplus wp-content/plugins/
-mv files/uploads/* wp-content/uploads/    # media (9 files under 2026/)
+cp -a files/plugins/gdpr-cookie-compliance files/plugins/updraftplus wp-content/plugins/
+cp -a files/plugins/wordfence wp-content/plugins/
+cp -a files/uploads/. wp-content/uploads/   # media (13 files under 2026/, incl. the logo-1 favicon set)
 # apply.php / validate.php stay in files/ as fallback tools - do not web-serve them
 chmod -R u+rwX wp-content/uploads
+# VERIFY - abort and re-sync if this does not all match:
+test "$(ls wp-content/mu-plugins | wc -l)" -ge 7 \
+  || { echo 'mu-plugins incomplete - re-extract the bundle'; exit 1; }
+test "$(find wp-content/uploads -type f -size +0 | wc -l)" -ge 13 \
+  || { echo 'media incomplete - re-extract the bundle and re-copy uploads'; exit 1; }
+test -f wp-content/uploads/2026/10/logo-1.png \
+  || { echo 'favicon file missing - re-copy uploads'; exit 1; }
 ```
 
 (SFTP route: same tree mapping copy-by-copy.)
