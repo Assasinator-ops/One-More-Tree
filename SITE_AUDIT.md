@@ -1,5 +1,12 @@
 # One More Tree — Full Website Audit
 
+> **Status update (2026-10-18, latest sweep):** all of the 2026-10-17 resolutions below hold and two
+> further additions are now in the codebase: outgoing mail is configured from
+> wp-admin → Settings → Email (SMTP) (`omt-smtp.php`, encrypted-at-rest password via
+> `OMT_SMTP_KEY`), and anonymous-page staleness is fixed (`omt-cache-headers.php`
+> sends explicit Cache-Control so host/CDN caches cannot serve hour-old HTML).
+> The bundle now ships 2,604 entries including both plugins.
+>
 > **Status update (2026-10-17, after final sweep):** P0-1 (forms) and P0-2/P0-3
 > (duplicate `-2` pages, drift) are **resolved in the migration package** — the
 > rebuilt dump + files bundle carry working mu-plugins, canonical pages only, and
@@ -31,7 +38,7 @@ hygiene. All findings below are evidence-based from these checks.
 - Effect: every submission fails the nonce check → user gets an "expired" error, or
   nothing happens. Lead capture (the site's core conversion) is dead.
 
-**Fix:** rsync/copy the current `wp-content/mu-plugins/` (all 5 files) to production,
+**Fix:** rsync/copy the current `wp-content/mu-plugins/` (5 plugins + their stylesheets, incl. `omt-smtp.php` and `omt-cache-headers.php`) to production,
 then purge caches. Verify with `grep -c '_omt_nonce' contact page HTML == 1` per form.
 
 ### 2. Duplicate `-2` pages still live on production

@@ -10,7 +10,7 @@ that exact result, stop and use the troubleshooting section instead of guessing.
 | File | What it contains |
 |---|---|
 | `migration/onemoretree-upload.sql` | The complete database: 10 pages + 6 articles, block templates, navigation, options, Wordfence tables, plugin settings. Already rewritten for `https://onemoretree.eu` and the production `wp_` table prefix. |
-| `migration/omt-files-bundle.tar.gz` | Theme (`lennox`), mu-plugins (forms/contacts/newsletters/SMTP), all media (`uploads/`), 3 active plugins (`gdpr-cookie-compliance`, `updraftplus`, `wordfence`), plus the content tools `apply.php` / `validate.php`. |
+| `migration/omt-files-bundle.tar.gz` | Theme (`lennox`), mu-plugins (forms/contacts/newsletters/SMTP/cache-headers), all media (`uploads/`), 3 active plugins (`gdpr-cookie-compliance`, `updraftplus`, `wordfence`), plus the content tools `apply.php` / `validate.php`. |
 | `migration/RUNBOOK.md` | The short command-focused version of this same process (use it once you're comfortable). |
 
 ---

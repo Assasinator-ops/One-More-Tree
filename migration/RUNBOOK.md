@@ -10,7 +10,7 @@ duplicates, no missing mu-plugins, no drifted content.
 | File | Purpose |
 |---|---|
 | `onemoretree-upload.sql` | Complete DB dump, prod-ready: prod `wp_` prefix, URLs already rebased to `https://onemoretree.eu`, `DROP TABLE IF EXISTS` included for every table. Verified with a full round-trip import (row counts identical). |
-| `omt-files-bundle.tar.gz` | Code + media bundle: `themes-lennox/` (full Lennox FSE theme), `mu-plugins/` (forms/contacts/newsletters/SMTP + CSS), `uploads/` (all media), `plugins/` (gdpr-cookie-compliance, updraftplus — the two active plugins), plus `apply.php` and `validate.php` fallback tools. |
+| `omt-files-bundle.tar.gz` | Code + media bundle: `themes-lennox/` (full Lennox FSE theme), `mu-plugins/` (forms/contacts/newsletters/SMTP/cache-headers + CSS), `uploads/` (all media), `plugins/` (gdpr-cookie-compliance, updraftplus, wordfence — the three active plugins), plus `apply.php` and `validate.php` fallback tools. |
 | `omt-dump-urls-omT.sql` | Intermediate artifact (URL-mapped dump before prefix consolidation). Not needed on the server; kept for audit trail only. |
 
 **What this state includes:** 91 posts (13 pages incl. all content pages and the 2
