@@ -10,7 +10,7 @@ that exact result, stop and use the troubleshooting section instead of guessing.
 | File | What it contains |
 |---|---|
 | `migration/onemoretree-upload.sql` | The complete database: 10 pages + 6 articles, block templates, navigation, options, Wordfence tables, plugin settings. Already rewritten for `https://onemoretree.eu` and the production `wp_` table prefix. |
-| `migration/omt-files-bundle.tar.gz` | Theme (`lennox`), mu-plugins (forms/contacts/newsletters), all media (`uploads/`), 3 active plugins (`gdpr-cookie-compliance`, `updraftplus`, `wordfence`), plus the content tools `apply.php` / `validate.php`. |
+| `migration/omt-files-bundle.tar.gz` | Theme (`lennox`), mu-plugins (forms/contacts/newsletters/SMTP), all media (`uploads/`), 3 active plugins (`gdpr-cookie-compliance`, `updraftplus`, `wordfence`), plus the content tools `apply.php` / `validate.php`. |
 | `migration/RUNBOOK.md` | The short command-focused version of this same process (use it once you're comfortable). |
 
 ---
@@ -156,10 +156,21 @@ These steps apply no matter which method you used:
    define( 'DISALLOW_FILE_EDIT', true );
    define( 'WP_POST_REVISIONS', 5 );
    define( 'EMPTY_TRASH_DAYS', 7 );
+   define( 'OMT_SMTP_KEY', '<64 random hex characters>' ); // e.g. output of: php -r "echo bin2hex( random_bytes( 32 ) );"
    ```
    `DISALLOW_FILE_EDIT` removes the theme/plugin code editor from wp-admin — a
    standard lock-down so an attacker with a stolen admin session cannot edit PHP
-   directly.
+   directly. `OMT_SMTP_KEY` is what lets the SMTP settings page store its password
+   encrypted at rest (without it, credentials sit in plain text in the options table
+   and would appear in any future DB dump — generate a key, then save the password
+   once in the next step).
+6. **Configure outgoing mail:** wp-admin → Settings → Email (SMTP). Enter the SMTP
+   host, port (`465` = SSL, `587` = STARTTLS), the verified sender address
+   (see the provider notes in SECURITY_FIXES.md), tick "Log in with…" and enter the
+   credentials + password, then press **Send test email** to itself. Expected: a
+   "Test email accepted" success notice. On failure the page shows the real
+   PHPMailer transport error (e.g. "Could not connect to SMTP host"), which is
+   enough to fix the setting without any other debugging.
 
 ---
 
@@ -176,6 +187,8 @@ These steps apply no matter which method you used:
 | Media | homepage logo + hero image | load with no 404 in the browser console |
 | Favicon | homepage `<head>` source | `<link rel="icon"` present, pointing at `logo-1-*.png` |
 | SEO tags | homepage `<head>` source | `<meta name="description"` and `og:` tags present |
+| SMTP settings page | wp-admin → Settings → Email (SMTP) | page renders, the configured host is shown, "Send test email" either succeeds or prints the real transport error |
+| Newsletter readiness | wp-admin → Newsletter | no "SMTP not configured" warning once the SMTP step above is done |
 | Old URLs | `https://onemoretree.eu/wp-sitemap.xml` | no `-2` slugs; pages listed match the 10 real pages |
 | Privacy page | `/privacy-policy/` | renders (the footer links to it) |
 

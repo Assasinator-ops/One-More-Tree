@@ -10,12 +10,12 @@ duplicates, no missing mu-plugins, no drifted content.
 | File | Purpose |
 |---|---|
 | `onemoretree-upload.sql` | Complete DB dump, prod-ready: prod `wp_` prefix, URLs already rebased to `https://onemoretree.eu`, `DROP TABLE IF EXISTS` included for every table. Verified with a full round-trip import (row counts identical). |
-| `omt-files-bundle.tar.gz` | Code + media bundle: `themes-lennox/` (full Lennox FSE theme), `mu-plugins/` (forms/contacts/newsletters + CSS), `uploads/` (all media), `plugins/` (gdpr-cookie-compliance, updraftplus — the two active plugins), plus `apply.php` and `validate.php` fallback tools. |
+| `omt-files-bundle.tar.gz` | Code + media bundle: `themes-lennox/` (full Lennox FSE theme), `mu-plugins/` (forms/contacts/newsletters/SMTP + CSS), `uploads/` (all media), `plugins/` (gdpr-cookie-compliance, updraftplus — the two active plugins), plus `apply.php` and `validate.php` fallback tools. |
 | `omt-dump-urls-omT.sql` | Intermediate artifact (URL-mapped dump before prefix consolidation). Not needed on the server; kept for audit trail only. |
 
 **What this state includes:** 91 posts (13 pages incl. all content pages and the 2
 block templates, 2 navigation menus, 2 wp_template, 3 template parts incl. header/footer,
-5 private form submissions, send-ready newsletter list), 2 users, all media files
+5 private form submissions, send-ready newsletter list), 1 user, all media files
 (9 uploads incl. site logo + hero art), 227 options (front page set, blog name,
 GDPR plugin settings), and 13 tables renamed to the production `wp_` prefix. Every URL
 in post content, meta, options and the block-navigation JSON is `https://onemoretree.eu` —
@@ -73,18 +73,16 @@ No prefix renaming needed: tables arrive as `wp_*`, matching prod config.
 
 ## Step C — post-import hardening (one minute)
 
-1. **Users changed with the DB**: log in with the local credentials. User #1 is
-   `Natnael` (natiemls72@gmail.com). **Delete or reset user #2 (`admin` /
-   admin@onemoretree.eu)** — it was created by a dev bootstrap and its password
-   (`admin123`) is publicly known:
-   ```sql
-   DELETE FROM wp_users WHERE ID = 2;
-   DELETE FROM wp_usermeta WHERE user_id = 2;
-   ```
-   (Or reset it properly: WP-CLI `wp user reset-password admin` if you keep it.)
-2. Purge caches: "Purge cache" on any cache module; or WP-CLI
+1. **Users changed with the DB**: log in with the local credentials. The dump ships
+   with exactly one account — user #1 `Natnael` (natiemls72@gmail.com). The old dev
+   `admin` account and its public password no longer exist in the dump; verify with
+   `wp user list --allow-root` (expected: exactly one row).
+2. **Outgoing mail:** add `define( 'OMT_SMTP_KEY', '<64 random hex chars>' );` to
+   prod `wp-config.php`, then set the transport under **Settings → Email (SMTP)**
+   and press *Send test email* (full walkthrough: DEPLOYMENT_GUIDE.md, Phase 3).
+3. Purge caches: "Purge cache" on any cache module; or WP-CLI
    `wp cache flush && wp transient delete --all && wp rewrite flush`.
-3. Re-save Settings → Permalinks once (flushes rewrite rules for nginx).
+4. Re-save Settings → Permalinks once (flushes rewrite rules for nginx).
 
 ## Step D — verify (go/no-go gate)
 

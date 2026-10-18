@@ -201,7 +201,7 @@ if ( ! function_exists( 'omt_smtp_configured' ) ) {
         // Fallback heuristic: if any SMTP-related option or filter is present, assume
         // the site intends to send mail (the transport may still be failing, which the
         // notice will explain).
-        $smtp_option_names = array( 'wp_use_smpt', 'smtp_host', 'smtp_user', 'smtp_pass' );
+        $smtp_option_names = array( 'wp_use_smpt', 'smtp_host', 'smtp_user', 'smtp_pass', 'omt_smtp_host' );
         foreach ( $smtp_option_names as $opt ) {
             if ( get_option( $opt ) !== false ) {
                 return true;
@@ -248,7 +248,7 @@ if ( ! function_exists( 'omt_smtp_notice' ) ) {
         }
 
         $candidates = array();
-        foreach ( array( 'wp_use_smpt', 'smtp_host', 'smtp_user', 'smtp_pass', 'smtp_port', 'smtp_secure' ) as $opt ) {
+        foreach ( array( 'wp_use_smpt', 'smtp_host', 'smtp_user', 'smtp_pass', 'smtp_port', 'smtp_secure', 'omt_smtp_host' ) as $opt ) {
             if ( get_option( $opt ) !== false ) {
                 $candidates[] = $opt;
             }

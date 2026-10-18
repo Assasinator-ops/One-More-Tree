@@ -162,6 +162,10 @@ by using a socket-internal config with `MYSQL_ROOT_HOST=localhost`.
   submit time, per-IP rate limits, hashed IP storage, wp_safe_redirect target
   validation, and a kses whitelist rather than blanket `unfiltered_html`. Nothing to
   change.
+* `omt-smtp.php`: the Settings → Email (SMTP) page ships write-only credentials,
+  optional at-rest encryption for the password (`OMT_SMTP_KEY`), capability + nonce
+  checks on both save and test-email handlers, and error messages that are escaped
+  before display. Nothing to change beyond the prod setup steps above.
 
 ---
 
@@ -206,3 +210,20 @@ by using a socket-internal config with `MYSQL_ROOT_HOST=localhost`.
       `EMPTY_TRASH_DAYS 7`)
 - [x] Known-password `admin` user removed from the source DB; the migration dump
       ships a single administrator account
+- [x] Outgoing email no longer depends on a third-party SMTP plugin: the must-use
+      `omt-smtp.php` provides the **Settings → Email (SMTP)** admin page — admin-only
+      (`manage_options` + nonce), write-only password field (never echoed back after
+      save), empty field keeps / single-hyphen clears the saved password, host/port/
+      encryption choices validated server-side, SMTP disabled entirely when no host
+      is set, and a test-email button that surfaces the real `wp_mail_failed` error
+      instead of failing silently. When `OMT_SMTP_KEY` (≥32 chars) is defined in
+      `wp-config.php` the password is stored AES-256-GCM encrypted at rest, so any
+      later DB dump does not contain usable credentials. Text is translated/escaped
+      throughout (`esc_attr`/`esc_html_e`/`is_email`).
+- [ ] Configure SMTP on prod after import: add `OMT_SMTP_KEY` to prod
+      `wp-config.php` (see migration/DEPLOYMENT_GUIDE.md Phase 3), save the
+      provider credentials under Settings → Email (SMTP), then run *Send test
+      email*; newsletters can only send once the Newsletter admin shows no
+      "SMTP not configured" warning
+- [ ] `OMT_SMTP_KEY` must be generated per environment (`php -r "echo
+      bin2hex( random_bytes( 32 ) );"`); never reuse the local key on prod

@@ -15,7 +15,7 @@ version control instead of only living in a database.
 | Path | What it is |
 |---|---|
 | `wp-content/themes/lennox/` | The production theme — full-site-editing block theme: `theme.json` design tokens (green palette, fluid `clamp()` type scale), block patterns, starter-site manifests, admin dashboard, responsive data-table CSS |
-| `wp-content/mu-plugins/` | Must-use plugins (cannot be deactivated): `omt-forms.php` (contact + newsletter handling: render-time CSRF nonce, honeypot, time-trap, per-IP rate limits, hashed IPs, private `omt_lead` post type), `omt-contacts.php` (contact-message admin), `omt-newsletters.php` (batched newsletter sending), plus their stylesheets |
+| `wp-content/mu-plugins/` | Must-use plugins (cannot be deactivated): `omt-forms.php` (contact + newsletter handling: render-time CSRF nonce, honeypot, time-trap, per-IP rate limits, hashed IPs, private `omt_lead` post type), `omt-contacts.php` (contact-message admin), `omt-newsletters.php` (batched newsletter sending), `omt-smtp.php` (Settings → Email (SMTP): outgoing-mail transport with write-only password, optional at-rest encryption via `OMT_SMTP_KEY`, built-in test email), plus their stylesheets |
 | `site/` | The content pipeline — see next section |
 | `docker-compose.yml` | Local WordPress + MySQL 8 stack |
 | `migration/` | Production deployment artifacts — see [migration/DEPLOYMENT_GUIDE.md](migration/DEPLOYMENT_GUIDE.md) |
