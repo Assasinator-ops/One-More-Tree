@@ -15,7 +15,7 @@ version control instead of only living in a database.
 | Path | What it is |
 |---|---|
 | `wp-content/themes/lennox/` | The production theme — full-site-editing block theme: `theme.json` design tokens (green palette, fluid `clamp()` type scale), block patterns, starter-site manifests, admin dashboard, responsive data-table CSS |
-| `wp-content/mu-plugins/` | Must-use plugins (cannot be deactivated): `omt-forms.php` (contact + newsletter handling: render-time CSRF nonce, honeypot, time-trap, per-IP rate limits, hashed IPs, private `omt_lead` post type), `omt-contacts.php` (contact-message admin), `omt-newsletters.php` (batched newsletter sending), `omt-smtp.php` (Settings → Email (SMTP): outgoing-mail transport with write-only password, optional at-rest encryption via `OMT_SMTP_KEY`, built-in test email), plus their stylesheets |
+| `wp-content/mu-plugins/` | Must-use plugins (cannot be deactivated): `omt-forms.php` (contact + newsletter handling: render-time CSRF nonce, honeypot, time-trap, per-IP rate limits, hashed IPs, private `omt_lead` post type), `omt-contacts.php` (contact-message admin), `omt-newsletters.php` (batched newsletter sending), `omt-smtp.php` (Settings → Email (SMTP): outgoing-mail transport with write-only password, optional at-rest encryption via `OMT_SMTP_KEY`, built-in test email), `omt-cache-headers.php` (explicit Cache-Control on HTML pages so host/CDN page caches follow our freshness policy instead of serving visitors an hour-stale copy), plus their stylesheets |
 | `site/` | The content pipeline — see next section |
 | `docker-compose.yml` | Local WordPress + MySQL 8 stack |
 | `migration/` | Production deployment artifacts — see [migration/DEPLOYMENT_GUIDE.md](migration/DEPLOYMENT_GUIDE.md) |
@@ -112,6 +112,7 @@ verification gate. The guide explains why at the end.
 |---|---|
 | Redirect loop locally | `wp option get siteurl` should be `http://localhost:8888` |
 | Forms don't submit | `wp-content/mu-plugins/` exists and contains `omt-forms.php`; page source contains `_omt_nonce` |
+| Page content updates lag for visitors | `omt-cache-headers.php` is in `wp-content/mu-plugins/` (it sets explicit `Cache-Control` on HTML); if still stale, purge the host/CDN page cache (TransIP panel → cache purge / Cloudflare → Clear Cache) |
 | Unstyled pages | Active theme is `lennox` (`wp option get stylesheet`) |
 | Duplicate `-2` pages on prod | The DB import wasn't a full replacement — re-import (safe: the dump drops all tables first) |
 | Wide tables overflow on phones | `.wp-block-table { overflow-x: auto }` is in `themes/lennox/style.css` — confirm the file shipped |

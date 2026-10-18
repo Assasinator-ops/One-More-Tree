@@ -208,6 +208,7 @@ edits — hand-fixing a half-migrated site is how things got broken the last tim
 | Duplicate `-2` pages still live | Old data mixed with new | Re-run the import (the dump has `DROP TABLE IF EXISTS` so it fully replaces — this is safe) |
 | 500 error only on `/wp-admin/` | Stale object cache or `.htaccess` from old site | Delete `.htaccess` in the root, then re-save permalinks (Phase 3 step 2) |
 | `wp db import` says table prefix mismatch | `wp-config.php` has a non-`wp_` prefix | This dump assumes `wp_`; if yours differs, change `$table_prefix` in `wp-config.php` to `'wp_'` before importing |
+| Content updates show instantly when logged in, but an incognito/anonymous browser keeps showing the *old* version (sometimes for ~an hour) | A page cache in front of WordPress (host cache, CDN, or proxy) is caching the anonymous HTML with its own long default lifetime; the login cookie is why editors bypass it | Our `omt-cache-headers.php` mu-plugin prevents this by sending an explicit `Cache-Control` policy on every HTML page (`s-maxage=120` shared-cache freshness + stale-while-revalidate, `no-store` for logged-in requests). If a page is *still* stale after publishing: purge the cache manually — TransIP panel → Website Caching → **Purge cache**, or Cloudflare → Caching → **Purge Everything** — and re-check |
 
 ---
 

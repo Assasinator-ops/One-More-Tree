@@ -100,6 +100,7 @@ Run all of these before considering the migration done:
 | `wp-sitemap.xml` | no `-2` slugs |
 | Media | logo renders, no 404 in browser console/network |
 | Emails/notification | no broken internal links (all URLs https://onemoretree.eu) |
+| Anonymous freshness | edit a page, open it in an incognito window | change visible within ~2 minutes (host page cache honours the `omt-cache-headers.php` policy). Instantly stale for longer → purge the host cache (TransIP panel → Website Caching → Purge) |
 
 Optional deterministic re-pour (only if content looks off): run `apply.php` and
 `validate.php` from the bundle with the server's PHP CLI against the WP root — they
